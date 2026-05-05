@@ -1,0 +1,853 @@
+{
+  "domains": [
+    "Software Engineering",
+    "Data Science",
+    "Cybersecurity",
+    "Full Stack Development",
+    "Cloud Computing"
+  ],
+  "skills": {
+    "Java": {
+      "Software Engineering": 12,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 10,
+      "Cloud Computing": 4
+    },
+    "Python": {
+      "Software Engineering": 8,
+      "Data Science": 14,
+      "Cybersecurity": 2,
+      "Full Stack Development": 6,
+      "Cloud Computing": 4
+    },
+    "C": {
+      "Software Engineering": 10,
+      "Data Science": 2,
+      "Cybersecurity": 4,
+      "Full Stack Development": 3,
+      "Cloud Computing": 2
+    },
+    "C++": {
+      "Software Engineering": 11,
+      "Data Science": 3,
+      "Cybersecurity": 5,
+      "Full Stack Development": 4,
+      "Cloud Computing": 3
+    },
+    "JavaScript": {
+      "Software Engineering": 7,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 14,
+      "Cloud Computing": 3
+    },
+    "TypeScript": {
+      "Software Engineering": 8,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 13,
+      "Cloud Computing": 4
+    },
+    "Go": {
+      "Software Engineering": 10,
+      "Data Science": 2,
+      "Cybersecurity": 2,
+      "Full Stack Development": 8,
+      "Cloud Computing": 6
+    },
+    "Rust": {
+      "Software Engineering": 11,
+      "Data Science": 2,
+      "Cybersecurity": 3,
+      "Full Stack Development": 6,
+      "Cloud Computing": 5
+    },
+    "Kotlin": {
+      "Software Engineering": 10,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 9,
+      "Cloud Computing": 4
+    },
+    "Scala": {
+      "Software Engineering": 9,
+      "Data Science": 6,
+      "Cybersecurity": 1,
+      "Full Stack Development": 6,
+      "Cloud Computing": 5
+    },
+    "Swift": {
+      "Software Engineering": 10,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 8,
+      "Cloud Computing": 3
+    },
+    "PHP": {
+      "Software Engineering": 6,
+      "Data Science": 1,
+      "Cybersecurity": 2,
+      "Full Stack Development": 11,
+      "Cloud Computing": 3
+    },
+    "HTML": {
+      "Software Engineering": 3,
+      "Data Science": 1,
+      "Cybersecurity": 1,
+      "Full Stack Development": 12,
+      "Cloud Computing": 2
+    },
+    "CSS": {
+      "Software Engineering": 3,
+      "Data Science": 1,
+      "Cybersecurity": 1,
+      "Full Stack Development": 12,
+      "Cloud Computing": 2
+    },
+    "React.js": {
+      "Software Engineering": 5,
+      "Data Science": 1,
+      "Cybersecurity": 1,
+      "Full Stack Development": 14,
+      "Cloud Computing": 3
+    },
+    "Angular": {
+      "Software Engineering": 6,
+      "Data Science": 1,
+      "Cybersecurity": 1,
+      "Full Stack Development": 13,
+      "Cloud Computing": 3
+    },
+    "Vue.js": {
+      "Software Engineering": 5,
+      "Data Science": 1,
+      "Cybersecurity": 1,
+      "Full Stack Development": 13,
+      "Cloud Computing": 3
+    },
+    "Node.js": {
+      "Software Engineering": 7,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 13,
+      "Cloud Computing": 5
+    },
+    "Express.js": {
+      "Software Engineering": 7,
+      "Data Science": 1,
+      "Cybersecurity": 1,
+      "Full Stack Development": 12,
+      "Cloud Computing": 5
+    },
+    "Next.js": {
+      "Software Engineering": 6,
+      "Data Science": 1,
+      "Cybersecurity": 1,
+      "Full Stack Development": 14,
+      "Cloud Computing": 4
+    },
+    "Svelte": {
+      "Software Engineering": 5,
+      "Data Science": 1,
+      "Cybersecurity": 1,
+      "Full Stack Development": 13,
+      "Cloud Computing": 3
+    },
+    "Machine Learning": {
+      "Software Engineering": 4,
+      "Data Science": 16,
+      "Cybersecurity": 1,
+      "Full Stack Development": 3,
+      "Cloud Computing": 3
+    },
+    "Deep Learning": {
+      "Software Engineering": 3,
+      "Data Science": 16,
+      "Cybersecurity": 1,
+      "Full Stack Development": 3,
+      "Cloud Computing": 3
+    },
+    "NLP": {
+      "Software Engineering": 3,
+      "Data Science": 15,
+      "Cybersecurity": 1,
+      "Full Stack Development": 3,
+      "Cloud Computing": 2
+    },
+    "Computer Vision": {
+      "Software Engineering": 3,
+      "Data Science": 15,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    },
+    "Pandas": {
+      "Software Engineering": 3,
+      "Data Science": 14,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    },
+    "NumPy": {
+      "Software Engineering": 3,
+      "Data Science": 14,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    },
+    "TensorFlow": {
+      "Software Engineering": 4,
+      "Data Science": 14,
+      "Cybersecurity": 1,
+      "Full Stack Development": 3,
+      "Cloud Computing": 3
+    },
+    "PyTorch": {
+      "Software Engineering": 4,
+      "Data Science": 14,
+      "Cybersecurity": 1,
+      "Full Stack Development": 3,
+      "Cloud Computing": 3
+    },
+    "scikit-learn": {
+      "Software Engineering": 3,
+      "Data Science": 15,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    },
+    "Statistics": {
+      "Software Engineering": 4,
+      "Data Science": 12,
+      "Cybersecurity": 1,
+      "Full Stack Development": 3,
+      "Cloud Computing": 2
+    },
+    "MySQL": {
+      "Software Engineering": 6,
+      "Data Science": 5,
+      "Cybersecurity": 2,
+      "Full Stack Development": 8,
+      "Cloud Computing": 5
+    },
+    "PostgreSQL": {
+      "Software Engineering": 6,
+      "Data Science": 5,
+      "Cybersecurity": 2,
+      "Full Stack Development": 8,
+      "Cloud Computing": 5
+    },
+    "MongoDB": {
+      "Software Engineering": 5,
+      "Data Science": 4,
+      "Cybersecurity": 2,
+      "Full Stack Development": 9,
+      "Cloud Computing": 5
+    },
+    "Firebase": {
+      "Software Engineering": 4,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 10,
+      "Cloud Computing": 6
+    },
+    "Redis": {
+      "Software Engineering": 6,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 7,
+      "Cloud Computing": 7
+    },
+    "SQLite": {
+      "Software Engineering": 6,
+      "Data Science": 4,
+      "Cybersecurity": 2,
+      "Full Stack Development": 7,
+      "Cloud Computing": 4
+    },
+    "AWS": {
+      "Software Engineering": 4,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 6,
+      "Cloud Computing": 14
+    },
+    "Azure": {
+      "Software Engineering": 4,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 6,
+      "Cloud Computing": 14
+    },
+    "Google Cloud": {
+      "Software Engineering": 4,
+      "Data Science": 4,
+      "Cybersecurity": 2,
+      "Full Stack Development": 5,
+      "Cloud Computing": 14
+    },
+    "Docker": {
+      "Software Engineering": 5,
+      "Data Science": 2,
+      "Cybersecurity": 2,
+      "Full Stack Development": 7,
+      "Cloud Computing": 12
+    },
+    "Kubernetes": {
+      "Software Engineering": 4,
+      "Data Science": 2,
+      "Cybersecurity": 3,
+      "Full Stack Development": 5,
+      "Cloud Computing": 13
+    },
+    "CI/CD": {
+      "Software Engineering": 5,
+      "Data Science": 2,
+      "Cybersecurity": 2,
+      "Full Stack Development": 6,
+      "Cloud Computing": 12
+    },
+    "Jenkins": {
+      "Software Engineering": 5,
+      "Data Science": 2,
+      "Cybersecurity": 2,
+      "Full Stack Development": 5,
+      "Cloud Computing": 11
+    },
+    "Terraform": {
+      "Software Engineering": 4,
+      "Data Science": 2,
+      "Cybersecurity": 2,
+      "Full Stack Development": 5,
+      "Cloud Computing": 13
+    },
+    "Ansible": {
+      "Software Engineering": 4,
+      "Data Science": 2,
+      "Cybersecurity": 3,
+      "Full Stack Development": 5,
+      "Cloud Computing": 12
+    },
+    "Ethical Hacking": {
+      "Software Engineering": 2,
+      "Data Science": 2,
+      "Cybersecurity": 14,
+      "Full Stack Development": 3,
+      "Cloud Computing": 4
+    },
+    "Network Security": {
+      "Software Engineering": 3,
+      "Data Science": 2,
+      "Cybersecurity": 13,
+      "Full Stack Development": 3,
+      "Cloud Computing": 6
+    },
+    "Cryptography": {
+      "Software Engineering": 4,
+      "Data Science": 4,
+      "Cybersecurity": 12,
+      "Full Stack Development": 2,
+      "Cloud Computing": 5
+    },
+    "Penetration Testing": {
+      "Software Engineering": 2,
+      "Data Science": 2,
+      "Cybersecurity": 15,
+      "Full Stack Development": 2,
+      "Cloud Computing": 4
+    },
+    "SIEM": {
+      "Software Engineering": 3,
+      "Data Science": 3,
+      "Cybersecurity": 12,
+      "Full Stack Development": 3,
+      "Cloud Computing": 6
+    },
+    "Git": {
+      "Software Engineering": 8,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 9,
+      "Cloud Computing": 5
+    },
+    "GitHub": {
+      "Software Engineering": 7,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 9,
+      "Cloud Computing": 5
+    },
+    "Linux": {
+      "Software Engineering": 8,
+      "Data Science": 3,
+      "Cybersecurity": 6,
+      "Full Stack Development": 6,
+      "Cloud Computing": 8
+    },
+    "REST APIs": {
+      "Software Engineering": 8,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 11,
+      "Cloud Computing": 6
+    },
+    "GraphQL": {
+      "Software Engineering": 6,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 12,
+      "Cloud Computing": 5
+    },
+    "Agile": {
+      "Software Engineering": 9,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 8,
+      "Cloud Computing": 5
+    },
+    "Problem Solving": {
+      "Software Engineering": 10,
+      "Data Science": 6,
+      "Cybersecurity": 4,
+      "Full Stack Development": 7,
+      "Cloud Computing": 5
+    },
+    "Bash": {
+      "Software Engineering": 7,
+      "Data Science": 2,
+      "Cybersecurity": 5,
+      "Full Stack Development": 5,
+      "Cloud Computing": 6
+    },
+    "Embedded Systems": {
+      "Software Engineering": 8,
+      "Data Science": 2,
+      "Cybersecurity": 3,
+      "Full Stack Development": 4,
+      "Cloud Computing": 3
+    },
+    "VLSI Design": {
+      "Software Engineering": 9,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 3,
+      "Cloud Computing": 3
+    },
+    "Signal Processing": {
+      "Software Engineering": 5,
+      "Data Science": 8,
+      "Cybersecurity": 2,
+      "Full Stack Development": 3,
+      "Cloud Computing": 2
+    },
+    "IoT Protocols": {
+      "Software Engineering": 6,
+      "Data Science": 2,
+      "Cybersecurity": 3,
+      "Full Stack Development": 5,
+      "Cloud Computing": 6
+    },
+    "Power Systems": {
+      "Software Engineering": 4,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 3,
+      "Cloud Computing": 4
+    },
+    "Circuit Design": {
+      "Software Engineering": 7,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 4,
+      "Cloud Computing": 4
+    },
+    "MATLAB": {
+      "Software Engineering": 5,
+      "Data Science": 6,
+      "Cybersecurity": 2,
+      "Full Stack Development": 3,
+      "Cloud Computing": 3
+    },
+    "CAD / SolidWorks": {
+      "Software Engineering": 4,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    },
+    "Thermodynamics": {
+      "Software Engineering": 3,
+      "Data Science": 4,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    },
+    "Manufacturing Processes": {
+      "Software Engineering": 3,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    },
+    "AutoCAD": {
+      "Software Engineering": 3,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    },
+    "Structural Analysis": {
+      "Software Engineering": 3,
+      "Data Science": 3,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    },
+    "Surveying": {
+      "Software Engineering": 2,
+      "Data Science": 3,
+      "Cybersecurity": 1,
+      "Full Stack Development": 2,
+      "Cloud Computing": 2
+    }
+  },
+  "interests": {
+    "Coding": {
+      "Software Engineering": 12,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 12,
+      "Cloud Computing": 4
+    },
+    "Problem Solving": {
+      "Software Engineering": 10,
+      "Data Science": 8,
+      "Cybersecurity": 4,
+      "Full Stack Development": 8,
+      "Cloud Computing": 5
+    },
+    "Debugging": {
+      "Software Engineering": 11,
+      "Data Science": 5,
+      "Cybersecurity": 4,
+      "Full Stack Development": 9,
+      "Cloud Computing": 4
+    },
+    "System Design": {
+      "Software Engineering": 10,
+      "Data Science": 4,
+      "Cybersecurity": 4,
+      "Full Stack Development": 10,
+      "Cloud Computing": 7
+    },
+    "Competitive Programming": {
+      "Software Engineering": 12,
+      "Data Science": 5,
+      "Cybersecurity": 3,
+      "Full Stack Development": 6,
+      "Cloud Computing": 3
+    },
+    "Open Source Contribution": {
+      "Software Engineering": 9,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 10,
+      "Cloud Computing": 5
+    },
+    "Technical Writing": {
+      "Software Engineering": 7,
+      "Data Science": 5,
+      "Cybersecurity": 3,
+      "Full Stack Development": 7,
+      "Cloud Computing": 4
+    },
+    "Teaching / Mentoring": {
+      "Software Engineering": 8,
+      "Data Science": 5,
+      "Cybersecurity": 3,
+      "Full Stack Development": 7,
+      "Cloud Computing": 4
+    },
+    "Algorithm Design": {
+      "Software Engineering": 11,
+      "Data Science": 7,
+      "Cybersecurity": 3,
+      "Full Stack Development": 6,
+      "Cloud Computing": 4
+    },
+    "Code Review Culture": {
+      "Software Engineering": 10,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 9,
+      "Cloud Computing": 4
+    },
+    "AI Research": {
+      "Software Engineering": 5,
+      "Data Science": 16,
+      "Cybersecurity": 2,
+      "Full Stack Development": 4,
+      "Cloud Computing": 4
+    },
+    "Data Analysis": {
+      "Software Engineering": 4,
+      "Data Science": 15,
+      "Cybersecurity": 2,
+      "Full Stack Development": 5,
+      "Cloud Computing": 5
+    },
+    "Data Visualization": {
+      "Software Engineering": 4,
+      "Data Science": 12,
+      "Cybersecurity": 2,
+      "Full Stack Development": 7,
+      "Cloud Computing": 4
+    },
+    "Web Design": {
+      "Software Engineering": 4,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 14,
+      "Cloud Computing": 3
+    },
+    "App Development": {
+      "Software Engineering": 9,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 12,
+      "Cloud Computing": 4
+    },
+    "Backend Development": {
+      "Software Engineering": 10,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 11,
+      "Cloud Computing": 6
+    },
+    "Frontend Development": {
+      "Software Engineering": 5,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 15,
+      "Cloud Computing": 4
+    },
+    "Mobile Development": {
+      "Software Engineering": 9,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 11,
+      "Cloud Computing": 3
+    },
+    "Game Development": {
+      "Software Engineering": 11,
+      "Data Science": 3,
+      "Cybersecurity": 2,
+      "Full Stack Development": 8,
+      "Cloud Computing": 3
+    },
+    "Networking": {
+      "Software Engineering": 5,
+      "Data Science": 3,
+      "Cybersecurity": 10,
+      "Full Stack Development": 5,
+      "Cloud Computing": 8
+    },
+    "Security Systems": {
+      "Software Engineering": 4,
+      "Data Science": 3,
+      "Cybersecurity": 14,
+      "Full Stack Development": 4,
+      "Cloud Computing": 6
+    },
+    "Cloud Infrastructure": {
+      "Software Engineering": 4,
+      "Data Science": 3,
+      "Cybersecurity": 3,
+      "Full Stack Development": 6,
+      "Cloud Computing": 14
+    },
+    "Automation": {
+      "Software Engineering": 7,
+      "Data Science": 4,
+      "Cybersecurity": 4,
+      "Full Stack Development": 7,
+      "Cloud Computing": 10
+    },
+    "DevOps Culture": {
+      "Software Engineering": 5,
+      "Data Science": 3,
+      "Cybersecurity": 3,
+      "Full Stack Development": 7,
+      "Cloud Computing": 13
+    },
+    "IoT": {
+      "Software Engineering": 8,
+      "Data Science": 4,
+      "Cybersecurity": 5,
+      "Full Stack Development": 7,
+      "Cloud Computing": 6
+    },
+    "Robotics": {
+      "Software Engineering": 9,
+      "Data Science": 5,
+      "Cybersecurity": 4,
+      "Full Stack Development": 6,
+      "Cloud Computing": 5
+    },
+    "Blockchain": {
+      "Software Engineering": 8,
+      "Data Science": 4,
+      "Cybersecurity": 4,
+      "Full Stack Development": 7,
+      "Cloud Computing": 5
+    },
+    "UI/UX Design": {
+      "Software Engineering": 4,
+      "Data Science": 2,
+      "Cybersecurity": 1,
+      "Full Stack Development": 12,
+      "Cloud Computing": 3
+    },
+    "Product Management": {
+      "Software Engineering": 8,
+      "Data Science": 4,
+      "Cybersecurity": 2,
+      "Full Stack Development": 9,
+      "Cloud Computing": 5
+    },
+    "Research": {
+      "Software Engineering": 6,
+      "Data Science": 12,
+      "Cybersecurity": 3,
+      "Full Stack Development": 5,
+      "Cloud Computing": 5
+    },
+    "Freelancing": {
+      "Software Engineering": 8,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 10,
+      "Cloud Computing": 6
+    },
+    "Startup Building": {
+      "Software Engineering": 8,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 11,
+      "Cloud Computing": 6
+    },
+    "Enterprise IT": {
+      "Software Engineering": 7,
+      "Data Science": 4,
+      "Cybersecurity": 5,
+      "Full Stack Development": 7,
+      "Cloud Computing": 9
+    },
+    "Remote Collaboration": {
+      "Software Engineering": 7,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 8,
+      "Cloud Computing": 7
+    },
+    "Open Innovation": {
+      "Software Engineering": 7,
+      "Data Science": 6,
+      "Cybersecurity": 3,
+      "Full Stack Development": 8,
+      "Cloud Computing": 6
+    },
+    "Hackathons": {
+      "Software Engineering": 9,
+      "Data Science": 5,
+      "Cybersecurity": 4,
+      "Full Stack Development": 9,
+      "Cloud Computing": 5
+    },
+    "Tech Meetups": {
+      "Software Engineering": 7,
+      "Data Science": 5,
+      "Cybersecurity": 4,
+      "Full Stack Development": 8,
+      "Cloud Computing": 5
+    },
+    "Career Growth": {
+      "Software Engineering": 8,
+      "Data Science": 5,
+      "Cybersecurity": 4,
+      "Full Stack Development": 8,
+      "Cloud Computing": 6
+    },
+    "Leadership": {
+      "Software Engineering": 8,
+      "Data Science": 4,
+      "Cybersecurity": 4,
+      "Full Stack Development": 8,
+      "Cloud Computing": 7
+    },
+    "Consulting": {
+      "Software Engineering": 7,
+      "Data Science": 5,
+      "Cybersecurity": 4,
+      "Full Stack Development": 8,
+      "Cloud Computing": 7
+    },
+    "Public Speaking": {
+      "Software Engineering": 7,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 7,
+      "Cloud Computing": 4
+    },
+    "Mentoring Juniors": {
+      "Software Engineering": 8,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 8,
+      "Cloud Computing": 4
+    },
+    "Building MVPs": {
+      "Software Engineering": 8,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 12,
+      "Cloud Computing": 6
+    },
+    "Performance Engineering": {
+      "Software Engineering": 11,
+      "Data Science": 4,
+      "Cybersecurity": 3,
+      "Full Stack Development": 8,
+      "Cloud Computing": 7
+    },
+    "Site Reliability": {
+      "Software Engineering": 6,
+      "Data Science": 3,
+      "Cybersecurity": 4,
+      "Full Stack Development": 6,
+      "Cloud Computing": 14
+    },
+    "Quality Assurance": {
+      "Software Engineering": 9,
+      "Data Science": 4,
+      "Cybersecurity": 4,
+      "Full Stack Development": 9,
+      "Cloud Computing": 5
+    },
+    "Accessibility (a11y)": {
+      "Software Engineering": 6,
+      "Data Science": 2,
+      "Cybersecurity": 2,
+      "Full Stack Development": 13,
+      "Cloud Computing": 4
+    },
+    "Green Tech / Sustainability": {
+      "Software Engineering": 6,
+      "Data Science": 5,
+      "Cybersecurity": 3,
+      "Full Stack Development": 6,
+      "Cloud Computing": 7
+    }
+  }
+}

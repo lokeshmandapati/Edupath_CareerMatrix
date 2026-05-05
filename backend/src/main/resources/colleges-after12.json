@@ -1,0 +1,209 @@
+{
+  "Engineering (B.Tech)": [
+    { "name": "IIT Madras", "location": "Chennai, Tamil Nadu", "city": "Chennai", "state": "Tamil Nadu", "website": "https://www.iitm.ac.in/" },
+    { "name": "IIT Delhi", "location": "New Delhi, Delhi", "city": "Delhi", "state": "Delhi", "website": "https://home.iitd.ac.in/" },
+    { "name": "IIT Bombay", "location": "Mumbai, Maharashtra", "city": "Mumbai", "state": "Maharashtra", "website": "https://www.iitb.ac.in/" },
+    { "name": "IIT Kanpur", "location": "Kanpur, Uttar Pradesh", "city": "Kanpur", "state": "Uttar Pradesh", "website": "https://www.iitk.ac.in/" },
+    { "name": "IIT Kharagpur", "location": "Kharagpur, West Bengal", "city": "Kharagpur", "state": "West Bengal", "website": "https://www.iitkgp.ac.in/" },
+    { "name": "IIT Roorkee", "location": "Roorkee, Uttarakhand", "city": "Roorkee", "state": "Uttarakhand", "website": "https://www.iitr.ac.in/" },
+    { "name": "IIT Guwahati", "location": "Guwahati, Assam", "city": "Guwahati", "state": "Assam", "website": "https://www.iitg.ac.in/" },
+    { "name": "IIT Hyderabad", "location": "Hyderabad, Telangana", "city": "Hyderabad", "state": "Telangana", "website": "https://iith.ac.in/" },
+    { "name": "NIT Tiruchirappalli", "location": "Tiruchirappalli, Tamil Nadu", "city": "Tiruchirappalli", "state": "Tamil Nadu", "website": "https://www.nitt.edu/" },
+    { "name": "BITS Pilani", "location": "Pilani, Rajasthan", "city": "Pilani", "state": "Rajasthan", "website": "https://www.bits-pilani.ac.in/" },
+
+    { "name": "DTU", "location": "Delhi, Delhi", "city": "Delhi", "state": "Delhi", "website": "https://dtu.ac.in/" },
+    { "name": "NSUT", "location": "Delhi, Delhi", "city": "Delhi", "state": "Delhi", "website": "https://www.nsut.ac.in/" },
+    { "name": "IIIT Delhi", "location": "Delhi, Delhi", "city": "Delhi", "state": "Delhi", "website": "https://iiitd.ac.in/" },
+
+    { "name": "VJTI", "location": "Mumbai, Maharashtra", "city": "Mumbai", "state": "Maharashtra", "website": "https://vjti.ac.in/" },
+    { "name": "SPIT", "location": "Mumbai, Maharashtra", "city": "Mumbai", "state": "Maharashtra", "website": "https://www.spit.ac.in/" },
+
+    { "name": "RV College of Engineering", "location": "Bengaluru, Karnataka", "city": "Bengaluru", "state": "Karnataka", "website": "https://www.rvce.edu.in/" },
+    { "name": "PES University", "location": "Bengaluru, Karnataka", "city": "Bengaluru", "state": "Karnataka", "website": "https://www.pes.edu/" },
+
+    { "name": "PEC Chandigarh", "location": "Chandigarh, Chandigarh", "city": "Chandigarh", "state": "Chandigarh", "website": "https://pec.ac.in/" },
+    { "name": "Thapar Institute of Engineering & Technology", "location": "Patiala, Punjab", "city": "Patiala", "state": "Punjab", "website": "https://www.thapar.edu/" }
+  ],
+  "Medicine (MBBS/BDS)": [
+    { "name": "AIIMS Delhi", "location": "New Delhi, Delhi", "website": "https://www.aiims.edu/" },
+    { "name": "Christian Medical College (CMC)", "location": "Vellore, Tamil Nadu", "website": "https://www.cmch-vellore.edu/" },
+    { "name": "Armed Forces Medical College (AFMC)", "location": "Pune, Maharashtra", "website": "https://www.afmc.nic.in/" },
+    { "name": "Maulana Azad Medical College (MAMC)", "location": "New Delhi, Delhi", "website": "https://www.mamc.ac.in/" },
+    { "name": "King George's Medical University (KGMU)", "location": "Lucknow, Uttar Pradesh", "website": "https://www.kgmu.org/" },
+    { "name": "Grant Medical College", "location": "Mumbai, Maharashtra", "website": "https://www.gmcjjh.com/" },
+    { "name": "JIPMER", "location": "Puducherry, Puducherry", "website": "https://jipmer.edu.in/" },
+    { "name": "BJ Medical College", "location": "Ahmedabad, Gujarat", "website": "https://www.bjmcabd.edu.in/" },
+    { "name": "Madras Medical College", "location": "Chennai, Tamil Nadu", "website": "https://www.mmc.tn.gov.in/" },
+    { "name": "Seth GS Medical College (KEM)", "location": "Mumbai, Maharashtra", "website": "https://www.kem.edu/" }
+  ],
+  "Computer Science & IT": [
+    { "name": "IIT Bombay (CSE)", "location": "Mumbai, Maharashtra", "city": "Mumbai", "state": "Maharashtra", "website": "https://www.iitb.ac.in/", "cutoffGeneral": "Varies", "cutoffObc": "Varies", "cutoffScst": "Varies" },
+    { "name": "IIT Delhi (CSE)", "location": "New Delhi, Delhi", "city": "Delhi", "state": "Delhi", "website": "https://home.iitd.ac.in/", "cutoffGeneral": "Varies", "cutoffObc": "Varies", "cutoffScst": "Varies" },
+    { "name": "IIT Madras (CSE)", "location": "Chennai, Tamil Nadu", "city": "Chennai", "state": "Tamil Nadu", "website": "https://www.iitm.ac.in/" },
+    { "name": "IIIT Hyderabad", "location": "Hyderabad, Telangana", "city": "Hyderabad", "state": "Telangana", "website": "https://www.iiit.ac.in/" },
+    { "name": "IIT Kanpur (CSE)", "location": "Kanpur, Uttar Pradesh", "city": "Kanpur", "state": "Uttar Pradesh", "website": "https://www.iitk.ac.in/" },
+    { "name": "IIT Kharagpur (CSE)", "location": "Kharagpur, West Bengal", "city": "Kharagpur", "state": "West Bengal", "website": "https://www.iitkgp.ac.in/" },
+    { "name": "NIT Surathkal", "location": "Surathkal, Karnataka", "city": "Surathkal", "state": "Karnataka", "website": "https://www.nitk.ac.in/" },
+    { "name": "NIT Warangal", "location": "Warangal, Telangana", "city": "Warangal", "state": "Telangana", "website": "https://nitw.ac.in/" },
+    { "name": "BITS Pilani (CSE)", "location": "Pilani, Rajasthan", "city": "Pilani", "state": "Rajasthan", "website": "https://www.bits-pilani.ac.in/" },
+    { "name": "DTU (CSE)", "location": "Delhi, Delhi", "city": "Delhi", "state": "Delhi", "website": "https://dtu.ac.in/" },
+
+    { "name": "IIIT Delhi (CSE)", "location": "Delhi, Delhi", "city": "Delhi", "state": "Delhi", "website": "https://iiitd.ac.in/" },
+    { "name": "NSUT (CSE/IT)", "location": "Delhi, Delhi", "city": "Delhi", "state": "Delhi", "website": "https://www.nsut.ac.in/" },
+
+    { "name": "VJTI (IT)", "location": "Mumbai, Maharashtra", "city": "Mumbai", "state": "Maharashtra", "website": "https://vjti.ac.in/" },
+    { "name": "SPIT (CSE/IT)", "location": "Mumbai, Maharashtra", "city": "Mumbai", "state": "Maharashtra", "website": "https://www.spit.ac.in/" },
+
+    { "name": "RV College of Engineering (CSE)", "location": "Bengaluru, Karnataka", "city": "Bengaluru", "state": "Karnataka", "website": "https://www.rvce.edu.in/" },
+    { "name": "PES University (CSE)", "location": "Bengaluru, Karnataka", "city": "Bengaluru", "state": "Karnataka", "website": "https://www.pes.edu/" },
+    { "name": "BMS College of Engineering (CSE)", "location": "Bengaluru, Karnataka", "city": "Bengaluru", "state": "Karnataka", "website": "https://www.bmsce.ac.in/" },
+
+    { "name": "PEC Chandigarh (CSE)", "location": "Chandigarh, Chandigarh", "city": "Chandigarh", "state": "Chandigarh", "website": "https://pec.ac.in/" },
+    { "name": "Thapar Institute (CSE)", "location": "Patiala, Punjab", "city": "Patiala", "state": "Punjab", "website": "https://www.thapar.edu/" }
+  ],
+  "Pure Sciences (B.Sc)": [
+    { "name": "St. Stephen's College", "location": "New Delhi, Delhi", "website": "https://www.ststephens.edu/" },
+    { "name": "Hindu College", "location": "New Delhi, Delhi", "website": "https://www.hinducollege.ac.in/" },
+    { "name": "Miranda House", "location": "New Delhi, Delhi", "website": "https://www.mirandahouse.ac.in/" },
+    { "name": "Loyola College", "location": "Chennai, Tamil Nadu", "website": "https://www.loyolacollege.edu/" },
+    { "name": "Presidency College", "location": "Chennai, Tamil Nadu", "website": "https://www.presidencycollegechennai.ac.in/" },
+    { "name": "St. Xavier's College", "location": "Mumbai, Maharashtra", "website": "https://xaviers.edu/" },
+    { "name": "Fergusson College", "location": "Pune, Maharashtra", "website": "https://www.fergusson.edu/" },
+    { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
+    { "name": "Presidency University", "location": "Kolkata, West Bengal", "website": "https://www.presiuniv.ac.in/" },
+    { "name": "IISER Pune", "location": "Pune, Maharashtra", "website": "https://www.iiserpune.ac.in/" }
+  ],
+  "Architecture / Design": [
+    { "name": "SPA Delhi", "location": "New Delhi, Delhi", "website": "https://www.spadelhi.ac.in/" },
+    { "name": "IIT Roorkee (Architecture)", "location": "Roorkee, Uttarakhand", "website": "https://www.iitr.ac.in/" },
+    { "name": "CEPT University", "location": "Ahmedabad, Gujarat", "website": "https://cept.ac.in/" },
+    { "name": "Sir J.J. College of Architecture", "location": "Mumbai, Maharashtra", "website": "https://www.sirjjarchitecture.org/" },
+    { "name": "School of Planning and Architecture (SPA) Bhopal", "location": "Bhopal, Madhya Pradesh", "website": "https://www.spabhopal.ac.in/" },
+    { "name": "SPA Vijayawada", "location": "Vijayawada, Andhra Pradesh", "website": "https://www.spav.ac.in/" },
+    { "name": "NID Ahmedabad", "location": "Ahmedabad, Gujarat", "website": "https://www.nid.edu/" },
+    { "name": "NIFT Delhi", "location": "New Delhi, Delhi", "website": "https://www.nift.ac.in/delhi/" },
+    { "name": "Pearl Academy", "location": "New Delhi, Delhi", "website": "https://pearlacademy.com/" },
+    { "name": "Srishti Manipal Institute of Art, Design and Technology", "location": "Bengaluru, Karnataka", "website": "https://srishtimanipalinstitute.in/" }
+  ],
+  "B.Com / Accounting": [
+    { "name": "Shri Ram College of Commerce (SRCC)", "location": "New Delhi, Delhi", "website": "https://www.srcc.edu/" },
+    { "name": "Lady Shri Ram College (LSR)", "location": "New Delhi, Delhi", "website": "https://lsr.edu.in/" },
+    { "name": "Hindu College", "location": "New Delhi, Delhi", "website": "https://www.hinducollege.ac.in/" },
+    { "name": "Hansraj College", "location": "New Delhi, Delhi", "website": "https://www.hansrajcollege.ac.in/" },
+    { "name": "Loyola College", "location": "Chennai, Tamil Nadu", "website": "https://www.loyolacollege.edu/" },
+    { "name": "St. Xavier's College", "location": "Mumbai, Maharashtra", "website": "https://xaviers.edu/" },
+    { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
+    { "name": "NM College of Commerce", "location": "Mumbai, Maharashtra", "website": "https://nmcollege.in/" },
+    { "name": "Symbiosis College of Arts & Commerce", "location": "Pune, Maharashtra", "website": "https://www.symbiosiscollege.edu.in/" },
+    { "name": "Narsee Monjee College (Mumbai)", "location": "Mumbai, Maharashtra", "website": "https://nmims.edu/" }
+  ],
+  "CA / CS": [
+    { "name": "ICAI (CA) - Institute of Chartered Accountants of India", "location": "Pan-India", "website": "https://www.icai.org/" },
+    { "name": "ICSI (CS) - Institute of Company Secretaries of India", "location": "Pan-India", "website": "https://www.icsi.edu/" },
+    { "name": "St. Xavier's College", "location": "Mumbai, Maharashtra", "website": "https://xaviers.edu/" },
+    { "name": "Shri Ram College of Commerce (SRCC)", "location": "New Delhi, Delhi", "website": "https://www.srcc.edu/" },
+    { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
+    { "name": "Hindu College", "location": "New Delhi, Delhi", "website": "https://www.hinducollege.ac.in/" },
+    { "name": "Loyola College", "location": "Chennai, Tamil Nadu", "website": "https://www.loyolacollege.edu/" },
+    { "name": "NM College of Commerce", "location": "Mumbai, Maharashtra", "website": "https://nmcollege.in/" },
+    { "name": "Symbiosis College of Arts & Commerce", "location": "Pune, Maharashtra", "website": "https://www.symbiosiscollege.edu.in/" },
+    { "name": "Delhi University (Commerce colleges)", "location": "New Delhi, Delhi", "website": "https://www.du.ac.in/" }
+  ],
+  "Business & Management": [
+    { "name": "IIM Indore (Integrated Programme in Management)", "location": "Indore, Madhya Pradesh", "website": "https://www.iimidr.ac.in/" },
+    { "name": "IIM Rohtak (IPM)", "location": "Rohtak, Haryana", "website": "https://www.iimrohtak.ac.in/" },
+    { "name": "IIM Ranchi (IPM)", "location": "Ranchi, Jharkhand", "website": "https://www.iimranchi.ac.in/" },
+    { "name": "NMIMS", "location": "Mumbai, Maharashtra", "website": "https://nmims.edu/" },
+    { "name": "Symbiosis (SCMS)", "location": "Pune, Maharashtra", "website": "https://www.scmspune.ac.in/" },
+    { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
+    { "name": "Shaheed Sukhdev College of Business Studies", "location": "New Delhi, Delhi", "website": "https://sscbs.du.ac.in/" },
+    { "name": "St. Xavier's College", "location": "Mumbai, Maharashtra", "website": "https://xaviers.edu/" },
+    { "name": "Delhi University (BMS/BBA)", "location": "New Delhi, Delhi", "website": "https://www.du.ac.in/" },
+    { "name": "Loyola College", "location": "Chennai, Tamil Nadu", "website": "https://www.loyolacollege.edu/" }
+  ],
+  "Finance & Banking": [
+    { "name": "Shri Ram College of Commerce (SRCC)", "location": "New Delhi, Delhi", "website": "https://www.srcc.edu/" },
+    { "name": "St. Xavier's College", "location": "Mumbai, Maharashtra", "website": "https://xaviers.edu/" },
+    { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
+    { "name": "NMIMS", "location": "Mumbai, Maharashtra", "website": "https://nmims.edu/" },
+    { "name": "Delhi University (Commerce colleges)", "location": "New Delhi, Delhi", "website": "https://www.du.ac.in/" },
+    { "name": "Symbiosis", "location": "Pune, Maharashtra", "website": "https://www.siu.edu.in/" },
+    { "name": "Hindu College", "location": "New Delhi, Delhi", "website": "https://www.hinducollege.ac.in/" },
+    { "name": "Hansraj College", "location": "New Delhi, Delhi", "website": "https://www.hansrajcollege.ac.in/" },
+    { "name": "Loyola College", "location": "Chennai, Tamil Nadu", "website": "https://www.loyolacollege.edu/" },
+    { "name": "Presidency College", "location": "Chennai, Tamil Nadu", "website": "https://www.presidencycollegechennai.ac.in/" }
+  ],
+  "Digital Marketing": [
+    { "name": "Delhi University", "location": "New Delhi, Delhi", "website": "https://www.du.ac.in/" },
+    { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
+    { "name": "NMIMS", "location": "Mumbai, Maharashtra", "website": "https://nmims.edu/" },
+    { "name": "Symbiosis", "location": "Pune, Maharashtra", "website": "https://www.siu.edu.in/" },
+    { "name": "St. Xavier's College", "location": "Mumbai, Maharashtra", "website": "https://xaviers.edu/" },
+    { "name": "IIM Indore (short programs)", "location": "Indore, Madhya Pradesh", "website": "https://www.iimidr.ac.in/" },
+    { "name": "MICA", "location": "Ahmedabad, Gujarat", "website": "https://www.mica.ac.in/" },
+    { "name": "IIM Kozhikode (marketing)", "location": "Kozhikode, Kerala", "website": "https://iimk.ac.in/" },
+    { "name": "Nirma University", "location": "Ahmedabad, Gujarat", "website": "https://nirmauni.ac.in/" },
+    { "name": "Amity University", "location": "Noida, Uttar Pradesh", "website": "https://www.amity.edu/" }
+  ],
+  "Law": [
+    { "name": "NLSIU", "location": "Bengaluru, Karnataka", "website": "https://www.nls.ac.in/" },
+    { "name": "NALSAR", "location": "Hyderabad, Telangana", "website": "https://www.nalsar.ac.in/" },
+    { "name": "NLU Delhi", "location": "New Delhi, Delhi", "website": "https://nludelhi.ac.in/" },
+    { "name": "WBNUJS", "location": "Kolkata, West Bengal", "website": "https://www.nujs.edu/" },
+    { "name": "GNLU", "location": "Gandhinagar, Gujarat", "website": "https://gnlu.ac.in/" },
+    { "name": "NLU Jodhpur", "location": "Jodhpur, Rajasthan", "website": "https://nlujodhpur.ac.in/" },
+    { "name": "NLU Lucknow (RMLNLU)", "location": "Lucknow, Uttar Pradesh", "website": "https://rmlnlu.ac.in/" },
+    { "name": "Symbiosis Law School", "location": "Pune, Maharashtra", "website": "https://www.symlaw.ac.in/" },
+    { "name": "Jindal Global Law School", "location": "Sonipat, Haryana", "website": "https://jgu.edu.in/jgls/" },
+    { "name": "ILS Law College", "location": "Pune, Maharashtra", "website": "https://ilslaw.edu/" }
+  ],
+  "Psychology": [
+    { "name": "Lady Shri Ram College (LSR)", "location": "New Delhi, Delhi", "website": "https://lsr.edu.in/" },
+    { "name": "Jesus and Mary College", "location": "New Delhi, Delhi", "website": "https://www.jmc.ac.in/" },
+    { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
+    { "name": "St. Xavier's College", "location": "Mumbai, Maharashtra", "website": "https://xaviers.edu/" },
+    { "name": "Fergusson College", "location": "Pune, Maharashtra", "website": "https://www.fergusson.edu/" },
+    { "name": "Symbiosis College of Arts & Commerce", "location": "Pune, Maharashtra", "website": "https://www.symbiosiscollege.edu.in/" },
+    { "name": "Jamia Millia Islamia", "location": "New Delhi, Delhi", "website": "https://www.jmi.ac.in/" },
+    { "name": "Banaras Hindu University (BHU)", "location": "Varanasi, Uttar Pradesh", "website": "https://www.bhu.ac.in/" },
+    { "name": "University of Hyderabad", "location": "Hyderabad, Telangana", "website": "https://uohyd.ac.in/" },
+    { "name": "TISS", "location": "Mumbai, Maharashtra", "website": "https://www.tiss.edu/" }
+  ],
+  "Journalism & Media": [
+    { "name": "IIMC", "location": "New Delhi, Delhi", "website": "https://www.iimc.gov.in/" },
+    { "name": "ACJ", "location": "Chennai, Tamil Nadu", "website": "https://www.asianmedia.org.in/" },
+    { "name": "Jamia Millia Islamia", "location": "New Delhi, Delhi", "website": "https://www.jmi.ac.in/" },
+    { "name": "Delhi University", "location": "New Delhi, Delhi", "website": "https://www.du.ac.in/" },
+    { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
+    { "name": "St. Xavier's College", "location": "Mumbai, Maharashtra", "website": "https://xaviers.edu/" },
+    { "name": "Symbiosis", "location": "Pune, Maharashtra", "website": "https://www.siu.edu.in/" },
+    { "name": "Amity University", "location": "Noida, Uttar Pradesh", "website": "https://www.amity.edu/" },
+    { "name": "Manipal Institute of Communication", "location": "Manipal, Karnataka", "website": "https://manipal.edu/" },
+    { "name": "BHU", "location": "Varanasi, Uttar Pradesh", "website": "https://www.bhu.ac.in/" }
+  ],
+  "Design": [
+    { "name": "NID Ahmedabad", "location": "Ahmedabad, Gujarat", "website": "https://www.nid.edu/" },
+    { "name": "NIFT Delhi", "location": "New Delhi, Delhi", "website": "https://www.nift.ac.in/delhi/" },
+    { "name": "IDC, IIT Bombay", "location": "Mumbai, Maharashtra", "website": "https://www.idc.iitb.ac.in/" },
+    { "name": "Srishti Manipal Institute", "location": "Bengaluru, Karnataka", "website": "https://srishtimanipalinstitute.in/" },
+    { "name": "MIT Institute of Design", "location": "Pune, Maharashtra", "website": "https://www.mitid.edu.in/" },
+    { "name": "Pearl Academy", "location": "New Delhi, Delhi", "website": "https://pearlacademy.com/" },
+    { "name": "CEPT University", "location": "Ahmedabad, Gujarat", "website": "https://cept.ac.in/" },
+    { "name": "Symbiosis Institute of Design", "location": "Pune, Maharashtra", "website": "https://sid.edu.in/" },
+    { "name": "UPES (Design)", "location": "Dehradun, Uttarakhand", "website": "https://www.upes.ac.in/" },
+    { "name": "Amity University (Design)", "location": "Noida, Uttar Pradesh", "website": "https://www.amity.edu/" }
+  ],
+  "Civil Services (UPSC/State)": [
+    { "name": "Delhi University", "location": "New Delhi, Delhi", "website": "https://www.du.ac.in/" },
+    { "name": "Jawaharlal Nehru University (JNU)", "location": "New Delhi, Delhi", "website": "https://www.jnu.ac.in/" },
+    { "name": "Jamia Millia Islamia", "location": "New Delhi, Delhi", "website": "https://www.jmi.ac.in/" },
+    { "name": "University of Hyderabad", "location": "Hyderabad, Telangana", "website": "https://uohyd.ac.in/" },
+    { "name": "Presidency University", "location": "Kolkata, West Bengal", "website": "https://www.presiuniv.ac.in/" },
+    { "name": "St. Xavier's College", "location": "Mumbai, Maharashtra", "website": "https://xaviers.edu/" },
+    { "name": "Fergusson College", "location": "Pune, Maharashtra", "website": "https://www.fergusson.edu/" },
+    { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
+    { "name": "BHU", "location": "Varanasi, Uttar Pradesh", "website": "https://www.bhu.ac.in/" },
+    { "name": "Aligarh Muslim University (AMU)", "location": "Aligarh, Uttar Pradesh", "website": "https://www.amu.ac.in/" }
+  ]
+}
+

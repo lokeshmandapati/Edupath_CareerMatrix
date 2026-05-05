@@ -1,0 +1,549 @@
+{
+  "careerDomains": [
+    "Software Engineer",
+    "Data Scientist",
+    "AI Engineer",
+    "Web Developer",
+    "Cloud Engineer",
+    "Cybersecurity Engineer",
+    "Embedded Systems Engineer",
+    "IoT Engineer",
+    "VLSI Engineer",
+    "Electrical Engineer",
+    "Power Systems Engineer",
+    "Mechanical Design Engineer",
+    "Production Engineer",
+    "Civil Engineer",
+    "Structural Engineer",
+    "Data Analyst"
+  ],
+  "legacyDomains": [
+    "Software Engineering",
+    "Data Science",
+    "Cybersecurity",
+    "Full Stack Development",
+    "Cloud Computing"
+  ],
+  "legacyToCareer": {
+    "Software Engineering": {
+      "Software Engineer": 0.38,
+      "Data Scientist": 0.06,
+      "AI Engineer": 0.1,
+      "Web Developer": 0.12,
+      "Cloud Engineer": 0.08,
+      "Cybersecurity Engineer": 0.06,
+      "Embedded Systems Engineer": 0.06,
+      "IoT Engineer": 0.04,
+      "VLSI Engineer": 0.04,
+      "Electrical Engineer": 0.02,
+      "Power Systems Engineer": 0.01,
+      "Mechanical Design Engineer": 0.01,
+      "Production Engineer": 0.01,
+      "Civil Engineer": 0.0,
+      "Structural Engineer": 0.0,
+      "Data Analyst": 0.01
+    },
+    "Data Science": {
+      "Software Engineer": 0.05,
+      "Data Scientist": 0.36,
+      "AI Engineer": 0.28,
+      "Web Developer": 0.02,
+      "Cloud Engineer": 0.04,
+      "Cybersecurity Engineer": 0.01,
+      "Embedded Systems Engineer": 0.02,
+      "IoT Engineer": 0.02,
+      "VLSI Engineer": 0.02,
+      "Electrical Engineer": 0.02,
+      "Power Systems Engineer": 0.01,
+      "Mechanical Design Engineer": 0.01,
+      "Production Engineer": 0.01,
+      "Civil Engineer": 0.01,
+      "Structural Engineer": 0.01,
+      "Data Analyst": 0.11
+    },
+    "Cybersecurity": {
+      "Software Engineer": 0.08,
+      "Data Scientist": 0.02,
+      "AI Engineer": 0.02,
+      "Web Developer": 0.05,
+      "Cloud Engineer": 0.06,
+      "Cybersecurity Engineer": 0.58,
+      "Embedded Systems Engineer": 0.02,
+      "IoT Engineer": 0.03,
+      "VLSI Engineer": 0.02,
+      "Electrical Engineer": 0.03,
+      "Power Systems Engineer": 0.02,
+      "Mechanical Design Engineer": 0.02,
+      "Production Engineer": 0.02,
+      "Civil Engineer": 0.01,
+      "Structural Engineer": 0.01,
+      "Data Analyst": 0.03
+    },
+    "Full Stack Development": {
+      "Software Engineer": 0.12,
+      "Data Scientist": 0.04,
+      "AI Engineer": 0.04,
+      "Web Developer": 0.28,
+      "Cloud Engineer": 0.08,
+      "Cybersecurity Engineer": 0.04,
+      "Embedded Systems Engineer": 0.02,
+      "IoT Engineer": 0.04,
+      "VLSI Engineer": 0.02,
+      "Electrical Engineer": 0.02,
+      "Power Systems Engineer": 0.01,
+      "Mechanical Design Engineer": 0.02,
+      "Production Engineer": 0.02,
+      "Civil Engineer": 0.01,
+      "Structural Engineer": 0.01,
+      "Data Analyst": 0.05
+    },
+    "Cloud Computing": {
+      "Software Engineer": 0.1,
+      "Data Scientist": 0.04,
+      "AI Engineer": 0.04,
+      "Web Developer": 0.06,
+      "Cloud Engineer": 0.42,
+      "Cybersecurity Engineer": 0.06,
+      "Embedded Systems Engineer": 0.02,
+      "IoT Engineer": 0.02,
+      "VLSI Engineer": 0.02,
+      "Electrical Engineer": 0.02,
+      "Power Systems Engineer": 0.01,
+      "Mechanical Design Engineer": 0.02,
+      "Production Engineer": 0.02,
+      "Civil Engineer": 0.01,
+      "Structural Engineer": 0.01,
+      "Data Analyst": 0.05
+    }
+  },
+  "branches": {
+    "CSE": {
+      "label": "Computer Science (CSE)",
+      "primaryCareers": [
+        "Software Engineer",
+        "Data Scientist",
+        "AI Engineer",
+        "Web Developer",
+        "Cloud Engineer",
+        "Cybersecurity Engineer",
+        "Data Analyst"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.22,
+        "Data Scientist": 0.14,
+        "AI Engineer": 0.14,
+        "Web Developer": 0.14,
+        "Cloud Engineer": 0.12,
+        "Cybersecurity Engineer": 0.08,
+        "Embedded Systems Engineer": 0.02,
+        "IoT Engineer": 0.02,
+        "VLSI Engineer": 0.02,
+        "Electrical Engineer": 0.02,
+        "Power Systems Engineer": 0.02,
+        "Mechanical Design Engineer": 0.01,
+        "Production Engineer": 0.01,
+        "Civil Engineer": 0.01,
+        "Structural Engineer": 0.01,
+        "Data Analyst": 0.02
+      },
+      "offBranchPenalty": 0.52
+    },
+    "IT": {
+      "label": "Information Technology (IT)",
+      "primaryCareers": [
+        "Software Engineer",
+        "Data Scientist",
+        "AI Engineer",
+        "Web Developer",
+        "Cloud Engineer",
+        "Cybersecurity Engineer",
+        "Data Analyst"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.2,
+        "Data Scientist": 0.12,
+        "AI Engineer": 0.12,
+        "Web Developer": 0.16,
+        "Cloud Engineer": 0.12,
+        "Cybersecurity Engineer": 0.1,
+        "Embedded Systems Engineer": 0.02,
+        "IoT Engineer": 0.03,
+        "VLSI Engineer": 0.02,
+        "Electrical Engineer": 0.02,
+        "Power Systems Engineer": 0.02,
+        "Mechanical Design Engineer": 0.01,
+        "Production Engineer": 0.01,
+        "Civil Engineer": 0.01,
+        "Structural Engineer": 0.01,
+        "Data Analyst": 0.03
+      },
+      "offBranchPenalty": 0.52
+    },
+    "ECE": {
+      "label": "Electronics & Communication (ECE)",
+      "primaryCareers": [
+        "Embedded Systems Engineer",
+        "IoT Engineer",
+        "VLSI Engineer",
+        "Electrical Engineer",
+        "Software Engineer",
+        "Data Analyst"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.08,
+        "Data Scientist": 0.04,
+        "AI Engineer": 0.06,
+        "Web Developer": 0.04,
+        "Cloud Engineer": 0.04,
+        "Cybersecurity Engineer": 0.03,
+        "Embedded Systems Engineer": 0.22,
+        "IoT Engineer": 0.18,
+        "VLSI Engineer": 0.16,
+        "Electrical Engineer": 0.08,
+        "Power Systems Engineer": 0.04,
+        "Mechanical Design Engineer": 0.01,
+        "Production Engineer": 0.02,
+        "Civil Engineer": 0.0,
+        "Structural Engineer": 0.0,
+        "Data Analyst": 0.02
+      },
+      "offBranchPenalty": 0.5
+    },
+    "EE": {
+      "label": "Electrical Engineering (EE)",
+      "primaryCareers": [
+        "Electrical Engineer",
+        "Power Systems Engineer",
+        "Embedded Systems Engineer",
+        "IoT Engineer",
+        "Data Analyst"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.05,
+        "Data Scientist": 0.03,
+        "AI Engineer": 0.03,
+        "Web Developer": 0.02,
+        "Cloud Engineer": 0.04,
+        "Cybersecurity Engineer": 0.02,
+        "Embedded Systems Engineer": 0.1,
+        "IoT Engineer": 0.08,
+        "VLSI Engineer": 0.06,
+        "Electrical Engineer": 0.28,
+        "Power Systems Engineer": 0.22,
+        "Mechanical Design Engineer": 0.02,
+        "Production Engineer": 0.04,
+        "Civil Engineer": 0.01,
+        "Structural Engineer": 0.01,
+        "Data Analyst": 0.03
+      },
+      "offBranchPenalty": 0.5
+    },
+    "ME": {
+      "label": "Mechanical Engineering (ME)",
+      "primaryCareers": [
+        "Mechanical Design Engineer",
+        "Production Engineer",
+        "Data Analyst"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.06,
+        "Data Scientist": 0.03,
+        "AI Engineer": 0.04,
+        "Web Developer": 0.02,
+        "Cloud Engineer": 0.02,
+        "Cybersecurity Engineer": 0.02,
+        "Embedded Systems Engineer": 0.04,
+        "IoT Engineer": 0.05,
+        "VLSI Engineer": 0.02,
+        "Electrical Engineer": 0.05,
+        "Power Systems Engineer": 0.04,
+        "Mechanical Design Engineer": 0.28,
+        "Production Engineer": 0.22,
+        "Civil Engineer": 0.03,
+        "Structural Engineer": 0.04,
+        "Data Analyst": 0.04
+      },
+      "offBranchPenalty": 0.48
+    },
+    "CE": {
+      "label": "Civil Engineering (CE)",
+      "primaryCareers": [
+        "Civil Engineer",
+        "Structural Engineer",
+        "Data Analyst"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.04,
+        "Data Scientist": 0.03,
+        "AI Engineer": 0.03,
+        "Web Developer": 0.02,
+        "Cloud Engineer": 0.03,
+        "Cybersecurity Engineer": 0.02,
+        "Embedded Systems Engineer": 0.02,
+        "IoT Engineer": 0.02,
+        "VLSI Engineer": 0.01,
+        "Electrical Engineer": 0.04,
+        "Power Systems Engineer": 0.03,
+        "Mechanical Design Engineer": 0.05,
+        "Production Engineer": 0.04,
+        "Civil Engineer": 0.32,
+        "Structural Engineer": 0.26,
+        "Data Analyst": 0.04
+      },
+      "offBranchPenalty": 0.48
+    },
+    "CHE": {
+      "label": "Chemical Engineering",
+      "primaryCareers": [
+        "Production Engineer",
+        "Mechanical Design Engineer",
+        "Data Analyst",
+        "Software Engineer"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.08,
+        "Data Scientist": 0.08,
+        "AI Engineer": 0.06,
+        "Web Developer": 0.04,
+        "Cloud Engineer": 0.04,
+        "Cybersecurity Engineer": 0.02,
+        "Embedded Systems Engineer": 0.04,
+        "IoT Engineer": 0.04,
+        "VLSI Engineer": 0.02,
+        "Electrical Engineer": 0.05,
+        "Power Systems Engineer": 0.04,
+        "Mechanical Design Engineer": 0.12,
+        "Production Engineer": 0.18,
+        "Civil Engineer": 0.03,
+        "Structural Engineer": 0.03,
+        "Data Analyst": 0.13
+      },
+      "offBranchPenalty": 0.52
+    },
+    "BT": {
+      "label": "Biotechnology",
+      "primaryCareers": [
+        "Data Scientist",
+        "AI Engineer",
+        "Data Analyst",
+        "Software Engineer"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.1,
+        "Data Scientist": 0.2,
+        "AI Engineer": 0.16,
+        "Web Developer": 0.05,
+        "Cloud Engineer": 0.04,
+        "Cybersecurity Engineer": 0.02,
+        "Embedded Systems Engineer": 0.03,
+        "IoT Engineer": 0.03,
+        "VLSI Engineer": 0.02,
+        "Electrical Engineer": 0.03,
+        "Power Systems Engineer": 0.02,
+        "Mechanical Design Engineer": 0.04,
+        "Production Engineer": 0.04,
+        "Civil Engineer": 0.02,
+        "Structural Engineer": 0.02,
+        "Data Analyst": 0.18
+      },
+      "offBranchPenalty": 0.52
+    },
+    "AE": {
+      "label": "Aerospace Engineering",
+      "primaryCareers": [
+        "Mechanical Design Engineer",
+        "Production Engineer",
+        "Software Engineer",
+        "Data Analyst"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.12,
+        "Data Scientist": 0.06,
+        "AI Engineer": 0.06,
+        "Web Developer": 0.04,
+        "Cloud Engineer": 0.04,
+        "Cybersecurity Engineer": 0.02,
+        "Embedded Systems Engineer": 0.08,
+        "IoT Engineer": 0.05,
+        "VLSI Engineer": 0.04,
+        "Electrical Engineer": 0.08,
+        "Power Systems Engineer": 0.05,
+        "Mechanical Design Engineer": 0.14,
+        "Production Engineer": 0.1,
+        "Civil Engineer": 0.03,
+        "Structural Engineer": 0.04,
+        "Data Analyst": 0.07
+      },
+      "offBranchPenalty": 0.5
+    },
+    "MTR": {
+      "label": "Mechatronics",
+      "primaryCareers": [
+        "Embedded Systems Engineer",
+        "IoT Engineer",
+        "Production Engineer",
+        "Software Engineer"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.12,
+        "Data Scientist": 0.05,
+        "AI Engineer": 0.06,
+        "Web Developer": 0.05,
+        "Cloud Engineer": 0.05,
+        "Cybersecurity Engineer": 0.03,
+        "Embedded Systems Engineer": 0.18,
+        "IoT Engineer": 0.14,
+        "VLSI Engineer": 0.06,
+        "Electrical Engineer": 0.08,
+        "Power Systems Engineer": 0.04,
+        "Mechanical Design Engineer": 0.08,
+        "Production Engineer": 0.1,
+        "Civil Engineer": 0.02,
+        "Structural Engineer": 0.02,
+        "Data Analyst": 0.04
+      },
+      "offBranchPenalty": 0.5
+    },
+    "OTHER": {
+      "label": "Other",
+      "primaryCareers": [
+        "Software Engineer",
+        "Data Scientist",
+        "Web Developer",
+        "Data Analyst",
+        "Cloud Engineer"
+      ],
+      "branchPrior": {
+        "Software Engineer": 0.18,
+        "Data Scientist": 0.12,
+        "AI Engineer": 0.1,
+        "Web Developer": 0.12,
+        "Cloud Engineer": 0.1,
+        "Cybersecurity Engineer": 0.06,
+        "Embedded Systems Engineer": 0.04,
+        "IoT Engineer": 0.04,
+        "VLSI Engineer": 0.03,
+        "Electrical Engineer": 0.04,
+        "Power Systems Engineer": 0.03,
+        "Mechanical Design Engineer": 0.03,
+        "Production Engineer": 0.03,
+        "Civil Engineer": 0.03,
+        "Structural Engineer": 0.03,
+        "Data Analyst": 0.06
+      },
+      "offBranchPenalty": 0.58
+    }
+  },
+  "skillDirectCareer": {
+    "Embedded Systems": {
+      "Embedded Systems Engineer": 0.42,
+      "IoT Engineer": 0.18,
+      "VLSI Engineer": 0.12,
+      "Electrical Engineer": 0.1,
+      "Software Engineer": 0.1,
+      "Data Analyst": 0.08
+    },
+    "VLSI Design": {
+      "VLSI Engineer": 0.45,
+      "Embedded Systems Engineer": 0.2,
+      "Electrical Engineer": 0.15,
+      "IoT Engineer": 0.1,
+      "Software Engineer": 0.1
+    },
+    "Signal Processing": {
+      "Data Scientist": 0.15,
+      "Embedded Systems Engineer": 0.2,
+      "Electrical Engineer": 0.2,
+      "IoT Engineer": 0.15,
+      "AI Engineer": 0.15,
+      "Data Analyst": 0.15
+    },
+    "IoT Protocols": {
+      "IoT Engineer": 0.4,
+      "Embedded Systems Engineer": 0.25,
+      "Cloud Engineer": 0.12,
+      "Electrical Engineer": 0.1,
+      "Software Engineer": 0.13
+    },
+    "Power Systems": {
+      "Power Systems Engineer": 0.45,
+      "Electrical Engineer": 0.3,
+      "Embedded Systems Engineer": 0.12,
+      "Production Engineer": 0.13
+    },
+    "Circuit Design": {
+      "Electrical Engineer": 0.35,
+      "Embedded Systems Engineer": 0.2,
+      "VLSI Engineer": 0.2,
+      "Power Systems Engineer": 0.15,
+      "IoT Engineer": 0.1
+    },
+    "MATLAB": {
+      "Data Analyst": 0.2,
+      "Electrical Engineer": 0.2,
+      "Mechanical Design Engineer": 0.18,
+      "Data Scientist": 0.15,
+      "AI Engineer": 0.12,
+      "Embedded Systems Engineer": 0.15
+    },
+    "CAD / SolidWorks": {
+      "Mechanical Design Engineer": 0.45,
+      "Production Engineer": 0.25,
+      "Civil Engineer": 0.15,
+      "Structural Engineer": 0.15
+    },
+    "Thermodynamics": {
+      "Mechanical Design Engineer": 0.35,
+      "Production Engineer": 0.35,
+      "Data Analyst": 0.15,
+      "Electrical Engineer": 0.15
+    },
+    "Manufacturing Processes": {
+      "Production Engineer": 0.45,
+      "Mechanical Design Engineer": 0.35,
+      "Data Analyst": 0.2
+    },
+    "AutoCAD": {
+      "Civil Engineer": 0.35,
+      "Structural Engineer": 0.35,
+      "Mechanical Design Engineer": 0.2,
+      "Data Analyst": 0.1
+    },
+    "Structural Analysis": {
+      "Structural Engineer": 0.45,
+      "Civil Engineer": 0.35,
+      "Mechanical Design Engineer": 0.2
+    },
+    "Surveying": {
+      "Civil Engineer": 0.5,
+      "Structural Engineer": 0.25,
+      "Data Analyst": 0.25
+    }
+  },
+  "crossBranchRules": [
+    {
+      "branch": "ME",
+      "skillsAny": ["Python", "Java", "JavaScript", "C++", "Machine Learning", "Statistics", "MySQL"],
+      "boostCareers": ["Data Analyst", "Software Engineer", "AI Engineer"],
+      "boostFactor": 1.38
+    },
+    {
+      "branch": "CE",
+      "skillsAny": ["Python", "Java", "JavaScript", "MySQL", "PostgreSQL", "Machine Learning", "Statistics"],
+      "boostCareers": ["Data Analyst", "Software Engineer"],
+      "boostFactor": 1.32
+    },
+    {
+      "branch": "ECE",
+      "skillsAny": ["React.js", "Node.js", "JavaScript", "HTML", "Next.js", "Express.js"],
+      "boostCareers": ["Web Developer", "Software Engineer", "Cloud Engineer"],
+      "boostFactor": 1.28
+    },
+    {
+      "branch": "EE",
+      "skillsAny": ["Python", "Machine Learning", "Data Analysis"],
+      "boostCareers": ["Data Scientist", "Data Analyst", "AI Engineer"],
+      "boostFactor": 1.25
+    }
+  ]
+}

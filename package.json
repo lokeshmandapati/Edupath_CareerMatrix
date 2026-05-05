@@ -1,0 +1,17 @@
+{
+  "name": "careermatrix",
+  "private": true,
+  "version": "1.0.0",
+  "description": "CareerMatrix — run backend + frontend with one command",
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n backend,frontend -c cyan,magenta \"node scripts/start-backend.cjs\" \"npm run dev --workspace frontend\"",
+    "start": "npm run dev",
+    "generate:cfpa": "node scripts/generate-cfpa-mappings.cjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

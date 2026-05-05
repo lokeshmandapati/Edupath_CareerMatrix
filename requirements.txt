@@ -1,0 +1,36 @@
+# CareerMatrix — dependency and runtime reference
+# ---------------------------------------------------------------------------
+# This project is NOT Python-based. Do not use pip install -r with this file.
+# Source of truth for libraries:
+#   • Backend (Java):      backend/pom.xml
+#   • Frontend (Node):     frontend/package.json
+#   • Dev launcher (Node): package.json (root; concurrently)
+# ---------------------------------------------------------------------------
+
+# --- Minimum runtime / tooling (install separately) ---
+# JDK 17 or newer (JDK 21+ recommended)
+# Apache Maven 3.8+ (optional: use backend/tools/apache-maven-3.9.6 if bundled)
+# Node.js 18+ and npm
+# MySQL 8+ (optional for local dev; H2 in-memory profile available)
+
+# --- Optional ---
+# Docker Desktop — for docker-compose MySQL (see README / docker-compose)
+# OpenAI API key — optional; set app.openai.api-key in application.properties
+#   or environment variable APP_OPENAI_API_KEY for AI chat / dynamic roadmaps
+
+# --- CareerFit (CFPA) mapping data ---
+# Legacy skill/interest → five-domain weights:
+#   backend/src/main/resources/cfpa-mappings.json
+# Labels must align with frontend/src/data/assessmentOptions.js.
+# Regenerate after editing the generator or labels:
+#   npm run generate:cfpa
+# (runs scripts/generate-cfpa-mappings.cjs from the repository root)
+
+# Branch-aware CFPA projection + branch priors + skill-direct overlays + cross-branch rules:
+#   backend/src/main/resources/branch-career-config.json
+
+# Branch metadata, 50+ careers by branch, chat hints, and rich roadmaps (tools/projects/resources):
+#   backend/src/main/resources/BranchCareerMapping.json
+
+# --- Database note ---
+# Hibernate ddl-auto=update creates/updates tables on startup (e.g. users.branch, user_inputs.branch).

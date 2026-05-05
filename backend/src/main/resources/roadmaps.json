@@ -1,0 +1,132 @@
+{
+  "Software Engineering": [
+    {
+      "step": "Step 1: Programming foundations (Beginner)",
+      "details": "Learn core programming in one language (Java or Python): variables, control flow, OOP, collections, and debugging. Tools: IDE (IntelliJ/VS Code), Git basics. Project: CLI tool or small automation script. Timeline: 4–8 weeks."
+    },
+    {
+      "step": "Step 2: Data structures & algorithms",
+      "details": "Study arrays, lists, maps, trees, graphs, sorting, searching, Big-O. Practice on LeetCode/HackerRank at easy→medium. Skills: problem decomposition, complexity reasoning. Timeline: 8–12 weeks alongside projects."
+    },
+    {
+      "step": "Step 3: Software craft",
+      "details": "Write tests (unit/integration), refactor safely, meaningful naming, code review mindset. Tools: JUnit/pytest, build tools (Maven/Gradle). Project: library with tests and CI on GitHub Actions."
+    },
+    {
+      "step": "Step 4: APIs & persistence",
+      "details": "REST principles, HTTP, JSON, validation, errors. Databases: SQL (PostgreSQL/MySQL), migrations, indexes. Project: CRUD service with auth-ready structure. Timeline: Intermediate phase."
+    },
+    {
+      "step": "Step 5: System design basics (Advanced foundation)",
+      "details": "Scalability concepts: caching, load balancing, queues, idempotency, observability. Read high-level designs of products you use. Discuss trade-offs (consistency vs availability) in writing."
+    },
+    {
+      "step": "Step 6: Specialize & ship",
+      "details": "Pick a track (backend, mobile, systems) and build a portfolio piece: production-minded repo, README, diagrams. Contribute to open source or internships. Timeline: ongoing Advanced growth."
+    }
+  ],
+  "Data Science": [
+    {
+      "step": "Step 1: Python & tools (Beginner)",
+      "details": "Python syntax, virtual environments, Jupyter. Libraries: NumPy, pandas. Git for notebooks. Project: clean and analyze a public CSV (Kaggle). Timeline: 4–6 weeks."
+    },
+    {
+      "step": "Step 2: Statistics & probability",
+      "details": "Distributions, hypothesis testing, confidence intervals, regression intuition. Resources: Khan/Stats courses, Think Stats. Skills: translate business questions into statistical tasks."
+    },
+    {
+      "step": "Step 3: SQL & data wrangling",
+      "details": "SQL joins, aggregations, window functions. Extract data from warehouses; document assumptions. Tools: PostgreSQL/SQLite, dbt optional. Project: analytical SQL + pandas pipeline."
+    },
+    {
+      "step": "Step 4: Machine learning",
+      "details": "scikit-learn: preprocessing, pipelines, cross-validation, metrics (precision/recall, RMSE). Move to supervised models first; then intro to deep learning if needed. Timeline: Intermediate."
+    },
+    {
+      "step": "Step 5: Visualization & communication",
+      "details": "matplotlib/seaborn/plotly; storytelling with charts. Summarize for non-technical stakeholders. Project: notebook with clear narrative + reproducible steps."
+    },
+    {
+      "step": "Step 6: MLOps awareness & portfolio (Advanced)",
+      "details": "Model packaging, basic deployment (FastAPI + Docker), monitoring drift. Kaggle competitions or end-to-end projects with README. Timeline: 3–6+ months to strong portfolio."
+    }
+  ],
+  "Cybersecurity": [
+    {
+      "step": "Step 1: Core IT & networking (Beginner)",
+      "details": "OS fundamentals (Linux), TCP/IP, DNS, HTTP/S, firewalls. Set up a home lab (VMs). Tools: Wireshark basics. Timeline: 6–8 weeks."
+    },
+    {
+      "step": "Step 2: Security foundations",
+      "details": "CIA triad, threat modeling, IAM, cryptography concepts, OWASP Top 10. Skills: read CVE summaries responsibly; understand patching and hardening."
+    },
+    {
+      "step": "Step 3: Hands-on practice (ethical only)",
+      "details": "TryHackMe, HackTheBox (guided paths). Labs: DVWA, WebGoat on isolated VMs. Never test systems without authorization."
+    },
+    {
+      "step": "Step 4: Choose a track",
+      "details": "Blue team (SOC, SIEM, detection), GRC, appsec, or pentest. Align certs: Security+, CySA+, OSCP path later. Timeline: Intermediate."
+    },
+    {
+      "step": "Step 5: Scripting & automation",
+      "details": "Python/Bash for parsing logs, automating checks. Tools: Ansible basics, cloud security concepts (IAM policies)."
+    },
+    {
+      "step": "Step 6: Advanced & employability",
+      "details": "Build write-ups (CTF-style), contribute to security tooling, internships. Stay ethical and document learning publicly (blog/GitHub) with redacted details."
+    }
+  ],
+  "Full Stack Development": [
+    {
+      "step": "Step 1: Web foundations (Beginner)",
+      "details": "HTML5, CSS (layout, flex/grid), responsive design, accessibility basics. JavaScript: DOM, fetch, async/await. Project: static + small interactive page. Timeline: 4–8 weeks."
+    },
+    {
+      "step": "Step 2: Frontend framework",
+      "details": "React (or Vue): components, state, routing, forms. Tools: Vite, ESLint. Project: SPA consuming a public API."
+    },
+    {
+      "step": "Step 3: Backend & APIs",
+      "details": "REST, validation, auth concepts (JWT/sessions), error handling. Stack: Node/Express or Spring Boot. Project: secure CRUD API with tests."
+    },
+    {
+      "step": "Step 4: Databases & ORM",
+      "details": "Relational design, migrations, indexes. Use Prisma/Hibernate/JPA. Timeline: Intermediate full-stack apps."
+    },
+    {
+      "step": "Step 5: DevOps lite",
+      "details": "Docker, environment config, CI pipeline, deploy to a PaaS. Observability: structured logs, health checks."
+    },
+    {
+      "step": "Step 6: Capstone (Advanced)",
+      "details": "End-to-end product: auth, roles, payments optional, README, demo video. Performance and security review pass."
+    }
+  ],
+  "Cloud Computing": [
+    {
+      "step": "Step 1: Pick a cloud & core services (Beginner)",
+      "details": "AWS, Azure, or GCP: IAM, VPC/VNet, compute (EC2/VM), object storage, managed DB overview. Free tier labs. Timeline: 6–10 weeks."
+    },
+    {
+      "step": "Step 2: Infrastructure as Code",
+      "details": "Terraform or Bicep/CloudFormation: modules, state, workspaces. Project: provision network + app stack reproducibly."
+    },
+    {
+      "step": "Step 3: Containers & orchestration",
+      "details": "Docker images, multi-stage builds, registries. Kubernetes basics: pods, services, deployments. Tools: kubectl, minikube/kind."
+    },
+    {
+      "step": "Step 4: CI/CD & GitOps",
+      "details": "Pipelines (GitHub Actions/GitLab), deploy to cloud, secrets management (vault/parameter store). Intermediate reliability practices."
+    },
+    {
+      "step": "Step 5: Observability & cost",
+      "details": "Metrics, logs, traces; alerting. Cost optimization: rightsizing, reserved capacity, tagging. Skills: SLO thinking."
+    },
+    {
+      "step": "Step 6: Advanced patterns",
+      "details": "Multi-region, disaster recovery basics, zero-downtime deploys, security in cloud (least privilege, KMS). Certifications: AWS SAA/Azure AZ-104 path as you grow."
+    }
+  ]
+}

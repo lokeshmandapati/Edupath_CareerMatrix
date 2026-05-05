@@ -1,0 +1,412 @@
+{
+  "branches": [
+    {
+      "code": "CSE",
+      "label": "Computer Science (CSE)",
+      "chatHints": {
+        "tools": ["VS Code", "Git", "Docker", "Linux terminal", "Postman"],
+        "technologies": ["Python", "Java", "C++", "DSA", "OS", "DBMS", "Web stack", "ML basics"],
+        "careers": ["Software Engineer", "Backend Developer", "ML Engineer", "AI Engineer", "Full Stack Developer"]
+      }
+    },
+    {
+      "code": "IT",
+      "label": "Information Technology (IT)",
+      "chatHints": {
+        "tools": ["Windows Server", "VMware", "Wireshark", "SQL clients", "Cloud consoles"],
+        "technologies": ["Networking", "Databases", "Web apps", "Cloud", "Security basics", "ITIL"],
+        "careers": ["Cloud Engineer", "DevOps Engineer", "Full Stack Developer", "Cybersecurity Analyst"]
+      }
+    },
+    {
+      "code": "ECE",
+      "label": "Electronics & Communication (ECE)",
+      "chatHints": {
+        "tools": ["MATLAB", "Multisim", "Keil", "Oscilloscope concepts", "FPGA tools"],
+        "technologies": ["Embedded C", "PCB basics", "Signals & systems", "IoT", "VLSI intro"],
+        "careers": ["Embedded Systems Engineer", "IoT Engineer", "VLSI Engineer", "Signal Processing Engineer", "Robotics Engineer"]
+      }
+    },
+    {
+      "code": "EE",
+      "label": "Electrical Engineering (EE)",
+      "chatHints": {
+        "tools": ["MATLAB/Simulink", "ETAP", "AutoCAD Electrical", "PLC environments"],
+        "technologies": ["Power systems", "Machines", "Control theory", "Protection relays", "Smart grids"],
+        "careers": ["Electrical Engineer", "Power Systems Engineer", "Control Systems Engineer"]
+      }
+    },
+    {
+      "code": "ME",
+      "label": "Mechanical Engineering (ME)",
+      "chatHints": {
+        "tools": ["SolidWorks", "AutoCAD", "ANSYS", "MATLAB", "CAM basics"],
+        "technologies": ["Thermodynamics", "Manufacturing", "Design", "Materials", "CAD"],
+        "careers": ["Mechanical Design Engineer", "Production Engineer", "Thermal Engineer", "Automotive Engineer", "Robotics Engineer"]
+      }
+    },
+    {
+      "code": "CE",
+      "label": "Civil Engineering (CE)",
+      "chatHints": {
+        "tools": ["AutoCAD", "STAAD.Pro", "ETABS", "Revit", "GIS basics"],
+        "technologies": ["Structural analysis", "Surveying", "Concrete tech", "Transportation", "Geotech"],
+        "careers": ["Civil Engineer", "Structural Engineer", "Site Engineer", "Transportation Engineer"]
+      }
+    },
+    {
+      "code": "CHE",
+      "label": "Chemical Engineering",
+      "chatHints": {
+        "tools": ["Aspen Plus", "MATLAB", "ChemCAD", "HYSYS basics"],
+        "technologies": ["Mass & energy balance", "Reaction engineering", "Unit operations", "Process safety"],
+        "careers": ["Process Engineer", "Petrochemical Engineer", "Plant Engineer"]
+      }
+    },
+    {
+      "code": "BT",
+      "label": "Biotechnology",
+      "chatHints": {
+        "tools": ["Python/R", "Bioconductor", "BLAST", "PyMOL basics", "Lab data tools"],
+        "technologies": ["Genetics", "Cell culture", "Bioinformatics", "Bioprocess", "Quality systems"],
+        "careers": ["Bioinformatics Scientist", "Research Scientist", "Bioprocess Engineer"]
+      }
+    },
+    {
+      "code": "AE",
+      "label": "Aerospace Engineering",
+      "chatHints": {
+        "tools": ["MATLAB", "CATIA/NX", "ANSYS", "STK basics"],
+        "technologies": ["Aerodynamics", "Propulsion", "Structures", "Orbital mechanics", "Avionics intro"],
+        "careers": ["Aerospace Engineer", "Flight Systems Engineer", "Structures Analyst"]
+      }
+    },
+    {
+      "code": "MTR",
+      "label": "Mechatronics",
+      "chatHints": {
+        "tools": ["Arduino/Raspberry Pi", "MATLAB", "SolidWorks", "PLC (Siemens/Allen-Bradley)"],
+        "technologies": ["Sensors", "Actuators", "Control", "Embedded", "Robotics integration"],
+        "careers": ["Automation Engineer", "Robotics Engineer", "Embedded Systems Engineer"]
+      }
+    },
+    {
+      "code": "OTHER",
+      "label": "Other",
+      "chatHints": {
+        "tools": ["Git", "Office suite", "Domain-specific CAD/IDE"],
+        "technologies": ["Communication skills", "Project management", "Domain fundamentals"],
+        "careers": ["Cross-functional roles", "Analyst", "Consulting"]
+      }
+    }
+  ],
+  "careersByBranch": {
+    "CSE": [
+      "Software Engineer",
+      "Full Stack Developer",
+      "Backend Developer",
+      "Frontend Developer",
+      "Data Scientist",
+      "Machine Learning Engineer",
+      "AI Engineer",
+      "DevOps Engineer",
+      "Cloud Engineer",
+      "Cybersecurity Analyst",
+      "Blockchain Developer",
+      "Game Developer",
+      "Data Engineer",
+      "Site Reliability Engineer",
+      "Mobile Engineer"
+    ],
+    "IT": [
+      "Software Engineer",
+      "Full Stack Developer",
+      "Cloud Engineer",
+      "DevOps Engineer",
+      "Cybersecurity Analyst",
+      "Database Administrator",
+      "Network Engineer",
+      "Backend Developer",
+      "Frontend Developer",
+      "Data Analyst"
+    ],
+    "ECE": [
+      "Embedded Systems Engineer",
+      "IoT Engineer",
+      "VLSI Engineer",
+      "Signal Processing Engineer",
+      "Robotics Engineer",
+      "Hardware Engineer",
+      "Firmware Engineer",
+      "Electrical Engineer"
+    ],
+    "EE": [
+      "Electrical Engineer",
+      "Power Systems Engineer",
+      "Control Systems Engineer",
+      "Embedded Systems Engineer",
+      "Automation Engineer"
+    ],
+    "ME": [
+      "Mechanical Design Engineer",
+      "Production Engineer",
+      "Thermal Engineer",
+      "Automotive Engineer",
+      "Robotics Engineer",
+      "Quality Engineer",
+      "CAD Engineer"
+    ],
+    "CE": [
+      "Civil Engineer",
+      "Structural Engineer",
+      "Site Engineer",
+      "Transportation Engineer",
+      "Geotechnical Engineer",
+      "Project Engineer"
+    ],
+    "CHE": ["Process Engineer", "Petrochemical Engineer", "Plant Engineer", "R&D Engineer"],
+    "BT": ["Bioinformatics Scientist", "Research Scientist", "Clinical Research Associate", "Bioprocess Engineer"],
+    "AE": ["Aerospace Engineer", "Flight Systems Engineer", "Structures Engineer", "Propulsion Engineer"],
+    "MTR": ["Automation Engineer", "Robotics Engineer", "Embedded Systems Engineer", "Control Engineer"],
+    "OTHER": ["Software Engineer", "Data Analyst", "Product Manager (Tech)", "Consultant"]
+  },
+  "richRoadmaps": {
+    "data scientist|CSE": [
+      {
+        "step": "Step 1: Python & analytical foundations",
+        "details": "Master Python, NumPy, pandas, and SQL. Learn descriptive stats and visualization (matplotlib/plotly).",
+        "tools": ["Python", "Jupyter", "pandas", "PostgreSQL"],
+        "projects": ["EDA on Kaggle dataset", "SQL + pandas pipeline"],
+        "resources": ["pandas docs", "Kaggle Learn", "SQLBolt"]
+      },
+      {
+        "step": "Step 2: Statistics & ML core",
+        "details": "Probability, hypothesis testing, regression, cross-validation, metrics.",
+        "tools": ["scikit-learn", "statsmodels"],
+        "projects": ["End-to-end supervised learning project with README"],
+        "resources": ["ISLR book", "scikit-learn user guide"]
+      },
+      {
+        "step": "Step 3: Feature engineering & deployment awareness",
+        "details": "Pipelines, leakage, imbalanced data; intro to model packaging (FastAPI) and basic MLOps.",
+        "tools": ["Docker", "FastAPI"],
+        "projects": ["Batch scoring API with tests"],
+        "resources": ["Made With ML (MLOps basics)"]
+      }
+    ],
+    "mechanical design engineer|ME": [
+      {
+        "step": "Step 1: Engineering drawing & design intent",
+        "details": "Read and create orthographic views, tolerances, GD&T basics.",
+        "tools": ["AutoCAD", "drawing standards"],
+        "projects": ["Reverse-engineer a simple assembly drawing"],
+        "resources": ["Textbook: Engineering Drawing", "YouTube: GD&T intro"]
+      },
+      {
+        "step": "Step 2: CAD proficiency",
+        "details": "3D modeling, assemblies, mates/constraints, drawings from models.",
+        "tools": ["SolidWorks", "Fusion 360"],
+        "projects": ["Gearbox housing or bracket design with drawings"],
+        "resources": ["SolidWorks official tutorials"]
+      },
+      {
+        "step": "Step 3: Simulation & materials",
+        "details": "Static/thermal concepts; choose materials; basic FEA workflow.",
+        "tools": ["ANSYS", "SolidWorks Simulation"],
+        "projects": ["FEA on a cantilever bracket—compare with hand calcs"],
+        "resources": ["FEA primers on YouTube"]
+      },
+      {
+        "step": "Step 4: Design portfolio",
+        "details": "Document projects with assumptions, sketches, and design decisions for interviews.",
+        "tools": ["PDF portfolio", "GitHub for scripts if any"],
+        "projects": ["Capstone mechanical design project"],
+        "resources": ["ASME design guides"]
+      }
+    ],
+    "software engineer|CSE": [
+      {
+        "step": "Step 1: Core programming & DSA",
+        "details": "Pick Java, Python, or C++; master syntax, OOP, and problem-solving patterns.",
+        "tools": ["VS Code", "Git"],
+        "projects": ["CLI tools", "small libraries"],
+        "resources": ["LeetCode/HackerRank", "CP handbook"]
+      },
+      {
+        "step": "Step 2: Software engineering practices",
+        "details": "Testing, CI, code review, clean code, debugging.",
+        "tools": ["GitHub Actions", "JUnit/pytest"],
+        "projects": ["Open-source contribution or team project"],
+        "resources": ["Clean Code", "Google SRE book (intro)"]
+      },
+      {
+        "step": "Step 3: Systems & delivery",
+        "details": "APIs, databases, basic system design, observability.",
+        "tools": ["PostgreSQL", "Docker"],
+        "projects": ["CRUD service with auth-ready structure"],
+        "resources": ["Designing Data-Intensive Applications (intro chapters)"]
+      }
+    ],
+    "embedded systems engineer|ECE": [
+      {
+        "step": "Step 1: C & microcontrollers",
+        "details": "Pointers, peripherals, timers, interrupts; bare-metal basics.",
+        "tools": ["STM32/Arduino", "Keil/STM32CubeIDE"],
+        "projects": ["PWM LED", "UART sensor read"],
+        "resources": ["MCU datasheet walkthroughs"]
+      },
+      {
+        "step": "Step 2: RTOS & drivers",
+        "details": "Tasks, mutexes, queues; simple driver patterns.",
+        "tools": ["FreeRTOS"],
+        "projects": ["Sensor fusion task on RTOS"],
+        "resources": ["FreeRTOS docs"]
+      },
+      {
+        "step": "Step 3: Debugging & integration",
+        "details": "Logic analyzer, oscilloscope usage, protocol debugging (I2C/SPI).",
+        "tools": ["Saleae/logic analyzer", "DMM"],
+        "projects": ["End-to-end firmware module with tests"],
+        "resources": ["Embedded.fm podcast", "vendor app notes"]
+      }
+    ],
+    "cloud engineer|IT": [
+      {
+        "step": "Step 1: Cloud fundamentals",
+        "details": "IAM, VPC/VNet, compute, storage, billing guardrails.",
+        "tools": ["AWS/Azure/GCP console"],
+        "projects": ["Deploy static site + HTTPS"],
+        "resources": ["Cloud provider well-architected labs"]
+      },
+      {
+        "step": "Step 2: IaC & containers",
+        "details": "Terraform or Bicep; Docker images; basic K8s concepts.",
+        "tools": ["Terraform", "Docker"],
+        "projects": ["IaC repo for small 3-tier app"],
+        "resources": ["Terraform tutorials", "Play with Docker"]
+      },
+      {
+        "step": "Step 3: CI/CD & reliability",
+        "details": "Pipelines, secrets, rollback, observability basics.",
+        "tools": ["GitHub Actions", "CloudWatch/monitoring"],
+        "projects": ["Blue/green or canary demo"],
+        "resources": ["Google SRE workbook chapters"]
+      }
+    ],
+    "civil engineer|CE": [
+      {
+        "step": "Step 1: Surveying & codes",
+        "details": "Measurements, leveling, local building codes awareness.",
+        "tools": ["AutoCAD", "Total station concepts"],
+        "projects": ["Site layout mini-project"],
+        "resources": ["IRC/NBC overview for your region"]
+      },
+      {
+        "step": "Step 2: Structural basics",
+        "details": "Loads, beams, concrete/steel intro.",
+        "tools": ["STAAD/ETABS basics"],
+        "projects": ["Simple beam/frame model"],
+        "resources": ["Structural analysis textbooks"]
+      },
+      {
+        "step": "Step 3: Site & project execution",
+        "details": "Contracts, safety, quality checks, coordination.",
+        "tools": ["MS Project/Primavera intro"],
+        "projects": ["Case study of a small construction schedule"],
+        "resources": ["PMI construction basics"]
+      }
+    ],
+    "process engineer|CHE": [
+      {
+        "step": "Step 1: Material & energy balances",
+        "details": "Steady-state balances, unit conversions, process diagrams.",
+        "tools": ["Excel/MATLAB", "Aspen intro"],
+        "projects": ["Simulate a simple reactor/mixer"],
+        "resources": ["Felder & Rousseau"]
+      },
+      {
+        "step": "Step 2: Unit operations & safety",
+        "details": "Heat exchangers, distillation, pumps; HAZOP awareness.",
+        "tools": ["P&ID reading", "Aspen Plus tutorials"],
+        "projects": ["Design a distillation column sketch problem"],
+        "resources": ["Crowl & Louvar (process safety)"]
+      },
+      {
+        "step": "Step 3: Plant scale-up",
+        "details": "Pilot to production considerations, instrumentation, optimization.",
+        "tools": ["DCS concepts", "SPC basics"],
+        "projects": ["Throughput improvement case write-up"],
+        "resources": ["Industry webinars", "AIChE resources"]
+      }
+    ],
+    "bioinformatics scientist|BT": [
+      {
+        "step": "Step 1: Programming & stats",
+        "details": "Python/R, biostatistics, reproducible notebooks.",
+        "tools": ["Bioconductor", "pandas", "R tidyverse"],
+        "projects": ["RNA-seq or variant calling tutorial dataset"],
+        "resources": ["Biostar Handbook"]
+      },
+      {
+        "step": "Step 2: Genomics pipelines",
+        "details": "FASTQ QC, alignment, variant annotation basics.",
+        "tools": ["BWA", "GATK intro", "IGV"],
+        "projects": ["Reproduce a small NGS pipeline step"],
+        "resources": ["Broad Institute GATK docs"]
+      },
+      {
+        "step": "Step 3: Communication & domain depth",
+        "details": "Publishable figures, methods sections, collaboration with wet lab.",
+        "tools": ["LaTeX/Markdown", "Git"],
+        "projects": ["Mini publication-style report"],
+        "resources": ["Coursera genomics specializations"]
+      }
+    ],
+    "aerospace engineer|AE": [
+      {
+        "step": "Step 1: Core math & physics",
+        "details": "Vector calc, rigid body dynamics, fluid basics.",
+        "tools": ["MATLAB"],
+        "projects": ["Orbit simulation toy model"],
+        "resources": ["Anderson aerodynamics intro"]
+      },
+      {
+        "step": "Step 2: CAD & structures",
+        "details": "Parametric CAD, FEM intro for lightweight structures.",
+        "tools": ["CATIA/NX", "ANSYS"],
+        "projects": ["Wing rib or bracket FEM"],
+        "resources": ["Nastran/ANSYS learning modules"]
+      },
+      {
+        "step": "Step 3: Systems & certification mindset",
+        "details": "Requirements, traceability, safety culture (DO-178/DO-254 awareness).",
+        "tools": ["SysML intro", "Jama/Polarion concepts"],
+        "projects": ["Requirements doc for a subsystem"],
+        "resources": ["NASA systems engineering handbook"]
+      }
+    ],
+    "automation engineer|MTR": [
+      {
+        "step": "Step 1: Sensors, actuators, circuits",
+        "details": "Signals, PLCs basics, relay logic, safety interlocks.",
+        "tools": ["Multisim", "PLC sim"],
+        "projects": ["Home automation mini-circuit"],
+        "resources": ["PLC vendor micro-courses"]
+      },
+      {
+        "step": "Step 2: Control & embedded",
+        "details": "PID tuning, microcontrollers, communication buses.",
+        "tools": ["Arduino", "MATLAB control toolbox"],
+        "projects": ["PID temperature control"],
+        "resources": ["Ogata control systems"]
+      },
+      {
+        "step": "Step 3: Integration & industry 4.0",
+        "details": "SCADA basics, OPC-UA awareness, data logging.",
+        "tools": ["Node-RED", "Ignition trial"],
+        "projects": ["Line monitoring dashboard mock"],
+        "resources": ["ISA standards overview"]
+      }
+    ]
+  }
+}
