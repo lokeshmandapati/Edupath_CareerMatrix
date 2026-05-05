@@ -18,13 +18,14 @@ import java.util.regex.Pattern;
 public class ChatService {
 
     private static final String SYSTEM_PROMPT = """
-            You are CareerMatrix Assistant, a concise and practical career coach.
-            You support 3 contexts:
-            - ENGINEERING: engineering students (skills, tech, roles, resumes, roadmaps).
-            - CLASS10: class 10 students choosing a stream (Science/Commerce/Humanities).
-            - AFTER12: students deciding next steps after class 12 (entrances, degrees, shortlisting).
-            Keep answers structured and actionable. Do not invent credentials or guarantees.
-            If the user asks something unrelated to careers or learning, politely steer back.
+            You are CareerMatrix Assistant, a helpful and knowledgeable career coach.
+            Your priority is to provide DIRECT and ACCURATE answers to the user's specific questions.
+            Guidelines:
+            1. Answer the specific question asked FIRST.
+            2. Use a CLEAR and STRUCTURED format (bullet points, numbered lists, or bold headings) for every response.
+            3. Provide direct and accurate technical information.
+            4. After answering, you may BRIEFLY relate it to their career context if it adds value.
+            5. Avoid unnecessary fluff or 'unknown matter' that isn't related to the user's question.
             """;
 
     private final GeminiService geminiService;
@@ -60,8 +61,8 @@ public class ChatService {
                 String reply = geminiService.chatCompletion(systemPrompt, history, message);
                 return new ChatResponse(reply);
             } catch (Exception e) {
-                e.printStackTrace();
-                return new ChatResponse("⚠️ Gemini Error: " + e.getMessage());
+                System.err.println("Gemini failed, falling back to OpenAI: " + e.getMessage());
+                // Fall through to OpenAI
             }
         }
 
@@ -72,8 +73,8 @@ public class ChatService {
                 String reply = openAiService.chatCompletion(messages);
                 return new ChatResponse(reply);
             } catch (Exception e) {
-                e.printStackTrace();
-                return new ChatResponse("⚠️ OpenAI Error: " + e.getMessage());
+                System.err.println("OpenAI failed: " + e.getMessage());
+                // Fall through to rule-based
             }
         }
 
@@ -89,59 +90,87 @@ public class ChatService {
     }
 
     private String ruleBasedClass10(String message, String topStream, List<String> interests) {
-        String stream = (topStream == null || topStream.isBlank()) ? "your stream options" : topStream.trim();
-        String base = """
-                Class 10 guidance (stream selection):
-                - Focus on fundamentals + consistency.
-                - Choose a stream that matches strengths and interest, not only trends.
-                - Keep doors open with optional subjects where possible.
-                """.stripIndent().trim();
-        String interestLine = (interests != null && !interests.isEmpty())
-                ? "You mentioned interests like: " + String.join(", ", interests.subList(0, Math.min(6, interests.size()))) + ".\n"
-                : "";
-        String q = message.toLowerCase(Locale.ROOT);
-        if (q.contains("science")) {
-            return interestLine + "For Science: focus on Math + Science basics, daily problem practice, and strong revision.\n"
-                    + "Recommended: Mathematics, Physics, Chemistry, Biology/CS.\n"
-                    + "Next: Explore PCM vs PCB based on comfort with math vs bio.\n\n" + base;
-        }
-        if (q.contains("commerce")) {
-            return interestLine + "For Commerce: build Accountancy basics, improve quantitative aptitude, and strengthen communication.\n"
-                    + "Recommended: Accountancy, Business Studies, Economics, Math (optional).\n"
-                    + "Next: Explore CA/CS vs B.Com/BBA early.\n\n" + base;
-        }
-        if (q.contains("humanities") || q.contains("arts")) {
-            return interestLine + "For Humanities: strengthen reading/writing, current affairs, and analytical thinking.\n"
-                    + "Recommended: History, Political Science, Psychology/Sociology, English.\n"
-                    + "Next: Explore law, design, journalism, psychology, civil services.\n\n" + base;
-        }
-        return interestLine + "Your current best-fit stream (from assessment): " + stream + ".\n"
-                + "Tell me your marks in Math/Science/English/Social and what you enjoy, and I’ll suggest a weekly plan + subject combo.";
+        String smart = smartFallback(message);
+        if (smart != null) return smart;
+
+        return """
+                I'm currently in **Offline Mode** because the AI services (Gemini/OpenAI) are temporarily busy or out of quota.
+                
+                I couldn't find a specific pre-programmed answer for: "%s".
+                
+                **What you can do:**
+                1. Ask about common topics like **"diff between AI and ML"**, **"Food Technology"**, or **"Engineering branches"**.
+                2. Check your API keys' billing/quota status.
+                3. Try again in a few minutes.
+                
+                For Class 10 (Science Stream), focus on PCM (Physics, Chemistry, Math) for technical careers.""".formatted(message).stripIndent().trim();
     }
 
     private String ruleBasedAfter12(String message, String topDirection, List<String> interests) {
-        String dir = (topDirection == null || topDirection.isBlank()) ? "your top direction" : topDirection.trim();
-        String interestLine = (interests != null && !interests.isEmpty())
-                ? "Your interests: " + String.join(", ", interests.subList(0, Math.min(6, interests.size()))) + ".\n"
-                : "";
-        String q = message.toLowerCase(Locale.ROOT);
-        if (q.contains("jee")) {
-            return interestLine + "JEE plan: NCERT + strong problem practice + PYQs + mocks.\n"
-                    + "Weekly: 5 days practice, 1 day revision, 1 day mock + analysis.\n"
-                    + "If your target is " + dir + ", shortlist exams + colleges early.";
+        String smart = smartFallback(message);
+        if (smart != null) return smart;
+
+        return """
+                I'm currently in **Offline Mode** because the AI services (Gemini/OpenAI) are temporarily busy or out of quota.
+                
+                I couldn't find a specific pre-programmed answer for: "%s".
+                
+                **What you can do:**
+                1. Ask about **"College selection"**, **"Entrance exams"**, or **"Job roles"**.
+                2. Check your API keys' billing/quota status.
+                3. Try again later.
+                
+                For After 12 guidance, I recommend focusing on Entrance Exam preparation for your target career.""".formatted(message).stripIndent().trim();
+    }
+
+    private String smartFallback(String message) {
+        String m = message.toLowerCase(Locale.ROOT);
+        if (m.contains("hi") || m.contains("hello") || m.contains("hey")) {
+            return "Hello! I'm CareerMatrix Assistant. How can I help you with your career goals today?";
         }
-        if (q.contains("neet")) {
-            return interestLine + "NEET plan: NCERT is priority (Bio/Chem), then PYQs + mocks.\n"
-                    + "Weekly: daily Biology revision + 2 mocks/week near the exam.\n"
-                    + "If your target is " + dir + ", confirm eligibility and attempt strategy.";
+        if (m.contains("full form") && m.contains("ai")) {
+            return "The full form of AI is Artificial Intelligence.";
         }
-        if (q.contains("clat") || q.contains("law")) {
-            return interestLine + "Law path (CLAT/AILET): reading + reasoning + GK/current affairs.\n"
-                    + "Daily: editorial reading + 30–45 mins reasoning practice.\n"
-                    + "Also build writing + debate skills.";
+        if (m.contains("diff") && m.contains("ai") && (m.contains("ml") || m.contains("machine learning") || m.contains("dl") || m.contains("dp"))) {
+            return """
+                    Here is the difference:
+                    • AI (Artificial Intelligence): The broad concept of machines being able to carry out tasks in a way that we would consider “smart”.
+                    • ML (Machine Learning): A subset of AI based on the idea that we should just give machines access to data and let them learn for themselves.
+                    • DL (Deep Learning): A subset of ML that uses neural networks with many layers (deep) to solve complex problems like image and speech recognition.""".stripIndent().trim();
         }
-        return interestLine + "Your current best-fit direction (from assessment): " + dir + ".\n"
-                + "Ask me: entrances for this path, an 8-week plan, or how to shortlist colleges based on budget and goals.";
+        if (m.contains("who are you") || m.contains("what is your name")) {
+            return "I am your CareerMatrix Assistant, here to help you navigate your education and career path.";
+        }
+        if (m.contains("career") && (m.contains("best") || m.contains("top"))) {
+            return "The 'best' career depends on your interests. Currently, high-growth fields include Data Science, AI Engineering, Cyber Security, Renewable Energy, and Healthcare Technology. Tell me your favorite subjects for a better suggestion!";
+        }
+        if (m.contains("thank")) {
+            return "You're welcome! Feel free to ask if you have more questions.";
+        }
+        if (m.contains("food technology") || (m.contains("food") && m.contains("tech"))) {
+            return """
+                    **Food Technology Overview:**
+                    Food technology is the branch of food science that deals with the production, preservation, quality control, and research and development of food products.
+                    
+                    **Supply Chain in Food Tech:**
+                    1. **Sourcing**: Obtaining raw ingredients from farmers.
+                    2. **Processing**: Transforming raw materials into finished food products.
+                    3. **Packaging**: Ensuring safety and shelf-life.
+                    4. **Logistics**: Moving products at the right temperature (Cold Chain) to retailers.
+                    
+                    It is a great field if you are interested in Science and Engineering applied to the food industry!""".stripIndent().trim();
+        }
+        if (m.contains("pasteurization") || m.contains("pasturization")) {
+            return """
+                    **Pasteurization:**
+                    Pasteurization is a heat-treatment process that destroys pathogenic microorganisms in certain foods and beverages (like milk and juice).
+                    
+                    **Key Facts:**
+                    • Developed by **Louis Pasteur** in the 1860s.
+                    • It involves heating the liquid to a specific temperature for a set time and then cooling it immediately.
+                    • It makes food safer to consume and extends its shelf life without significantly changing the taste.""".stripIndent().trim();
+        }
+        return null;
     }
 
     private static List<ChatTurnDto> trimHistory(List<ChatTurnDto> history, int maxTurns) {
@@ -158,6 +187,9 @@ public class ChatService {
             List<String> skills,
             List<String> interests
     ) {
+        String smart = smartFallback(raw);
+        if (smart != null) return smart;
+
         String m = raw.toLowerCase(Locale.ROOT);
         m = Pattern.compile("\\s+").matcher(m).replaceAll(" ").trim();
 

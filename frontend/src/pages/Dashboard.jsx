@@ -8,6 +8,8 @@ import Loader from '../components/Loader'
 import PageTransition from '../components/PageTransition'
 import { ROADMAP_CAREER_KEY } from '../constants/storageKeys'
 import { ENGINEERING_BRANCHES } from '../data/assessmentOptions'
+import { getCommitment } from '../data/careerCommitment'
+import { ADMISSION_EXAMS } from '../data/admissionData'
 
 const container = {
   hidden: { opacity: 0 },
@@ -166,6 +168,42 @@ export default function Dashboard() {
           <h2 className="mb-8 font-display text-2xl font-bold text-accent">Personalized Toolkit</h2>
           <motion.div variants={container} initial="hidden" animate="show" className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <motion.div variants={item}>
+              <Card className="glass group overflow-hidden border-none p-0 shadow-premium h-full">
+                <div className="p-8">
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-500/10 shadow-sm ring-1 ring-red-500/20">
+                      <span className="text-2xl" aria-hidden>🔔</span>
+                    </div>
+                    <Link to="/calendar" className="text-xs font-bold text-primary hover:underline">View All</Link>
+                  </div>
+                  <h3 className="mt-6 font-display text-xl font-bold text-accent">Upcoming Deadlines</h3>
+                  
+                  <div className="mt-6 space-y-4">
+                    {ADMISSION_EXAMS.slice(0, 3).map(exam => {
+                      const diff = +new Date(exam.date) - +new Date()
+                      const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+                      const color = days < 7 ? 'bg-red-500' : days < 15 ? 'bg-amber-500' : 'bg-emerald-500'
+                      
+                      return (
+                        <div key={exam.id} className="flex items-center justify-between rounded-2xl bg-black/5 p-4 ring-1 ring-black/5">
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-sm font-bold text-accent">{exam.name}</p>
+                            <p className="text-[10px] font-bold text-muted uppercase tracking-wider">{exam.category}</p>
+                          </div>
+                          <div className="flex flex-col items-end shrink-0 ml-2">
+                            <span className={`rounded-lg px-2 py-1 text-[10px] font-black text-white ${color}`}>
+                              {days}d left
+                            </span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={item}>
               <Link to="/career-form" className="group block h-full">
                 <Card className="glass hover-lift h-full border-none p-8 shadow-premium">
                   <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 shadow-sm ring-1 ring-primary/20 transition-all group-hover:bg-primary group-hover:text-white">
@@ -196,6 +234,7 @@ export default function Dashboard() {
                     </svg>
                   </div>
                   <h3 className="mt-6 font-display text-xl font-bold text-accent">View Insights</h3>
+
                   {loading ? (
                     <div className="mt-4">
                       <Loader label="Syncing..." />
@@ -206,6 +245,27 @@ export default function Dashboard() {
                         <p className="text-2xl font-black text-primary">{latest.topCareer}</p>
                         <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-muted">{new Date(latest.createdAt).toLocaleDateString()}</p>
                       </div>
+
+                      {/* NEW: Duration & Difficulty Mini-Badge */}
+                      {(() => {
+                        const commitment = getCommitment(latest.topCareer)
+                        const difficultyColor = 
+                          commitment.level === 1 ? 'text-emerald-500 bg-emerald-500/10' :
+                          commitment.level === 2 ? 'text-amber-500 bg-amber-500/10' :
+                          'text-red-500 bg-red-500/10'
+                        
+                        return (
+                          <div className="flex flex-wrap gap-2">
+                             <span className="inline-flex items-center gap-1.5 rounded-lg bg-primary/5 px-2 py-1 text-[10px] font-bold text-primary ring-1 ring-primary/20">
+                              ⏳ {commitment.duration}
+                            </span>
+                            <span className={`inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-[10px] font-bold ring-1 ring-black/5 ${difficultyColor}`}>
+                              📊 {commitment.difficulty}
+                            </span>
+                          </div>
+                        )
+                      })()}
+
                       <span className="inline-flex items-center gap-2 text-sm font-bold text-primary transition-all group-hover:gap-3">
                         Full Breakdown
                         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -279,6 +339,46 @@ export default function Dashboard() {
                   </p>
                   <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary transition-all group-hover:gap-3">
                     Explore Degrees
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </Card>
+              </Link>
+            </motion.div>
+
+            <motion.div variants={item}>
+              <Link to="/calendar" className="group block h-full">
+                <Card className="glass hover-lift h-full border-none p-8 shadow-premium">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 shadow-sm ring-1 ring-amber-500/20 transition-all group-hover:bg-amber-500 group-hover:text-white">
+                    <span className="text-3xl" aria-hidden>📅</span>
+                  </div>
+                  <h3 className="mt-6 font-display text-xl font-bold text-accent">Admission Calendar</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    Track entrance exam dates, counselling deadlines, and set smart reminders.
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary transition-all group-hover:gap-3">
+                    View Calendar
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </Card>
+              </Link>
+            </motion.div>
+
+            <motion.div variants={item}>
+              <Link to="/resources" className="group block h-full">
+                <Card className="glass hover-lift h-full border-none p-8 shadow-premium">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/10 shadow-sm ring-1 ring-emerald-500/20 transition-all group-hover:bg-emerald-500 group-hover:text-white">
+                    <span className="text-3xl" aria-hidden>📚</span>
+                  </div>
+                  <h3 className="mt-6 font-display text-xl font-bold text-accent">Learning Resources</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    Access curated YouTube channels, free university courses, and skill practice sites.
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary transition-all group-hover:gap-3">
+                    Open Hub
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>

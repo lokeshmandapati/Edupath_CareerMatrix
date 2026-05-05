@@ -76,6 +76,10 @@ public class CareerFitPredictionService {
         User user = userRepository.findById(Long.valueOf(authenticatedUserId))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
+        if (req.stream() != null && !req.stream().trim().equalsIgnoreCase("ENGINEERING") && !req.stream().trim().isBlank()) {
+            return predictNonEngineering(user, req);
+        }
+
         BranchCareerConfigService.BranchProfile branchProfile = branchConfig.requireBranch(req.branch());
         List<String> careerDomains = branchConfig.getCareerDomains();
 
@@ -202,6 +206,92 @@ public class CareerFitPredictionService {
                 branchProfile.label(),
                 whyBranchFit,
                 crossSuggestions,
+                null,
+                null,
+                null
+        );
+    }
+
+    private PredictionResponse predictNonEngineering(User user, PredictionRequest req) {
+        String stream = req.stream().trim().toUpperCase(Locale.ROOT);
+        Map<String, Double> raw = new LinkedHashMap<>();
+        
+        List<String> careers;
+        if (stream.equals("MEDICAL")) {
+            careers = List.of("Doctor (MBBS)", "Dentist (BDS)", "Pharmacist", "Nurse", "Medical Researcher", "Public Health Specialist", "Surgeon");
+        } else if (stream.equals("COMMERCE")) {
+            careers = List.of("Chartered Accountant", "Investment Banker", "Financial Analyst", "Business Consultant", "Tax Advisor", "Company Secretary", "Corporate Lawyer");
+        } else if (stream.equals("ARTS")) {
+            careers = List.of("Lawyer", "Psychologist", "Journalist", "Graphic Designer", "Civil Servant", "Content Strategist", "Human Resources Manager");
+        } else {
+            careers = List.of("General Manager", "Entrepreneur", "Educator", "Civil Servant");
+        }
+        
+        for (String c : careers) raw.put(c, 1.0);
+        
+        for (String interest : req.interests()) {
+            if (interest == null) continue;
+            String it = interest.trim().toLowerCase(Locale.ROOT);
+            for (String c : careers) {
+                if (c.toLowerCase(Locale.ROOT).contains(it)) raw.merge(c, 0.5, Double::sum);
+            }
+            if (stream.equals("MEDICAL")) {
+                if (it.contains("surgery") || it.contains("patient")) raw.merge("Doctor (MBBS)", 0.6, Double::sum);
+                if (it.contains("medicine") || it.contains("chemistry")) raw.merge("Pharmacist", 0.6, Double::sum);
+                if (it.contains("care") || it.contains("nursing")) raw.merge("Nurse", 0.6, Double::sum);
+            }
+            if (stream.equals("COMMERCE")) {
+                if (it.contains("finance") || it.contains("market")) raw.merge("Investment Banker", 0.6, Double::sum);
+                if (it.contains("account") || it.contains("tax")) raw.merge("Chartered Accountant", 0.6, Double::sum);
+                if (it.contains("business") || it.contains("strategy")) raw.merge("Business Consultant", 0.6, Double::sum);
+            }
+        }
+        
+        String branch = req.branch().toUpperCase(Locale.ROOT);
+        if (branch.contains("MBBS")) raw.merge("Doctor (MBBS)", 0.8, Double::sum);
+        if (branch.contains("BDS") || branch.contains("DENTAL")) raw.merge("Dentist (BDS)", 0.8, Double::sum);
+        if (branch.contains("PHARM")) raw.merge("Pharmacist", 0.8, Double::sum);
+        if (branch.contains("NURSING")) raw.merge("Nurse", 0.8, Double::sum);
+        if (branch.contains("CA")) raw.merge("Chartered Accountant", 0.8, Double::sum);
+        if (branch.contains("CS")) raw.merge("Company Secretary", 0.8, Double::sum);
+        if (branch.contains("LAW")) raw.merge("Lawyer", 0.8, Double::sum);
+
+        LinkedHashMap<String, Double> percentages = new LinkedHashMap<>(CfpaMappingService.sortByValueDesc(
+                CfpaMappingService.normalizeToPercentages(raw)
+        ));
+
+        String top = percentages.entrySet().iterator().next().getKey();
+        String explanation = "Based on your " + stream + " stream (" + branch + ") and selected interests, " + top + " is an excellent fit. This path leverages your specific academic background and aligns strongly with your preferences.";
+
+        Map<String, Double> breakdown = CfpaMappingService.immutableCopy(percentages);
+
+        persistInputAndResult(
+                user,
+                req,
+                new BranchCareerConfigService.BranchProfile(req.branch(), req.branch(), List.of(), Map.of(), 0),
+                percentages,
+                top,
+                explanation,
+                85.0,
+                breakdown,
+                breakdown,
+                "Your academic background naturally aligns with this career trajectory.",
+                List.of()
+        );
+
+        List<PredictionResponse.CareerRankItem> ranked = rankList(percentages);
+        return new PredictionResponse(
+                top,
+                percentages,
+                ranked,
+                explanation,
+                85.0,
+                breakdown,
+                breakdown,
+                req.branch(),
+                req.branch(),
+                "Your academic background naturally aligns with this career trajectory.",
+                List.of(),
                 null,
                 null,
                 null

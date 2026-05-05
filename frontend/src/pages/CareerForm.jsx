@@ -9,7 +9,8 @@ import Card from '../components/Card'
 import PageTransition from '../components/PageTransition'
 import SkillInterestPicker from '../components/SkillInterestPicker'
 import {
-  ENGINEERING_BRANCHES,
+  STREAMS,
+  STREAM_BRANCHES,
   getSkillCategoriesForBranch,
   getInterestCategoriesForBranch,
   getRecommendedSkillLabels,
@@ -17,7 +18,7 @@ import {
 } from '../data/assessmentOptions'
 
 const PROJECT_LEVELS = ['Beginner', 'Intermediate', 'Advanced']
-const STEP_LABELS = ['Academics & branch', 'Skills', 'Interests', 'Projects']
+const STEP_LABELS = ['Academic Stream', 'Skills', 'Interests', 'Projects']
 
 const stepVariants = {
   initial: { opacity: 0, x: 16 },
@@ -29,7 +30,8 @@ export default function CareerForm() {
   const navigate = useNavigate()
   const { setBranch: setProfileBranch } = useAuth()
   const [step, setStep] = useState(1)
-  const [selectedBranch, setSelectedBranch] = useState('CSE')
+  const [selectedStream, setSelectedStream] = useState(null)
+  const [selectedBranch, setSelectedBranch] = useState('')
   const [cgpa, setCgpa] = useState('8.0')
   const [technicalSkills, setTechnicalSkills] = useState([])
   const [interests, setInterests] = useState([])
@@ -48,12 +50,18 @@ export default function CareerForm() {
 
   const next = () => {
     setError('')
-    if (step === 1 && !selectedBranch) {
-      setError('Select your engineering branch')
-      return
+    if (step === 1) {
+      if (!selectedStream) {
+        setError('Please select your academic stream first')
+        return
+      }
+      if (!selectedBranch) {
+        setError('Please select your specific branch/specialization')
+        return
+      }
     }
     if (step === 2 && technicalSkills.length === 0) {
-      setError('Select at least one technical skill')
+      setError('Select at least one skill related to your field')
       return
     }
     if (step === 3 && interests.length === 0) {
@@ -63,7 +71,14 @@ export default function CareerForm() {
     setStep((s) => Math.min(s + 1, totalSteps))
   }
 
-  const back = () => setStep((s) => Math.max(s - 1, 1))
+  const back = () => {
+    if (step === 1 && selectedStream) {
+       setSelectedStream(null)
+       setSelectedBranch('')
+       return
+    }
+    setStep((s) => Math.max(s - 1, 1))
+  }
 
   const submit = async () => {
     setError('')
@@ -71,6 +86,7 @@ export default function CareerForm() {
     try {
       const { data } = await api.post('/api/predict-career', {
         branch: String(selectedBranch).toUpperCase(),
+        stream: selectedStream,
         cgpa: parseFloat(cgpa) || 0,
         technicalSkills,
         interests,
@@ -144,37 +160,70 @@ export default function CareerForm() {
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  className="space-y-6"
+                  className="space-y-8"
                 >
-                  <div>
-                    <h2 className="font-display text-lg font-semibold text-accent">Select your branch</h2>
-                    <p className="mt-1 text-sm text-slate-600">Required — we prioritize careers and skills that match your engineering stream.</p>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                      {ENGINEERING_BRANCHES.map((b) => {
-                        const active = selectedBranch === b.id
-                        return (
+                  {!selectedStream ? (
+                    <div className="space-y-6">
+                      <div>
+                        <h2 className="font-display text-xl font-bold text-accent">What is your academic stream?</h2>
+                        <p className="mt-1 text-sm text-slate-600">Select your broad field of study to get personalized branch options.</p>
+                      </div>
+                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {STREAMS.map((s) => (
                           <button
-                            key={b.id}
-                            type="button"
-                            onClick={() => setSelectedBranch(b.id)}
-                            className={`flex items-center gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-300 ${
-                              active
-                                ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
-                                : 'border-borderline bg-surface hover:border-primary/30 hover:bg-page/20'
-                            }`}
+                            key={s.id}
+                            onClick={() => setSelectedStream(s.id)}
+                            className="group flex flex-col items-center gap-4 rounded-3xl border border-borderline bg-surface p-6 text-center transition-all hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
                           >
-                            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-page text-2xl shadow-inner ring-1 ring-borderline" aria-hidden>
-                              {b.icon}
+                            <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/5 text-4xl transition-transform group-hover:scale-110">
+                              {s.icon}
                             </span>
-                            <span className="min-w-0">
-                              <span className={`block font-semibold ${active ? 'text-white' : 'text-accent'}`}>{b.label}</span>
-                              <span className={`text-xs ${active ? 'text-white/85' : 'text-muted'}`}>{b.short}</span>
-                            </span>
+                            <span className="font-display font-bold text-accent">{s.label}</span>
                           </button>
-                        )
-                      })}
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="space-y-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h2 className="font-display text-xl font-bold text-accent">Select your branch</h2>
+                          <p className="mt-1 text-sm text-slate-600">Choose your specific specialization in {STREAMS.find(s => s.id === selectedStream)?.label}.</p>
+                        </div>
+                        <button 
+                          onClick={() => { setSelectedStream(null); setSelectedBranch(''); }}
+                          className="text-xs font-bold text-primary hover:underline"
+                        >
+                          Change Stream
+                        </button>
+                      </div>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {(STREAM_BRANCHES[selectedStream] || []).map((b) => {
+                          const active = selectedBranch === b.id
+                          return (
+                            <button
+                              key={b.id}
+                              type="button"
+                              onClick={() => setSelectedBranch(b.id)}
+                              className={`flex items-center gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-300 ${
+                                active
+                                  ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                  : 'border-borderline bg-surface hover:border-primary/30 hover:bg-page/20'
+                              }`}
+                            >
+                              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-page text-2xl shadow-inner ring-1 ring-borderline" aria-hidden>
+                                {b.icon}
+                              </span>
+                              <span className="min-w-0">
+                                <span className={`block font-semibold ${active ? 'text-white' : 'text-accent'}`}>{b.label}</span>
+                                <span className={`text-xs ${active ? 'text-white/85' : 'text-muted'}`}>{b.short}</span>
+                              </span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
                   <div>
                     <h2 className="font-display text-lg font-semibold text-accent">Academic details</h2>
                     <p className="mt-1 text-sm leading-relaxed text-slate-600">

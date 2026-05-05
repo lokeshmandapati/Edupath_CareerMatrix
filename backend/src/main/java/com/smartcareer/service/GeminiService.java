@@ -27,11 +27,12 @@ public class GeminiService {
     private final HttpClient httpClient = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(30))
             .build();
+    private final String baseUrl = "https://generativelanguage.googleapis.com/v1beta";
 
     @Value("${app.gemini.api-key:}")
     private String apiKey;
 
-    @Value("${app.gemini.model:gemini-1.5-flash}")
+    @Value("${app.gemini.model:gemini-flash-latest}")
     private String model;
 
     public GeminiService(ObjectMapper objectMapper) {
@@ -42,35 +43,51 @@ public class GeminiService {
         return apiKey != null && !apiKey.isBlank();
     }
 
-    public String chatCompletion(String systemPrompt, List<ChatTurnDto> history, String userMessage) throws Exception {
+    public String chatCompletion(String systemPrompt, List<ChatTurnDto> history, String userMessage) {
+        String[] models = {model, "gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-pro"};
+        Exception lastEx = null;
+
+        for (String m : models) {
+            try {
+                return callModel(m, systemPrompt, history, userMessage);
+            } catch (Exception e) {
+                String msg = e.getMessage();
+                if (msg != null && (msg.contains("429") || msg.contains("503") || msg.contains("404"))) {
+                    System.err.println("Model " + m + " failed (" + msg + "), trying next...");
+                    lastEx = e;
+                    continue;
+                }
+                if (e instanceof RuntimeException) throw (RuntimeException) e;
+                throw new RuntimeException(e);
+            }
+        }
+        throw new RuntimeException("All Gemini models exhausted: " + (lastEx != null ? lastEx.getMessage() : "Unknown error"));
+    }
+
+    private String callModel(String m, String systemPrompt, List<ChatTurnDto> history, String userMessage) throws Exception {
         if (!isConfigured()) {
             throw new IllegalStateException("Gemini API key not configured");
         }
 
-        String finalModel = (model == null || model.isBlank()) ? "gemini-1.5-flash" : model;
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/" + finalModel + ":generateContent?key=" + apiKey.trim();
-
+        String url = String.format("%s/models/%s:generateContent?key=%s", baseUrl, m, apiKey.trim());
 
         List<Map<String, Object>> contents = new ArrayList<>();
         String lastRole = null;
         if (history != null && !history.isEmpty()) {
             for (ChatTurnDto turn : history) {
                 String role = "assistant".equalsIgnoreCase(turn.role()) ? "model" : "user";
-                // Gemini API requires first role to be 'user'
                 if (lastRole == null && "model".equals(role)) {
                     contents.add(buildContent("user", "Hello"));
                     lastRole = "user";
                 }
-                // Gemini API requires strictly alternating roles
                 if (role.equals(lastRole)) {
-                    continue; // Skip consecutive identical roles
+                    continue;
                 }
                 contents.add(buildContent(role, turn.content()));
                 lastRole = role;
             }
         }
         
-        // If the last role was user, we must insert a dummy model response before the next user prompt
         if ("user".equals(lastRole)) {
             contents.add(buildContent("model", "Acknowledged."));
         }
@@ -83,7 +100,6 @@ public class GeminiService {
 
         String json = objectMapper.writeValueAsString(body);
 
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
@@ -94,7 +110,8 @@ public class GeminiService {
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
         if (response.statusCode() >= 400) {
             System.err.println("Gemini API Error: " + response.statusCode() + " - " + response.body());
-            throw new RuntimeException("Gemini API error: HTTP " + response.statusCode());
+            System.err.println("URL called: " + url.replaceAll("key=[^&]+", "key=REDACTED"));
+            throw new RuntimeException("Gemini API error: HTTP " + response.statusCode() + " for model " + m);
         }
 
         JsonNode root = objectMapper.readTree(response.body());

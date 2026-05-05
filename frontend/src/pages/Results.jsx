@@ -18,6 +18,8 @@ import Card from '../components/Card'
 import Loader from '../components/Loader'
 import PageTransition from '../components/PageTransition'
 import { ROADMAP_CAREER_KEY } from '../constants/storageKeys'
+import { generateReportPDF } from '../services/reportService'
+import { getCommitment } from '../data/careerCommitment'
 
 const CHART_COLORS = ['#38BDF8', '#38BDF8', '#0EA5E9', '#7DD3FC', '#BAE6FD']
 
@@ -152,28 +154,63 @@ export default function Results() {
   return (
     <PageTransition>
       <div className="mesh-gradient min-h-screen px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl space-y-10 pb-10">
-          <div>
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold tracking-wider text-primary uppercase ring-1 ring-primary/20"
+        <div id="report-content" className="mx-auto max-w-7xl space-y-10 pb-10">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="flex-1">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold tracking-wider text-primary uppercase ring-1 ring-primary/20"
+              >
+                Analysis Complete
+              </motion.div>
+              <h1 className="mt-4 font-display text-4xl font-extrabold tracking-tight text-accent sm:text-5xl lg:text-6xl">
+                Your <span className="bg-gradient-to-r from-primary to-violet-500 bg-clip-text text-transparent">Career Blueprint</span>
+              </h1>
+              <p className="mt-3 text-lg font-medium text-muted">
+                Based on our CFPA engine, here is your high-precision career alignment profile.
+              </p>
+            </div>
+            
+            <button
+              onClick={() => generateReportPDF('report-content', `CareerMatrix-Report-${prediction.topCareer}.pdf`)}
+              className="glass-dark flex items-center gap-2 rounded-2xl border border-primary/20 px-6 py-3 text-sm font-bold text-primary transition-all hover:bg-primary/10 active:scale-95"
             >
-              Analysis Complete
-            </motion.div>
-            <h1 className="mt-4 font-display text-4xl font-extrabold tracking-tight text-accent sm:text-5xl lg:text-6xl">
-              Your <span className="bg-gradient-to-r from-primary to-violet-500 bg-clip-text text-transparent">Career Blueprint</span>
-            </h1>
-            <p className="mt-3 text-lg font-medium text-muted">
-              Based on our CFPA engine, here is your high-precision career alignment profile.
-            </p>
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Export PDF
+            </button>
           </div>
 
-        {fetchError && (
-          <div className="rounded-xl border border-primary/20 bg-primary/10 px-4 py-3 text-sm text-accent">{fetchError}</div>
-        )}
+          {fetchError && (
+            <div className="rounded-xl border border-primary/20 bg-primary/10 px-4 py-3 text-sm text-accent">{fetchError}</div>
+          )}
 
-        <div className="grid gap-8 lg:grid-cols-5">
+          {/* Connect Overview of Interest */}
+          {prediction.interestMatchBreakdown && (
+            <Card className="glass border-none p-6 shadow-premium ring-1 ring-primary/10">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-500/10 text-2xl">
+                  🎨
+                </div>
+                <div>
+                  <h3 className="font-display text-lg font-bold text-accent">Passion Overview</h3>
+                  <p className="text-xs font-medium text-muted">Your core interests that drive these career matches.</p>
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {Object.keys(prediction.interestMatchBreakdown).slice(0, 8).map((interest) => (
+                  <span key={interest} className="rounded-full bg-violet-500/5 px-4 py-1.5 text-xs font-bold text-violet-600 ring-1 ring-violet-500/20">
+                    {interest}
+                  </span>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          <div className="grid gap-8 lg:grid-cols-5">
+            {/* ... Rest of the existing grid content ... */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -225,6 +262,46 @@ export default function Results() {
               <div className="mt-8 border-t border-borderline pt-8 space-y-4">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-muted">Analysis Summary</p>
                 <p className="text-sm font-medium leading-relaxed text-muted">{prediction.explanation}</p>
+              </div>
+
+              {/* NEW SECTION: Course Details */}
+              <div className="mt-8 border-t border-borderline pt-8">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-4">Course Commitment</p>
+                {(() => {
+                  const commitment = getCommitment(prediction.topCareer)
+                  const difficultyColor = 
+                    commitment.level === 1 ? 'text-emerald-500 bg-emerald-500/10 ring-emerald-500/20' :
+                    commitment.level === 2 ? 'text-amber-500 bg-amber-500/10 ring-amber-500/20' :
+                    'text-red-500 bg-red-500/10 ring-red-500/20'
+                  
+                  return (
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/5 text-xl">⏳</div>
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-muted">Duration</p>
+                          <p className="text-sm font-bold text-accent">{commitment.duration}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/5 text-xl">📊</div>
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-muted">Difficulty</p>
+                          <div className="flex items-center gap-2">
+                            <span className={`rounded-lg px-2 py-0.5 text-[10px] font-black uppercase tracking-widest ring-1 ${difficultyColor}`}>
+                              {commitment.difficulty}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <p className="rounded-xl bg-black/[0.02] p-3 text-[11px] font-medium italic text-muted ring-1 ring-black/5">
+                        "{commitment.description}"
+                      </p>
+                    </div>
+                  )
+                })()}
               </div>
             </Card>
           </motion.div>

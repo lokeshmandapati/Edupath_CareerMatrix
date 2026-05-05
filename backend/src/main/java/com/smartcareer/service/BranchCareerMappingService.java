@@ -156,7 +156,7 @@ public class BranchCareerMappingService {
         if (interests != null && !interests.isEmpty()) {
             sb.append("User interests: ").append(String.join(", ", interests.subList(0, Math.min(15, interests.size())))).append(".\n");
         }
-        sb.append("Tailor every answer to this branch; avoid generic CS advice when the branch is non-CS unless skills strongly indicate software.");
+        sb.append("Note: The student is in this branch/stream. You can use this for context, but prioritize answering their technical or general questions directly first.");
         return sb.toString();
     }
 

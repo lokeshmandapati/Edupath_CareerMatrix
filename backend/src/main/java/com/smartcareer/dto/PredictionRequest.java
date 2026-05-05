@@ -15,6 +15,7 @@ public record PredictionRequest(
         Double cgpa,
         @NotBlank(message = "Engineering branch is required")
         String branch,
+        String stream,
         @NotEmpty(message = "Select at least one technical skill")
         List<String> technicalSkills,
         @NotEmpty(message = "Select at least one interest")

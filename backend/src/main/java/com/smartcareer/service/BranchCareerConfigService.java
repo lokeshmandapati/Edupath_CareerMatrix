@@ -152,7 +152,11 @@ public class BranchCareerConfigService {
         String c = code.trim().toUpperCase(Locale.ROOT);
         BranchProfile p = branches.get(c);
         if (p == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown branch: " + code);
+            BranchProfile other = branches.get("OTHER");
+            if (other == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown branch: " + code);
+            }
+            return new BranchProfile(c, c, other.primaryCareers(), other.branchPrior(), other.offBranchPenalty());
         }
         return p;
     }

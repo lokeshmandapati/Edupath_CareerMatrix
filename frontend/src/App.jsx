@@ -15,6 +15,8 @@ import Class10Results from './pages/Class10Results'
 import After12Dashboard from './pages/After12Dashboard'
 import After12Form from './pages/After12Form'
 import After12Results from './pages/After12Results'
+import AdmissionCalendar from './pages/AdmissionCalendar'
+import LearningResources from './pages/LearningResources'
 import Chatbot from './components/Chatbot'
 
 function HomeRedirect() {
@@ -51,6 +53,26 @@ export default function App() {
           <ProtectedRoute>
             <AppShell>
               <Dashboard />
+            </AppShell>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/calendar"
+        element={
+          <ProtectedRoute>
+            <AppShell>
+              <AdmissionCalendar />
+            </AppShell>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/resources"
+        element={
+          <ProtectedRoute>
+            <AppShell>
+              <LearningResources />
             </AppShell>
           </ProtectedRoute>
         }
