@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,14 +59,17 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Value("${app.cors.allowed-origins:*}")
+    private String corsAllowedOrigins;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of(
-                // Vite dev server may pick the next free port (5174, 5175, ...)
-                "http://localhost:*",
-                "http://127.0.0.1:*"
-        ));
+        
+        // Parse the comma-separated list from application.properties / .env
+        List<String> allowedOrigins = Arrays.asList(corsAllowedOrigins.split(","));
+        config.setAllowedOriginPatterns(allowedOrigins);
+        
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
