@@ -21,6 +21,7 @@ public record After12CareerRequest(
         String workPreference,
         String budget,
         String locationFlexibility,
-        String examReadiness
+        String examReadiness,
+        String category
 ) {}
 

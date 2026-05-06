@@ -81,7 +81,9 @@ export default function Class10Form() {
   const [english, setEnglish] = useState('75')
   const [social, setSocial] = useState('75')
   const [interests, setInterests] = useState([])
+  const [customInterest, setCustomInterest] = useState('')
   const [aptitudeTags, setAptitudeTags] = useState([])
+  const [customAptitude, setCustomAptitude] = useState('')
   const [learningStyle, setLearningStyle] = useState('Mixed')
   const [subjectComfort, setSubjectComfort] = useState([])
   const [studyHours, setStudyHours] = useState('1–2 hours')
@@ -157,12 +159,30 @@ export default function Class10Form() {
         studyHours,
         familyPriority,
       })
+      const merged = {
+        ...data,
+        assessmentInputs: {
+          math: marksSummary.math,
+          science: marksSummary.science,
+          english: marksSummary.english,
+          social: marksSummary.social,
+          interests,
+          aptitudeTags,
+          learningStyle,
+          subjectComfort,
+          studyHours,
+          familyPriority,
+        },
+      }
       try {
-        localStorage.setItem(CLASS10_LAST_PREDICTION_KEY, JSON.stringify(data))
+        localStorage.setItem(CLASS10_LAST_PREDICTION_KEY, JSON.stringify(merged))
+        // Save for roadmap
+        localStorage.setItem('careermatrix_last_interests', JSON.stringify(interests))
+        localStorage.setItem('careermatrix_last_skills', JSON.stringify(aptitudeTags))
       } catch {
         /* ignore */
       }
-      navigate('/assessment/class10/results', { state: data, replace: true })
+      navigate('/assessment/class10/results', { state: merged, replace: true })
     } catch (err) {
       const msg = err.response?.data?.error || err.response?.data?.message || err.message || 'Prediction failed'
       setError(typeof msg === 'string' ? msg : 'Something went wrong')
@@ -247,8 +267,6 @@ export default function Class10Form() {
               {step === 2 && (
                 <motion.section key="s2" variants={stepVariants} initial="initial" animate="animate" exit="exit">
                   <h2 className="font-display text-lg font-semibold text-accent">Interests</h2>
-                  <p className="mt-1 text-sm text-slate-600">Pick what you enjoy (choose multiple).</p>
-
                   <div className="mt-5 flex flex-wrap gap-2">
                     {INTERESTS.map((it) => {
                       const active = interests.includes(it)
@@ -267,6 +285,54 @@ export default function Class10Form() {
                         </button>
                       )
                     })}
+                    {interests.filter(i => !INTERESTS.includes(i)).map((it) => (
+                      <button
+                        key={it}
+                        type="button"
+                        onClick={() => toggleInterest(it)}
+                        className="rounded-full border border-pink-500/40 bg-gradient-to-br from-pink-500 to-rose-500 px-4 py-2 text-sm font-medium text-white shadow-glow transition-all"
+                      >
+                        ✏️ {it} ×
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Custom interest input */}
+                  <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: 'rgba(236,72,153,0.2)', background: 'rgba(236,72,153,0.05)' }}>
+                    <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#ec4899' }}>✏️ Add your own career interest</p>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="e.g. Psychology, Animation, Space Science…"
+                        className="flex-1 rounded-xl border border-borderline bg-surface px-4 py-2.5 text-sm font-medium text-accent transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                        value={customInterest}
+                        onChange={(e) => setCustomInterest(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            const val = customInterest.trim()
+                            if (val && !interests.includes(val)) {
+                              setInterests(prev => [...prev, val])
+                            }
+                            setCustomInterest('')
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const val = customInterest.trim()
+                          if (val && !interests.includes(val)) {
+                            setInterests(prev => [...prev, val])
+                          }
+                          setCustomInterest('')
+                        }}
+                        className="rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-all hover:scale-105"
+                        style={{ background: 'linear-gradient(135deg, #ec4899, #d946ef)' }}
+                      >
+                        + Add
+                      </button>
+                    </div>
                   </div>
                 </motion.section>
               )}
@@ -275,7 +341,6 @@ export default function Class10Form() {
                 <motion.section key="s3" variants={stepVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
                   <div>
                     <h2 className="font-display text-lg font-semibold text-accent">Aptitude signals</h2>
-                    <p className="mt-1 text-sm text-slate-600">Pick what feels most natural to you (choose multiple).</p>
                     <div className="mt-5 flex flex-wrap gap-2">
                       {APTITUDE_TAGS.map((t) => {
                         const active = aptitudeTags.includes(t)
@@ -294,8 +359,56 @@ export default function Class10Form() {
                           </button>
                         )
                       })}
+                      {aptitudeTags.filter(t => !APTITUDE_TAGS.includes(t)).map((t) => (
+                        <button
+                          key={t}
+                          type="button"
+                          onClick={() => toggleAptitude(t)}
+                          className="rounded-full border border-cyan-500/40 bg-gradient-to-br from-cyan-500 to-teal-500 px-4 py-2 text-sm font-medium text-white shadow-glow transition-all"
+                        >
+                          ⚡ {t} ×
+                        </button>
+                      ))}
+                    </div>
+
+                  {/* Custom aptitude input */}
+                  <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: 'rgba(34,211,238,0.2)', background: 'rgba(34,211,238,0.05)' }}>
+                    <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#22d3ee' }}>⚡ Add your own skill or aptitude</p>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="e.g. Critical Thinking, Observation, Punctuality…"
+                        className="flex-1 rounded-xl border border-borderline bg-surface px-4 py-2.5 text-sm font-medium text-accent transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                        value={customAptitude}
+                        onChange={(e) => setCustomAptitude(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            const val = customAptitude.trim()
+                            if (val && !aptitudeTags.includes(val)) {
+                              setAptitudeTags(prev => [...prev, val])
+                            }
+                            setCustomAptitude('')
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const val = customAptitude.trim()
+                          if (val && !aptitudeTags.includes(val)) {
+                            setAptitudeTags(prev => [...prev, val])
+                          }
+                          setCustomAptitude('')
+                        }}
+                        className="rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-all hover:scale-105"
+                        style={{ background: 'linear-gradient(135deg, #06b6d4, #0891b2)' }}
+                      >
+                        + Add
+                      </button>
                     </div>
                   </div>
+                </div>
 
                   <div>
                     <h2 className="font-display text-lg font-semibold text-accent">Learning style</h2>

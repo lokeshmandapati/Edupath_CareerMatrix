@@ -31,6 +31,7 @@ function normalizeFromHistory(data) {
     examPaths: data.examPaths || [],
     nextSteps: data.nextSteps || [],
     quiz: data.quiz || null,
+    assessmentInputs: data.assessmentInputs || null,
   }
 }
 
@@ -182,17 +183,45 @@ export default function After12Results() {
         )}
 
         {prediction?.quiz && (
-          <Card className="border-primary/20 bg-gradient-to-br from-surface via-page/50 to-surface shadow-lg">
-            <p className="text-xs font-semibold uppercase tracking-wider text-primary">Assessment result (quiz-based)</p>
-            <div className="mt-3 flex flex-wrap items-center gap-3">
-              <span className="rounded-full bg-page px-4 py-2 text-sm font-semibold text-accent ring-1 ring-borderline">
-                {prediction.quiz.band}
-              </span>
-              <span className="text-sm text-slate-600">
-                Score: <span className="font-semibold text-accent">{prediction.quiz.score}</span>/{prediction.quiz.total} ({prediction.quiz.percent}%)
-              </span>
-            </div>
-          </Card>
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="border-primary/20 bg-gradient-to-br from-surface via-page/50 to-surface shadow-lg">
+              <p className="text-xs font-semibold uppercase tracking-wider text-primary">Assessment result (quiz-based)</p>
+              <div className="mt-3 flex flex-wrap items-center gap-3">
+                <span className="rounded-full bg-page px-4 py-2 text-sm font-semibold text-accent ring-1 ring-borderline">
+                  {prediction.quiz.band}
+                </span>
+                <span className="text-sm text-slate-600">
+                  Score: <span className="font-semibold text-accent">{prediction.quiz.score}</span>/{prediction.quiz.total} ({prediction.quiz.percent}%)
+                </span>
+              </div>
+            </Card>
+
+            <Card className="border-primary/20 bg-gradient-to-br from-surface via-page/50 to-surface shadow-lg">
+              <p className="text-xs font-semibold uppercase tracking-wider text-primary">Your Input Profile</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {prediction.assessmentInputs?.stream && (
+                  <span className="rounded-lg bg-primary/10 px-3 py-1 text-xs font-bold text-primary ring-1 ring-primary/20">
+                    Stream: {prediction.assessmentInputs.stream}
+                  </span>
+                )}
+                {prediction.assessmentInputs?.percentage && (
+                  <span className="rounded-lg bg-primary/10 px-3 py-1 text-xs font-bold text-primary ring-1 ring-primary/20">
+                    Marks: {prediction.assessmentInputs.percentage}%
+                  </span>
+                )}
+                {prediction.assessmentInputs?.interests?.slice(0, 3).map(it => (
+                  <span key={it} className="rounded-lg bg-pink-500/10 px-3 py-1 text-xs font-bold text-pink-600 ring-1 ring-pink-500/20">
+                    Interest: {it}
+                  </span>
+                ))}
+                {prediction.assessmentInputs?.aptitudeTags?.slice(0, 3).map(it => (
+                  <span key={it} className="rounded-lg bg-cyan-500/10 px-3 py-1 text-xs font-bold text-cyan-600 ring-1 ring-cyan-500/20">
+                    Skill: {it}
+                  </span>
+                ))}
+              </div>
+            </Card>
+          </div>
         )}
 
         <div className="grid gap-6 lg:grid-cols-5">
@@ -321,6 +350,56 @@ export default function After12Results() {
             )}
           </div>
         )}
+
+        {/* Personalized Toolkit Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative overflow-hidden rounded-[2.5rem] bg-[#0f1129] p-8 sm:p-12 ring-1 ring-white/10"
+        >
+          <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+          <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-violet-500/10 blur-3xl" />
+          
+          <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10">
+            <div className="max-w-xl text-center lg:text-left">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1 text-xs font-bold tracking-widest text-primary uppercase ring-1 ring-primary/20">
+                New Feature
+              </span>
+              <h2 className="mt-4 font-display text-3xl font-extrabold text-accent sm:text-4xl">
+                Personalized <span className="bg-gradient-to-r from-primary to-violet-500 bg-clip-text text-transparent">Toolkit</span>
+              </h2>
+              <p className="mt-4 text-lg font-medium text-slate-400">
+                Unlock specialized tools like the JEE College Predictor and Rank Analyzer to refine your engineering admission strategy.
+              </p>
+              
+              <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
+                <div className="flex items-center gap-2 text-sm font-bold text-slate-500">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                  College Prediction
+                </div>
+                <div className="flex items-center gap-2 text-sm font-bold text-slate-500">
+                  <span className="h-2 w-2 rounded-full bg-blue-500" />
+                  Rank vs Percentile
+                </div>
+                <div className="flex items-center gap-2 text-sm font-bold text-slate-500">
+                  <span className="h-2 w-2 rounded-full bg-violet-500" />
+                  Category Insights
+                </div>
+              </div>
+            </div>
+
+            <Link
+              to="/toolkit/jee-predictor"
+              className="group relative inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-primary to-violet-600 px-10 py-5 text-lg font-black text-white shadow-xl shadow-primary/30 transition-all hover:scale-105 hover:shadow-primary/40 active:scale-95"
+            >
+              Open JEE Predictor
+              <svg className="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+        </motion.section>
 
         <div className="flex flex-wrap gap-3">
           <Link

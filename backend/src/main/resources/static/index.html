@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerMatrix API — Backend Server</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #6366f1;
+      --violet: #8b5cf6;
+      --pink: #ec4899;
+      --bg: #09090f;
+      --surface: #111118;
+      --border: rgba(255,255,255,0.07);
+      --text: #f1f5f9;
+      --muted: #64748b;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Animated background ── */
+    .bg-mesh {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% -10%, rgba(99,102,241,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 110%, rgba(139,92,246,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(236,72,153,0.06) 0%, transparent 70%),
+        var(--bg);
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+      filter: blur(80px); opacity: 0.25;
+      animation: float 14s ease-in-out infinite;
+    }
+    .orb-1 { width: 600px; height: 600px; top: -200px; left: -150px; background: radial-gradient(circle, #6366f1, transparent 70%); animation-duration: 12s; }
+    .orb-2 { width: 500px; height: 500px; bottom: -200px; right: -150px; background: radial-gradient(circle, #8b5cf6, transparent 70%); animation-duration: 16s; animation-direction: reverse; }
+    .orb-3 { width: 300px; height: 300px; top: 40%; right: 5%; background: radial-gradient(circle, #ec4899, transparent 70%); animation-duration: 10s; animation-delay: 3s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.03); }
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      70% { transform: scale(1.3); opacity: 0; }
+      100% { transform: scale(1.3); opacity: 0; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ── Layout ── */
+    .wrapper {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 3rem 1.5rem;
+      gap: 3rem;
+    }
+
+    /* ── Status badge ── */
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border: 1px solid rgba(34,197,94,0.3);
+      background: rgba(34,197,94,0.08);
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #4ade80;
+      animation: fade-up 0.5s ease both;
+    }
+
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #4ade80;
+      position: relative;
+    }
+    .status-dot::after {
+      content: '';
+      position: absolute; inset: -3px; border-radius: 50%;
+      border: 1px solid #4ade80;
+      animation: pulse-ring 2s ease infinite;
+    }
+
+    /* ── Hero ── */
+    .hero { text-align: center; animation: fade-up 0.6s 0.1s ease both; }
+
+    .logo-icon {
+      width: 80px; height: 80px; border-radius: 24px;
+      background: linear-gradient(135deg, var(--primary), var(--violet));
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.2rem;
+      box-shadow: 0 0 40px rgba(99,102,241,0.5), 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+      background: linear-gradient(135deg, #fff 30%, var(--violet), var(--pink));
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 5s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1.05rem; color: var(--muted); max-width: 480px; margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── Cards grid ── */
+    .cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem; width: 100%; max-width: 900px;
+      animation: fade-up 0.6s 0.25s ease both;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      transition: transform 0.35s cubic-bezier(0.2,1,0.3,1), box-shadow 0.35s ease, border-color 0.35s ease;
+      cursor: default;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; inset: 0; border-radius: 20px;
+      background: linear-gradient(135deg, transparent, rgba(99,102,241,0.04));
+      opacity: 0; transition: opacity 0.35s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.4), 0 0 24px rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.3); }
+    .card:hover::before { opacity: 1; }
+
+    .card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 1rem;
+    }
+
+    .card-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+    .card-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+    .card-value {
+      margin-top: 0.75rem;
+      font-size: 1.4rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--violet));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ── Endpoints ── */
+    .endpoints {
+      width: 100%; max-width: 900px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      overflow: hidden;
+      animation: fade-up 0.6s 0.4s ease both;
+    }
+
+    .endpoints-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .endpoint-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem; transition: background 0.2s;
+    }
+    .endpoint-row:last-child { border-bottom: none; }
+    .endpoint-row:hover { background: rgba(99,102,241,0.05); }
+
+    .method {
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em;
+      min-width: 44px; text-align: center;
+    }
+    .get { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+    .post { background: rgba(99,102,241,0.12); color: #818cf8; border: 1px solid rgba(99,102,241,0.2); }
+
+    .path { font-family: 'Courier New', monospace; color: #c4b5fd; flex: 1; }
+    .desc-text { color: var(--muted); font-size: 0.78rem; }
+
+    /* ── Footer ── */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; font-size: 0.75rem; color: var(--muted);
+      padding-bottom: 2rem;
+      animation: fade-up 0.6s 0.5s ease both;
+    }
+
+    footer span { color: var(--primary); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="wrapper">
+
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      API Server Running
+    </div>
+
+    <div class="hero">
+      <div class="logo-icon">🎯</div>
+      <h1>CareerMatrix API</h1>
+      <p class="subtitle">
+        Intelligent Career Path Prediction — Spring Boot backend powering AI-driven career assessment, roadmap generation, and personalized student guidance.
+      </p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon" style="background:rgba(99,102,241,0.15);">🚀</div>
+        <div class="card-title">Server Port</div>
+        <div class="card-desc">Tomcat embedded server actively listening for requests.</div>
+        <div class="card-value">:8080</div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(139,92,246,0.15);">🤖</div>
+        <div class="card-title">AI Engine</div>
+        <div class="card-desc">Powered by Google Gemini for dynamic career roadmaps.</div>
+        <div class="card-value">Gemini</div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(236,72,153,0.15);">🗄️</div>
+        <div class="card-title">Database</div>
+        <div class="card-desc">H2 in-memory database for fast local development.</div>
+        <div class="card-value">H2 / Active</div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(34,197,94,0.15);">🔐</div>
+        <div class="card-title">Security</div>
+        <div class="card-desc">JWT-based authentication securing all private endpoints.</div>
+        <div class="card-value">JWT / On</div>
+      </div>
+    </div>
+
+    <div class="endpoints">
+      <div class="endpoints-header">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Available API Endpoints
+      </div>
+      <div class="endpoint-row"><span class="method post">POST</span><span class="path">/api/register</span><span class="desc-text">Register a new student account</span></div>
+      <div class="endpoint-row"><span class="method post">POST</span><span class="path">/api/login</span><span class="desc-text">Authenticate and receive JWT token</span></div>
+      <div class="endpoint-row"><span class="method post">POST</span><span class="path">/api/predict</span><span class="desc-text">Career fit prediction (Engineering)</span></div>
+      <div class="endpoint-row"><span class="method post">POST</span><span class="path">/api/predict-after12-career</span><span class="desc-text">After 12th career path prediction</span></div>
+      <div class="endpoint-row"><span class="method post">POST</span><span class="path">/api/predict-class10-stream</span><span class="desc-text">Class 10 stream suggestion</span></div>
+      <div class="endpoint-row"><span class="method get">GET</span><span class="path">/api/options/dynamic?stream=...</span><span class="desc-text">AI-generated skills & interests for custom streams</span></div>
+      <div class="endpoint-row"><span class="method post">POST</span><span class="path">/api/roadmap</span><span class="desc-text">Generate personalised career roadmap (Gemini)</span></div>
+      <div class="endpoint-row"><span class="method post">POST</span><span class="path">/api/chat</span><span class="desc-text">AI career counselor chatbot</span></div>
+      <div class="endpoint-row"><span class="method get">GET</span><span class="path">/api/colleges</span><span class="desc-text">College database with cutoffs</span></div>
+      <div class="endpoint-row"><span class="method get">GET</span><span class="path">/h2-console</span><span class="desc-text">H2 Database browser console</span></div>
+    </div>
+
+  </div>
+
+  <footer>
+    Built with ❤️ · <span>CareerMatrix</span> Backend · Spring Boot 3 · Gemini AI
+  </footer>
+</body>
+</html>

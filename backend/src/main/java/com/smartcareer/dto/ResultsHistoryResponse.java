@@ -20,7 +20,10 @@ public record ResultsHistoryResponse(
         List<String> recommendedSubjects,
         List<String> examPaths,
         List<String> nextSteps,
-        String assessmentType
+        String assessmentType,
+        List<String> rawSkills,
+        List<String> rawInterests,
+        Map<String, Object> assessmentInputs
 ) {
     public ResultsHistoryResponse(
             String resultId,
@@ -29,6 +32,6 @@ public record ResultsHistoryResponse(
             String explanation,
             Instant createdAt
     ) {
-        this(resultId, topCareer, careerScores, explanation, createdAt, null, null, null, null, null, null, null, null, null, null, null);
+        this(resultId, topCareer, careerScores, explanation, createdAt, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 }

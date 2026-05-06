@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 /**
  * Career roadmaps: rich branch-aware data from {@code BranchCareerMapping.json},
- * legacy {@code roadmaps.json}, optional OpenAI, then generic fallback.
+ * legacy {@code roadmaps.json}, optional Gemini, then generic fallback.
  */
 @Service
 public class RoadmapService {
@@ -40,18 +40,18 @@ public class RoadmapService {
     );
 
     private final ObjectMapper objectMapper;
-    private final OpenAiService openAiService;
+    private final GeminiService geminiService;
     private final BranchCareerMappingService branchCareerMappingService;
 
     private Map<String, List<RoadmapStepDto>> predefined = Map.of();
 
     public RoadmapService(
             ObjectMapper objectMapper,
-            OpenAiService openAiService,
+            GeminiService geminiService,
             BranchCareerMappingService branchCareerMappingService
     ) {
         this.objectMapper = objectMapper;
-        this.openAiService = openAiService;
+        this.geminiService = geminiService;
         this.branchCareerMappingService = branchCareerMappingService;
     }
 
@@ -90,11 +90,19 @@ public class RoadmapService {
         String branchCode = branchCareerMappingService.resolveBranchCodeOrOther(request.branch());
 
         // 1. Try AI First for "Live" data
-        if (openAiService.isConfigured()) {
+        if (geminiService.isConfigured()) {
             try {
                 // Include type in the prompt for AI to know context
-                String context = type + " roadmap for career " + careerInput + " in stream " + branchCode;
-                List<RoadmapStepDto> aiSteps = generateWithOpenAi(context, branchCode);
+                String streamLabel = branchCareerMappingService.findBranch(branchCode)
+                        .map(BranchCareerMappingService.BranchMeta::label)
+                        .orElse(branchCode);
+                
+                String contextDescription = (type.equals("CLASS10") ? "Class 10 Stream Selection" : 
+                                           type.equals("AFTER12") ? "Post-12th Career Path" : 
+                                           "Professional Career") + " roadmap";
+                
+                String context = contextDescription + " for \"" + careerInput + "\" starting from a background in \"" + streamLabel + "\"";
+                List<RoadmapStepDto> aiSteps = generateWithGemini(context, branchCode, request.skills(), request.interests());
                 if (!aiSteps.isEmpty()) {
                     return new RoadmapResponse(aiSteps);
                 }
@@ -494,10 +502,6 @@ public class RoadmapService {
 
     private String resolveKey(String normalized) {
         String lc = normalized.toLowerCase(Locale.ROOT);
-        String aliased = aliasCareerToRoadmapKey(lc);
-        if (aliased != null) {
-            return aliased;
-        }
         for (String k : predefined.keySet()) {
             if (k.toLowerCase(Locale.ROOT).equals(lc)) {
                 return k;
@@ -527,107 +531,77 @@ public class RoadmapService {
         return null;
     }
 
-    private static String aliasCareerToRoadmapKey(String normalizedLower) {
-        if (normalizedLower.contains("software engineer") && !normalizedLower.contains("embedded")) {
-            return "Software Engineering";
-        }
-        if (normalizedLower.contains("data scientist") || (normalizedLower.contains("data science") && !normalizedLower.contains("analyst"))) {
-            return "Data Science";
-        }
-        if (normalizedLower.contains("data analyst")) {
-            return "Data Science";
-        }
-        if (normalizedLower.contains("ai engineer") || normalizedLower.contains("artificial intelligence")) {
-            return "Data Science";
-        }
-        if (normalizedLower.contains("web developer") || normalizedLower.contains("full stack")) {
-            return "Full Stack Development";
-        }
-        if (normalizedLower.contains("cloud engineer") || normalizedLower.contains("devops")) {
-            return "Cloud Computing";
-        }
-        if (normalizedLower.contains("cybersecurity") || normalizedLower.contains("security engineer")) {
-            return "Cybersecurity";
-        }
-        if (normalizedLower.contains("embedded") || normalizedLower.contains("vlsi") || normalizedLower.contains("iot engineer")) {
-            return "Software Engineering";
-        }
-        if (normalizedLower.contains("electrical engineer") || normalizedLower.contains("power systems")) {
-            return "Software Engineering";
-        }
-        if (normalizedLower.contains("mechanical") || normalizedLower.contains("production engineer")) {
-            return "Software Engineering";
-        }
-        if (normalizedLower.contains("civil engineer") || normalizedLower.contains("structural engineer")) {
-            return "Software Engineering";
-        }
-        return null;
-    }
-
     private List<RoadmapStepDto> genericRoadmap(String label, String branchCode) {
         String branchNote = branchCode != null && !branchCode.equalsIgnoreCase("OTHER")
-                ? " Tailor each step to branch " + branchCode + " (labs, standards, and tools used in that industry)."
+                ? " Leveraging your background in " + branchCode + ", "
                 : "";
         List<RoadmapStepDto> steps = new ArrayList<>();
         steps.add(new RoadmapStepDto(
-                "Step 1: Clarify the role (Beginner)",
-                "Define target titles and industries for \"" + label + "\". Review 10 job descriptions; list recurring skills and tools. Timeline: 1–2 weeks." + branchNote,
-                List.of("Job boards", "LinkedIn", "Notion"),
-                List.of("JD comparison matrix"),
-                List.of("O*NET", "Glassdoor skill tags")
+                "Step 1: Role Discovery & Market Research",
+                branchNote + "start by researching the standard entry requirements for \"" + label + "\". Identify the top 3 specialized skills needed in the industry today.",
+                List.of("LinkedIn Industry Insights", "Job Descriptions"),
+                List.of("Skills GAP Analysis document"),
+                List.of("O*NET Online", "Industry Blogs")
         ));
         steps.add(new RoadmapStepDto(
-                "Step 2: Core skills",
-                "Pick one primary skill chain aligned with your branch; follow official docs and short courses. Build weekly micro-projects.",
-                List.of("IDE", "Official docs"),
-                List.of("Weekly micro-project"),
-                List.of("YouTube playlists with labs")
+                "Step 2: Foundational Learning Path",
+                "Build a strong foundation. Since you're targeting \"" + label + "\", focus on mastering the core principles and fundamental theories first.",
+                List.of("Educational Platforms", "Textbooks"),
+                List.of("Concept mind-map"),
+                List.of("Khan Academy", "Coursera Foundations")
         ));
         steps.add(new RoadmapStepDto(
-                "Step 3: Projects portfolio",
-                "Ship 2–3 projects with README, assumptions, and metrics. Host demos where applicable.",
-                List.of("Git", "CI optional"),
-                List.of("Portfolio site or PDF"),
-                List.of("Peer review checklist")
+                "Step 3: Practical Application & Projects",
+                "Apply what you've learned. Build 2 small projects that demonstrate your ability to solve real problems in the field of " + label + ".",
+                List.of("Relevant Software/Tools", "Project Management Tools"),
+                List.of("2 Small-scale projects"),
+                List.of("Project inspiration sites", "GitHub (if technical)")
         ));
         steps.add(new RoadmapStepDto(
-                "Step 4: Professional skills",
-                "Practice behavioral interviews (STAR), collaboration, and written design notes.",
-                List.of("Calendar", "Recording for mock interviews"),
-                List.of("STAR story bank"),
-                List.of("Company engineering blogs")
+                "Step 4: Professional Networking",
+                "Connect with experts. Find 2-3 mentors currently working in \"" + label + "\" and ask for a 15-minute coffee chat to understand their journey.",
+                List.of("LinkedIn", "Professional Communities"),
+                List.of("Networking tracker"),
+                List.of("Industry meetups", "Alumni networks")
         ));
         steps.add(new RoadmapStepDto(
-                "Step 5: Community & feedback",
-                "Join domain communities, get mentorship, iterate on resume and headline.",
-                List.of("Discord/Slack", "Meetup"),
-                List.of("Mentor coffee chat"),
-                List.of("Regional industry associations")
+                "Step 5: Specialized Mastery",
+                "Deep dive into advanced topics. Choose a specific sub-niche within \"" + label + "\" to become an expert in.",
+                List.of("Advanced Tools", "Niche Software"),
+                List.of("Capstone specialization project"),
+                List.of("Specialized Certifications")
         ));
         steps.add(new RoadmapStepDto(
-                "Step 6: Advanced growth",
-                "Deepen specialization; certifications only if demanded by employers in your region.",
-                List.of("Advanced courses"),
-                List.of("Specialization capstone"),
-                List.of("Certification roadmaps")
+                "Step 6: Career Launch & Iteration",
+                "Refine your portfolio and start applying. Update your resume to highlight the projects and skills you've built during this roadmap.",
+                List.of("Resume Builder", "Portfolio Site"),
+                List.of("Final professional portfolio"),
+                List.of("Interview prep guides")
         ));
         return steps;
     }
 
-    private List<RoadmapStepDto> generateWithOpenAi(String context, String branchCode) throws Exception {
+    private List<RoadmapStepDto> generateWithGemini(String context, String branchCode, List<String> skills, List<String> interests) throws Exception {
         String branchLabel = branchCareerMappingService.findBranch(branchCode)
                 .map(BranchCareerMappingService.BranchMeta::label)
                 .orElse(branchCode);
+                
+        String customSkills = (skills != null && !skills.isEmpty()) ? String.join(", ", skills) : "None specified";
+        String customInterests = (interests != null && !interests.isEmpty()) ? String.join(", ", interests) : "None specified";
+        
         String userPrompt = """
                 Generate a PROFESSIONAL and ACTIONABLE learning roadmap for: %s.
-                Student Context: Current academic branch is %s (%s).
+                Student Context: Current academic branch/stream is %s (%s).
+                Student's Custom Skills: %s
+                Student's Custom Interests: %s
                 
                 REQUIREMENTS:
                 1. Timeline: Break it down into clear weekly/monthly milestones (e.g., "Week 1-2", "Month 1").
-                2. Tools: Recommend specific, industry-standard modern tools (e.g., VS Code, GitHub, Figma, specific libraries).
-                3. Projects: Suggest 2-3 real-world practical projects with specific goals.
-                4. Resources: Link to official documentation or top-tier learning platforms (e.g., MDN, Coursera, official sites).
-                5. Stream Awareness: If the career doesn't match the stream, include "Bridge Steps" to help the transition.
+                2. Customization: Explicitly weave their Custom Skills and Custom Interests into the learning path.
+                3. Tools: Recommend specific, industry-standard modern tools relevant to their interests.
+                4. Projects: Suggest 2-3 real-world practical projects that directly utilize their custom skills.
+                5. Resources: Link to official documentation or top-tier learning platforms.
+                6. Stream Awareness: If the career doesn't match the stream, include "Bridge Steps" to help the transition.
 
                 Return ONLY valid JSON (no markdown fences) with this exact shape:
                 {"roadmap":[
@@ -635,14 +609,13 @@ public class RoadmapService {
                   ...
                 ]}
                 Include 6-8 comprehensive steps from Beginner to Job-Ready.
-                """.formatted(context.replace("\"", "'"), branchLabel, branchCode);
+                """.formatted(context.replace("\"", "'"), branchLabel, branchCode, customSkills, customInterests);
 
-        List<Map<String, String>> messages = List.of(
-                Map.of("role", "system", "content", "You output only compact JSON objects. No prose outside JSON."),
-                Map.of("role", "user", "content", userPrompt)
+        String raw = geminiService.chatCompletion(
+                "You output only compact JSON objects. No prose outside JSON.",
+                List.of(),
+                userPrompt
         );
-
-        String raw = openAiService.chatCompletion(messages);
         raw = stripJsonFences(raw);
         JsonNode root = objectMapper.readTree(raw);
         JsonNode arr = root.path("roadmap");

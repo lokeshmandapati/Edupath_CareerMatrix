@@ -21,7 +21,9 @@ public record PredictionResponse(
         List<String> crossBranchSuggestions,
         List<String> recommendedSubjects,
         List<String> examPaths,
-        List<String> nextSteps
+        List<String> nextSteps,
+        List<String> rawSkills,
+        List<String> rawInterests
 ) {
     public record CareerRankItem(String career, double scorePercent, int rank) {}
 

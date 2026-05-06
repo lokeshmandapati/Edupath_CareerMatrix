@@ -91,10 +91,37 @@
       }
     },
     {
+      "code": "MBBS",
+      "label": "Medicine (MBBS)",
+      "chatHints": {
+        "tools": ["Stethoscope", "Diagnostic tools", "Medical software", "Anatomy apps"],
+        "technologies": ["Clinical Diagnosis", "Pharmacology", "Internal Medicine", "Surgery basics"],
+        "careers": ["General Physician", "Surgeon", "Medical Researcher", "Public Health Specialist"]
+      }
+    },
+    {
+      "code": "CA",
+      "label": "Chartered Accountancy (CA)",
+      "chatHints": {
+        "tools": ["Excel", "Tally", "Taxation software", "Financial calculators"],
+        "technologies": ["Audit", "Direct/Indirect Tax", "Financial Management", "Corporate Law"],
+        "careers": ["Chartered Accountant", "Auditor", "Financial Consultant", "Tax Advisor"]
+      }
+    },
+    {
+      "code": "LAW_ARTS",
+      "label": "Legal Studies (Law)",
+      "chatHints": {
+        "tools": ["Legal databases (SCC Online/Manupatra)", "MS Word", "Case management tools"],
+        "technologies": ["Constitutional Law", "Corporate Law", "Criminal Justice", "Legal Research"],
+        "careers": ["Corporate Lawyer", "Litigation Lawyer", "Legal Consultant", "Public Prosecutor"]
+      }
+    },
+    {
       "code": "OTHER",
       "label": "Other",
       "chatHints": {
-        "tools": ["Git", "Office suite", "Domain-specific CAD/IDE"],
+        "tools": ["Git", "Office suite", "Domain-specific tools"],
         "technologies": ["Communication skills", "Project management", "Domain fundamentals"],
         "careers": ["Cross-functional roles", "Analyst", "Consulting"]
       }
@@ -168,7 +195,28 @@
     "BT": ["Bioinformatics Scientist", "Research Scientist", "Clinical Research Associate", "Bioprocess Engineer"],
     "AE": ["Aerospace Engineer", "Flight Systems Engineer", "Structures Engineer", "Propulsion Engineer"],
     "MTR": ["Automation Engineer", "Robotics Engineer", "Embedded Systems Engineer", "Control Engineer"],
-    "OTHER": ["Software Engineer", "Data Analyst", "Product Manager (Tech)", "Consultant"]
+    "MBBS": [
+      "General Physician",
+      "Surgeon",
+      "Medical Researcher",
+      "Healthcare Administrator",
+      "Public Health Expert"
+    ],
+    "CA": [
+      "Chartered Accountant",
+      "Financial Auditor",
+      "Tax Consultant",
+      "Investment Banker",
+      "Corporate Finance Manager"
+    ],
+    "LAW_ARTS": [
+      "Corporate Lawyer",
+      "Litigation Specialist",
+      "Legal Analyst",
+      "Judicial Officer",
+      "Company Secretary"
+    ],
+    "OTHER": ["Software Engineer", "Data Analyst", "Product Manager", "Consultant", "Entrepreneur"]
   },
   "richRoadmaps": {
     "data scientist|CSE": [

@@ -3,34 +3,13 @@ import { Link, useNavigate, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { api } from '../services/api'
 import { useAuth } from '../context/AuthContext'
-import InputField from '../components/InputField'
-import Button from '../components/Button'
-import Logo, { LogoMark } from '../components/Logo'
 
-const UserIcon = () => (
-  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.5}
-      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-    />
-  </svg>
-)
-
-const LockIcon = () => (
-  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.5}
-      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-    />
-  </svg>
-)
-
-const PROJECT_DESCRIPTION =
-  'CareerMatrix is a full-stack career intelligence application that translates your academics, technical skills, interests, and project experience into ranked career recommendations. The CareerFit Prediction Algorithm normalizes scores across five domains—software engineering, data science, cybersecurity, full stack development, and cloud computing—and explains each match in plain language. After you authenticate, you unlock your dashboard, detailed results with visual breakdowns, AI-generated roadmaps, and a floating career assistant for skills, technologies, and résumés. Secure sign-in protects your results so you can revisit anytime, retake the assessment as you grow, compare outcomes, and plan your next steps with confidence while keeping your history private.'
+const highlights = [
+  { icon: '📊', title: 'Your Career Blueprint', desc: 'AI-ranked career matches with full visual breakdown.' },
+  { icon: '🗺️', title: 'Learning Roadmap', desc: 'Personalised step-by-step path from beginner to job-ready.' },
+  { icon: '💬', title: 'Career AI Assistant', desc: 'Chat anytime for skills, resume, and exam guidance.' },
+  { icon: '🔁', title: 'Track Your Progress', desc: 'Retake and compare assessments as you grow.' },
+]
 
 export default function Login() {
   const navigate = useNavigate()
@@ -39,6 +18,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPass, setShowPass] = useState(false)
 
   if (isAuthenticated) return <Navigate to="/dashboard" replace />
 
@@ -59,92 +39,137 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-page">
-      <header className="border-b border-borderline bg-surface px-4 py-4 shadow-sm sm:px-8">
-        <Logo to="/login" size="md" />
-      </header>
+    <div className="relative flex min-h-screen overflow-hidden" style={{ background: '#09090f', color: '#f1f5f9' }}>
 
-      <div className="flex flex-1 items-center px-4 py-10 sm:px-6 sm:py-14">
+      {/* Background */}
+      <div className="pointer-events-none fixed inset-0 -z-10">
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 80% 60% at 90% -10%, rgba(139,92,246,0.18) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 10% 110%, rgba(99,102,241,0.15) 0%, transparent 60%)' }} />
+        <div className="absolute -top-52 -right-40 h-[600px] w-[600px] rounded-full opacity-20 blur-[100px] animate-pulse" style={{ background: 'radial-gradient(circle, #8b5cf6, transparent 70%)' }} />
+        <div className="absolute -bottom-52 -left-40 h-[500px] w-[500px] rounded-full opacity-15 blur-[100px] animate-pulse" style={{ background: 'radial-gradient(circle, #6366f1, transparent 70%)', animationDelay: '2s' }} />
+      </div>
+
+      {/* Left panel — form */}
+      <div className="flex flex-1 items-center justify-center px-6 py-12">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center"
+          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="w-full max-w-md"
         >
-          <section
-            className="flex flex-col justify-center space-y-6"
-            aria-labelledby="login-project-heading"
-          >
-            <div className="flex items-start gap-4">
-              <LogoMark size="xl" className="shrink-0 drop-shadow-sm" />
-              <div className="min-w-0 pt-1">
-                <h2 id="login-project-heading" className="font-display text-xl font-semibold text-accent sm:text-2xl">
-                  About CareerMatrix
-                </h2>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-primary/90">Platform overview</p>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-borderline bg-gradient-to-br from-surface to-page p-6 shadow-sm sm:p-8">
-              <p className="text-sm leading-relaxed text-slate-600 sm:text-[15px]">{PROJECT_DESCRIPTION}</p>
-            </div>
-          </section>
+          {/* Mobile logo */}
+          <div className="mb-8 flex items-center gap-3 lg:hidden">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl text-lg" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
+            <span className="text-base font-extrabold" style={{ color: '#f1f5f9' }}>CareerMatrix</span>
+          </div>
 
-          <div className="rounded-2xl border border-borderline bg-surface p-8 shadow-lg transition-all duration-300 sm:p-10">
-            <h1 className="font-display text-2xl font-bold tracking-tight text-accent sm:text-3xl">Welcome Back</h1>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">Login to explore your personalized career insights</p>
+          <div className="rounded-3xl border p-8 sm:p-10" style={{ background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)' }}>
+            <div className="mb-8">
+              <h1 className="text-2xl font-extrabold sm:text-3xl" style={{ color: '#f1f5f9' }}>Welcome back 👋</h1>
+              <p className="mt-2 text-sm" style={{ color: '#64748b' }}>Sign in to access your career dashboard and insights.</p>
+            </div>
 
             {error && (
-              <div
-                className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 shadow-sm"
-                role="alert"
-              >
-                {error}
+              <div className="mb-6 rounded-xl border px-4 py-3 text-sm font-medium" style={{ borderColor: 'rgba(239,68,68,0.3)', background: 'rgba(239,68,68,0.08)', color: '#f87171' }} role="alert">
+                ⚠️ {error}
               </div>
             )}
 
-            <form onSubmit={submit} className="mt-8 space-y-5">
-              <InputField
-                label="Name or Email"
-                autoComplete="username"
-                required
-                value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)}
-                placeholder="Your name or email"
-                icon={<UserIcon />}
-              />
-              <p className="-mt-2 text-xs text-slate-500">Use the name or email you registered with.</p>
+            <form onSubmit={submit} className="space-y-5">
+              {/* Identifier */}
+              <div>
+                <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Name or Email</label>
+                <input
+                  required value={identifier} onChange={(e) => setIdentifier(e.target.value)}
+                  autoComplete="username"
+                  placeholder="Your name or email"
+                  className="w-full rounded-xl px-4 py-3 text-sm font-medium outline-none transition-all"
+                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#f1f5f9' }}
+                  onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,0.6)'}
+                  onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                />
+                <p className="mt-1.5 text-xs" style={{ color: '#475569' }}>Use the name or email you registered with.</p>
+              </div>
 
-              <InputField
-                label="Password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                icon={<LockIcon />}
-              />
+              {/* Password */}
+              <div>
+                <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Password</label>
+                <div className="relative">
+                  <input
+                    type={showPass ? 'text' : 'password'} required
+                    value={password} onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                    placeholder="Your password"
+                    className="w-full rounded-xl px-4 py-3 pr-12 text-sm font-medium outline-none transition-all"
+                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#f1f5f9' }}
+                    onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,0.6)'}
+                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                  />
+                  <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold" style={{ color: '#6366f1' }}>
+                    {showPass ? 'Hide' : 'Show'}
+                  </button>
+                </div>
+              </div>
 
-              <Button type="submit" disabled={loading} className="!mt-2 w-full !py-3.5">
+              <button
+                type="submit" disabled={loading}
+                className="w-full rounded-xl py-3.5 text-sm font-bold text-white transition-all hover:scale-[1.02] hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
+                style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 24px rgba(99,102,241,0.4)' }}
+              >
                 {loading ? (
                   <span className="inline-flex items-center gap-2">
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                     Signing in…
                   </span>
-                ) : (
-                  'Sign in'
-                )}
-              </Button>
+                ) : '✨ Sign In to Dashboard'}
+              </button>
             </form>
 
-            <p className="mt-8 text-center text-sm text-slate-600">
+            <p className="mt-6 text-center text-sm" style={{ color: '#475569' }}>
               No account?{' '}
-              <Link to="/signup" className="font-semibold text-primary transition-all duration-300 hover:text-primary/80 hover:underline">
-                Create one
-              </Link>
+              <Link to="/signup" className="font-bold transition-colors hover:underline" style={{ color: '#818cf8' }}>Sign up</Link>
             </p>
           </div>
         </motion.div>
       </div>
+
+      {/* Right panel — highlights */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-14">
+        <Link to="/" className="flex items-center gap-3 self-end">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl text-xl" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
+          <div>
+            <div className="text-sm font-extrabold" style={{ color: '#f1f5f9' }}>CareerMatrix</div>
+            <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: '#6366f1' }}>Career Path Prediction</div>
+          </div>
+        </Link>
+
+        <div className="space-y-8">
+          <div>
+            <h2 className="text-4xl font-extrabold leading-tight" style={{ letterSpacing: '-0.03em' }}>
+              Your personalized{' '}
+              <span style={{ background: 'linear-gradient(135deg, #818cf8, #a78bfa, #ec4899)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                career intelligence
+              </span>{' '}
+              awaits.
+            </h2>
+            <p className="mt-4 text-base leading-relaxed" style={{ color: '#64748b' }}>
+              Sign in to access your full dashboard — predictions, roadmaps, deadlines, and AI guidance all in one place.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            {highlights.map((h) => (
+              <div key={h.title} className="rounded-2xl border p-5" style={{ borderColor: 'rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.03)' }}>
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl text-xl" style={{ background: 'rgba(99,102,241,0.15)' }}>{h.icon}</div>
+                <div className="mb-1 text-sm font-bold" style={{ color: '#f1f5f9' }}>{h.title}</div>
+                <div className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{h.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <p className="text-xs" style={{ color: '#334155' }}>© 2025 CareerMatrix · Free for all students</p>
+      </div>
+
     </div>
   )
 }

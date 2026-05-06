@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ADMISSION_EXAMS } from '../data/admissionData'
 import { INDIAN_STATES } from '../data/indianStates'
+import { api } from '../services/api'
 import PageTransition from '../components/PageTransition'
 import Card from '../components/Card'
 import Button from '../components/Button'
@@ -64,13 +65,63 @@ function CountdownTimer({ targetDate }) {
 }
 
 export default function AdmissionCalendar() {
+  const [exams, setExams] = useState([])
+  const [loading, setLoading] = useState(true)
   const [reminders, setReminders] = useState({})
   const [trackedExams, setTrackedExams] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [selectedExam, setSelectedExam] = useState(null)
   const [filterCategory, setFilterCategory] = useState('All')
-  const [filterState, setFilterState] = useState('All')
+  const [filterState, setFilterState] = useState('All India')
+  const [stateInput, setStateInput] = useState('All India')
   const [viewTrackedOnly, setViewTrackedOnly] = useState(false)
+
+  // Pre-defined categories for better UI initial state
+  const UI_CATEGORIES = ['All', 'Engineering', 'Medical', 'Management', 'Design', 'Law', 'Architecture', 'University']
+
+  const fetchExams = async (stateVal, catVal) => {
+    setLoading(true)
+    try {
+      const { data } = await api.get('/api/toolkit/upcoming-exams', {
+        params: { state: stateVal, category: catVal }
+      })
+      
+      if (data && data.length > 0) {
+        setExams(data)
+      } else {
+        const fallback = ADMISSION_EXAMS.filter(exam => {
+          const stateMatch = stateVal === 'All India' || exam.state === stateVal || exam.state === 'All India'
+          const catMatch = catVal === 'All' || exam.category === catVal
+          return stateMatch && catMatch
+        })
+        setExams(fallback)
+      }
+    } catch (e) {
+      console.error("Fetch error:", e)
+      const fallback = ADMISSION_EXAMS.filter(exam => {
+        const stateMatch = stateVal === 'All India' || exam.state === stateVal || exam.state === 'All India'
+        const catMatch = catVal === 'All' || exam.category === catVal
+        return stateMatch && catMatch
+      })
+      setExams(fallback)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchExams(filterState, filterCategory)
+  }, [filterCategory, filterState])
+
+  const handleSearch = () => {
+    setFilterState(stateInput)
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  }
 
   const toggleReminder = (examId) => {
     setReminders(prev => ({
@@ -78,7 +129,7 @@ export default function AdmissionCalendar() {
       [examId]: !prev[examId]
     }))
     if (!reminders[examId]) {
-      setSelectedExam(ADMISSION_EXAMS.find(e => e.id === examId))
+      setSelectedExam(exams.find(e => e.id === examId))
       setShowModal(true)
     }
   }
@@ -89,17 +140,15 @@ export default function AdmissionCalendar() {
     )
   }
 
-  const categories = ['All', ...new Set(ADMISSION_EXAMS.map(e => e.category))]
   const states = ['All', 'All India', ...INDIAN_STATES]
 
-  const filteredExams = ADMISSION_EXAMS.filter(exam => {
-    const matchCat = filterCategory === 'All' || exam.category === filterCategory
-    const matchState = 
-      filterState === 'All' || 
-      exam.state === filterState || 
-      (filterState !== 'All' && filterState !== 'All India' && exam.state === 'All India')
+  const filteredExams = exams.filter(exam => {
     const matchTracked = !viewTrackedOnly || trackedExams.includes(exam.id)
-    return matchCat && matchState && matchTracked
+    // Only show exams that are today or in the future
+    const examDate = new Date(exam.date)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    return matchTracked && examDate >= today
   })
 
   return (
@@ -141,12 +190,12 @@ export default function AdmissionCalendar() {
                 <p className="text-sm text-muted">Choose a field to see related entrance exams</p>
               </div>
               <span className="rounded-full bg-primary/10 px-4 py-1 text-xs font-bold text-primary ring-1 ring-primary/20">
-                {categories.length - 1} Fields Available
+                {UI_CATEGORIES.length - 1} Fields Available
               </span>
             </div>
             
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
-              {categories.map(cat => {
+              {UI_CATEGORIES.map(cat => {
                 const icon = 
                   cat === 'Engineering' ? '🛠️' :
                   cat === 'Medical' ? '🏥' :
@@ -179,28 +228,56 @@ export default function AdmissionCalendar() {
                 <label className="text-[10px] font-black uppercase tracking-widest text-muted">Region Selection</label>
                 <p className="text-sm font-bold text-accent">Filter by your Home State</p>
               </div>
-              <div className="relative w-full md:max-w-md">
-                <select
-                  value={filterState}
-                  onChange={(e) => setFilterState(e.target.value)}
-                  className="w-full appearance-none rounded-2xl border border-black/5 bg-white/80 px-6 py-4 text-sm font-bold text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all cursor-pointer"
-                >
-                  {states.map(s => (
-                    <option key={s} value={s}>{s === 'All' ? '🌍 Show All India + All States' : `📍 ${s}`}</option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-primary">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                  </svg>
+              <div className="flex flex-col gap-4 w-full md:max-w-xl">
+                <div className="flex flex-col gap-2 sm:flex-row">
+                  <div className="relative flex-1">
+                    <input
+                      type="text"
+                      list="indian-states"
+                      value={stateInput}
+                      onChange={(e) => setStateInput(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      placeholder="Type your state (e.g. Maharashtra)"
+                      className="w-full rounded-2xl border border-black/5 bg-white/80 px-6 py-4 text-sm font-bold text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all"
+                    />
+                    <datalist id="indian-states">
+                      <option value="All India" />
+                      {INDIAN_STATES.map(s => (
+                        <option key={s} value={s} />
+                      ))}
+                    </datalist>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-primary/40">
+                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleSearch}
+                    className="flex items-center justify-center gap-2 rounded-2xl bg-primary px-8 py-4 text-sm font-black text-white shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  >
+                    <span>SEARCH</span>
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </button>
                 </div>
+                <p className="px-2 text-[10px] font-bold text-muted italic">
+                  Tip: Press Enter or click Search to find state-specific and national exams using AI.
+                </p>
               </div>
             </div>
           </div>
 
           <motion.div variants={container} initial="hidden" animate="show" className="grid gap-6">
-            {filteredExams.map((exam) => (
-              <motion.div key={exam.id} variants={item}>
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20 bg-black/5 rounded-3xl">
+                <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+                <p className="mt-4 text-sm font-bold text-primary animate-pulse">AI is discovering upcoming exams for you...</p>
+              </div>
+            ) : filteredExams.length > 0 ? (
+              filteredExams.map((exam) => (
+                <motion.div key={exam.id || exam.name} variants={item}>
                 <Card className="glass group overflow-hidden border-none p-0 shadow-premium transition-all hover:shadow-2xl">
                   <div className="flex flex-col gap-6 p-6 lg:flex-row">
                     <div className="flex-1 space-y-4">
@@ -333,8 +410,9 @@ export default function AdmissionCalendar() {
                   </AnimatePresence>
                 </Card>
               </motion.div>
-            ))}
-          </motion.div>
+            ))
+          ) : null}
+        </motion.div>
 
           {filteredExams.length === 0 && (
             <div className="rounded-3xl bg-black/5 py-20 text-center">

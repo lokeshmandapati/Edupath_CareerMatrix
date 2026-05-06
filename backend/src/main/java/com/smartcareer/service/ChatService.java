@@ -131,12 +131,43 @@ public class ChatService {
         if (m.contains("full form") && m.contains("ai")) {
             return "The full form of AI is Artificial Intelligence.";
         }
-        if (m.contains("diff") && m.contains("ai") && (m.contains("ml") || m.contains("machine learning") || m.contains("dl") || m.contains("dp"))) {
+        if (m.contains("rnn") || (m.contains("recurrent") && m.contains("neural"))) {
             return """
-                    Here is the difference:
-                    • AI (Artificial Intelligence): The broad concept of machines being able to carry out tasks in a way that we would consider “smart”.
-                    • ML (Machine Learning): A subset of AI based on the idea that we should just give machines access to data and let them learn for themselves.
-                    • DL (Deep Learning): A subset of ML that uses neural networks with many layers (deep) to solve complex problems like image and speech recognition.""".stripIndent().trim();
+                    **Recurrent Neural Networks (RNN):**
+                    RNNs are a class of neural networks designed for processing sequential data (like text, speech, or time-series).
+                    
+                    **Key Features:**
+                    • **Internal Memory**: They maintain a "hidden state" that captures information from previous steps in the sequence.
+                    • **Sequential Processing**: Unlike standard neural networks, RNNs process inputs one by one while keeping track of context.
+                    • **Advanced Variants**: LSTMs (Long Short-Term Memory) and GRUs are used to handle long-term dependencies better than basic RNNs.""".stripIndent().trim();
+        }
+        if (m.contains("cnn") || (m.contains("convolutional") && m.contains("neural"))) {
+            return """
+                    **Convolutional Neural Networks (CNN):**
+                    CNNs are specialized neural networks primarily used for image recognition and computer vision tasks.
+                    
+                    **Key Components:**
+                    • **Convolutional Layers**: Use filters to detect patterns like edges, shapes, and textures.
+                    • **Pooling Layers**: Reduce the spatial dimensions (downsampling) to make the model more efficient.
+                    • **Fully Connected Layers**: Perform the final classification based on the detected features.""".stripIndent().trim();
+        }
+        if (m.contains("data science") || m.contains("what is data science")) {
+            return """
+                    **Data Science:**
+                    Data Science is an interdisciplinary field that uses scientific methods, processes, algorithms, and systems to extract knowledge and insights from structured and unstructured data.
+                    
+                    **Core Skills Needed:**
+                    • **Programming**: Python or R.
+                    • **Statistics**: Probability, hypothesis testing, and data distribution.
+                    • **Tools**: SQL, Pandas, Scikit-learn, and Tableau/PowerBI for visualization.
+                    • **Machine Learning**: Regression, classification, and clustering algorithms.""".stripIndent().trim();
+        }
+        if (m.contains("diff") && m.contains("ai") && (m.contains("ml") || m.contains("machine learning") || m.contains("dl") || m.contains("deep learning"))) {
+            return """
+                    **The AI Hierarchy:**
+                    • **AI (Artificial Intelligence)**: The broad concept of machines acting "smart" or mimicking human intelligence.
+                    • **ML (Machine Learning)**: A subset of AI where machines learn from data without being explicitly programmed.
+                    • **DL (Deep Learning)**: A subset of ML using multi-layered neural networks (like brain neurons) to solve highly complex tasks like face ID or voice recognition.""".stripIndent().trim();
         }
         if (m.contains("who are you") || m.contains("what is your name")) {
             return "I am your CareerMatrix Assistant, here to help you navigate your education and career path.";

@@ -7,8 +7,9 @@ import RoadmapCard from '../components/RoadmapCard'
 import Loader from '../components/Loader'
 import PageTransition from '../components/PageTransition'
 import Card from '../components/Card'
-import { ENGINEERING_BRANCHES } from '../data/assessmentOptions'
+import { STREAM_BRANCHES } from '../data/assessmentOptions'
 
+const ALL_BRANCHES = Object.values(STREAM_BRANCHES).flat()
 const DEFAULT_CAREER = 'Software Engineer'
 const DEFAULT_TYPE = 'ENGINEERING'
 const DEFAULT_CLASS10_TARGET = 'Science'
@@ -70,7 +71,14 @@ export default function RoadmapPage() {
     // default to a sensible target so we don't accidentally generate engineering roadmaps.
     if (initialType === 'CLASS10') return DEFAULT_CLASS10_TARGET
     if (initialType === 'AFTER12') return DEFAULT_AFTER12_TARGET
-    return readStoredCareer() || DEFAULT_CAREER
+    
+    const storedCareer = readStoredCareer()
+    if (storedCareer) return storedCareer
+    
+    // Fallback to the stored branch label if possible
+    const storedBranchId = readStoredBranch()
+    const branchName = ALL_BRANCHES.find(b => b.id === storedBranchId)?.label || storedBranchId
+    return branchName || DEFAULT_CAREER
   }, [paramCareer, initialType])
 
   const initialBranch = useMemo(() => {
@@ -88,7 +96,7 @@ export default function RoadmapPage() {
   const [error, setError] = useState('')
 
   const branchLabel = useMemo(
-    () => ENGINEERING_BRANCHES.find((b) => b.id === branchCode)?.label || branchCode,
+    () => ALL_BRANCHES.find((b) => b.id === branchCode)?.label || branchCode,
     [branchCode],
   )
 
@@ -97,10 +105,24 @@ export default function RoadmapPage() {
     setError('')
     try {
       const normalizedType = (type || DEFAULT_TYPE).toUpperCase()
+      
+      let skills = []
+      let interests = []
+      try {
+        const storedSkills = localStorage.getItem('careermatrix_last_skills')
+        if (storedSkills) skills = JSON.parse(storedSkills)
+        const storedInterests = localStorage.getItem('careermatrix_last_interests')
+        if (storedInterests) interests = JSON.parse(storedInterests)
+      } catch {
+        /* ignore */
+      }
+
       const data = await postRoadmap({
         career: label,
-        branch: normalizedType === 'ENGINEERING' ? branch || 'OTHER' : null,
+        branch: branch || 'OTHER',
         type: normalizedType,
+        skills,
+        interests,
       })
       const steps = Array.isArray(data?.roadmap) ? data.roadmap : []
       setRoadmap(steps)
@@ -126,8 +148,16 @@ export default function RoadmapPage() {
   }, [])
 
   useEffect(() => {
-    fetchRoadmap(initialType, initialCareer, initialType === 'ENGINEERING' ? initialBranch : null)
-  }, [initialType, initialCareer, initialBranch, fetchRoadmap])
+    // Only auto-fetch if we have a specific career from URL or context, 
+    // NOT if it's just a default fallback.
+    const hasCareer = paramCareer || readStoredContextLabel() || readStoredCareer()
+    if (hasCareer) {
+      fetchRoadmap(initialType, initialCareer, initialBranch)
+    } else {
+      setLoading(false)
+      setRoadmap([])
+    }
+  }, [initialType, initialCareer, initialBranch, fetchRoadmap, paramCareer])
 
   useEffect(() => {
     setInputCareer(career)
@@ -137,8 +167,9 @@ export default function RoadmapPage() {
 
   const onRegenerate = (e) => {
     e.preventDefault()
-    const name = inputCareer.trim() || DEFAULT_CAREER
-    const br = assessmentType === 'ENGINEERING' ? inputBranch.trim() || 'OTHER' : null
+    // Fallback to the branch label if no specific career is entered
+    const name = inputCareer.trim() || branchLabel
+    const br = inputBranch.trim() || 'OTHER'
     fetchRoadmap(assessmentType, name, br)
   }
 
@@ -163,8 +194,8 @@ export default function RoadmapPage() {
           </div>
 
         <Card className="border-primary/20 shadow-lg">
-          <div className="grid gap-3 sm:grid-cols-3">
-            <div className="min-w-0 sm:col-span-1">
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="min-w-0">
               <label htmlFor="roadmap-type" className="text-xs font-semibold uppercase tracking-wider text-primary">
                 Roadmap type
               </label>
@@ -179,19 +210,11 @@ export default function RoadmapPage() {
                 <option value="AFTER12">After 12th (Career)</option>
               </select>
             </div>
-            <div className="min-w-0 sm:col-span-2">
-              <p className="text-xs font-semibold uppercase tracking-wider text-primary">Current target</p>
-              <p className="mt-1 font-display text-xl font-bold text-accent">{career}</p>
+            <div className="min-w-0">
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary">Stream / Branch</span>
+              <p className="mt-1 font-display text-xl font-bold text-accent">{branchLabel}</p>
             </div>
           </div>
-          {assessmentType === 'ENGINEERING' && (
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <div className="min-w-0">
-                <span className="text-xs font-semibold uppercase tracking-wider text-primary">Branch</span>
-                <p className="mt-1 font-display text-xl font-bold text-accent">{branchLabel}</p>
-              </div>
-            </div>
-          )}
 
           <form onSubmit={onRegenerate} className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
             <div className="min-w-0 flex-1 sm:max-w-md">
@@ -207,25 +230,32 @@ export default function RoadmapPage() {
                 className="mt-1 w-full rounded-xl border border-borderline bg-page px-3 py-2 text-sm text-accent placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
-            {assessmentType === 'ENGINEERING' && (
-              <div className="min-w-0 sm:w-56">
-                <label htmlFor="roadmap-branch" className="text-xs font-medium text-slate-600">
-                  Engineering branch
-                </label>
-                <select
-                  id="roadmap-branch"
-                  value={inputBranch}
-                  onChange={(e) => setInputBranch(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-borderline bg-page px-3 py-2 text-sm text-accent focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                >
-                  {ENGINEERING_BRANCHES.map((b) => (
-                    <option key={b.id} value={b.id}>
-                      {b.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+            <div className="min-w-0 sm:w-64">
+              <label htmlFor="roadmap-branch" className="text-xs font-medium text-slate-600">
+                Your current branch
+              </label>
+              <select
+                id="roadmap-branch"
+                value={inputBranch}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setInputBranch(val);
+                  // Auto-detect roadmap type if it's currently Engineering but user picks Arts/Med/etc
+                  if (assessmentType === 'ENGINEERING') {
+                    if (STREAM_BRANCHES.MEDICAL.find(b => b.id === val)) setAssessmentType('AFTER12');
+                    if (STREAM_BRANCHES.ARTS.find(b => b.id === val)) setAssessmentType('AFTER12');
+                    if (STREAM_BRANCHES.COMMERCE.find(b => b.id === val)) setAssessmentType('AFTER12');
+                  }
+                }}
+                className="mt-1 w-full rounded-xl border border-borderline bg-page px-3 py-2 text-sm text-accent focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              >
+                {ALL_BRANCHES.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.label}
+                  </option>
+                ))}
+              </select>
+            </div>
             <button
               type="submit"
               disabled={loading}
@@ -254,9 +284,13 @@ export default function RoadmapPage() {
           </div>
         </Card>
 
-        {loading && (
-          <div className="flex min-h-[200px] items-center justify-center rounded-2xl border border-dashed border-primary/30 bg-page/80">
-            <Loader label="Building your roadmap…" />
+        {!loading && !error && roadmap.length === 0 && (
+          <div className="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed border-primary/20 bg-page/40 p-8 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-3xl">🚀</div>
+            <h3 className="mt-4 text-xl font-bold text-accent">Ready to build your roadmap?</h3>
+            <p className="mt-2 max-w-md text-slate-600">
+              Enter your target career and click the generate button to receive a personalized Success Blueprint tailored to your background.
+            </p>
           </div>
         )}
 
@@ -281,10 +315,10 @@ export default function RoadmapPage() {
           </div>
         )}
 
-        {!loading && !error && roadmap.length === 0 && (
-          <Card className="border-dashed border-primary/30 text-center text-slate-600">
-            No roadmap steps returned. Try another career and branch.
-          </Card>
+        {loading && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-page/60 backdrop-blur-sm">
+            <Loader label="Architecting your personalized roadmap…" />
+          </div>
         )}
       </div>
     </div>

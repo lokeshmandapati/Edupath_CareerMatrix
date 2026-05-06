@@ -204,6 +204,54 @@
     { "name": "Christ University", "location": "Bengaluru, Karnataka", "website": "https://www.christuniversity.in/" },
     { "name": "BHU", "location": "Varanasi, Uttar Pradesh", "website": "https://www.bhu.ac.in/" },
     { "name": "Aligarh Muslim University (AMU)", "location": "Aligarh, Uttar Pradesh", "website": "https://www.amu.ac.in/" }
+  ],
+  "B.Sc Agriculture": [
+    { "name": "PAU Ludhiana", "location": "Ludhiana, Punjab", "website": "https://www.pau.edu/" },
+    { "name": "TNAU Coimbatore", "location": "Coimbatore, Tamil Nadu", "website": "https://tnau.ac.in/" },
+    { "name": "GBPUAT Pantnagar", "location": "Pantnagar, Uttarakhand", "website": "https://www.gbpuat.ac.in/" },
+    { "name": "CCS HAU Hisar", "location": "Hisar, Haryana", "website": "https://hau.ac.in/" },
+    { "name": "BHU (Institute of Agricultural Sciences)", "location": "Varanasi, Uttar Pradesh", "website": "https://www.bhu.ac.in/ias" },
+    { "name": "ANGRAU Hyderabad", "location": "Hyderabad, Telangana", "website": "https://angrau.ac.in/" },
+    { "name": "UAS Bengaluru", "location": "Bengaluru, Karnataka", "website": "https://www.uasbangalore.edu.in/" },
+    { "name": "BCKV West Bengal", "location": "Mohanpur, West Bengal", "website": "https://www.bckv.edu.in/" },
+    { "name": "IGKV Raipur", "location": "Raipur, Chhattisgarh", "website": "https://igkv.ac.in/" },
+    { "name": "Amity University (Agri)", "location": "Noida, Uttar Pradesh", "website": "https://www.amity.edu/" }
+  ],
+  "Agricultural Engineering": [
+    { "name": "IIT Kharagpur (Agri Eng)", "location": "Kharagpur, West Bengal", "website": "https://www.iitkgp.ac.in/" },
+    { "name": "PAU Ludhiana (Agri Eng)", "location": "Ludhiana, Punjab", "website": "https://www.pau.edu/" },
+    { "name": "GBPUAT Pantnagar (Tech)", "location": "Pantnagar, Uttarakhand", "website": "https://www.gbpuat.ac.in/" },
+    { "name": "TNAU (AEC&RI)", "location": "Coimbatore, Tamil Nadu", "website": "https://tnau.ac.in/" },
+    { "name": "MPUAT Udaipur", "location": "Udaipur, Rajasthan", "website": "https://www.mpuat.ac.in/" },
+    { "name": "Jawaharlal Nehru Krishi Vishwavidyalaya", "location": "Jabalpur, Madhya Pradesh", "website": "http://jnkvv.org/" },
+    { "name": "Professor Jayashankar Telangana State Agricultural University", "location": "Hyderabad, Telangana", "website": "https://pjtsau.edu.in/" },
+    { "name": "Junagadh Agricultural University", "location": "Junagadh, Gujarat", "website": "http://www.jau.in/" },
+    { "name": "Tamil Nadu Agricultural University", "location": "Coimbatore, Tamil Nadu", "website": "https://tnau.ac.in/" },
+    { "name": "Kerala Agricultural University", "location": "Thrissur, Kerala", "website": "http://www.kau.in/" }
+  ],
+  "Applied Arts (BFA)": [
+    { "name": "Sir J.J. School of Art", "location": "Mumbai, Maharashtra", "website": "https://sirjjschoolofart.in/" },
+    { "name": "College of Art, Delhi", "location": "New Delhi, Delhi", "website": "http://delhi.gov.in/" },
+    { "name": "Faculty of Fine Arts, MSU Baroda", "location": "Vadodara, Gujarat", "website": "https://www.msubaroda.ac.in/" },
+    { "name": "Kala Bhavana, Visva-Bharati", "location": "Santiniketan, West Bengal", "website": "http://www.visvabharati.ac.in/" },
+    { "name": "Government College of Fine Arts", "location": "Chennai, Tamil Nadu", "website": "https://www.artandculture.tn.gov.in/" },
+    { "name": "BHU Faculty of Visual Arts", "location": "Varanasi, Uttar Pradesh", "website": "https://www.bhu.ac.in/visualarts/" },
+    { "name": "Lalit Kala Sansthan", "location": "Agra, Uttar Pradesh", "website": "https://dbrau.org.in/" },
+    { "name": "Rabindra Bharati University", "location": "Kolkata, West Bengal", "website": "http://www.rbu.ac.in/" },
+    { "name": "Jamia Millia Islamia (Fine Arts)", "location": "New Delhi, Delhi", "website": "https://www.jmi.ac.in/" },
+    { "name": "Jawaharlal Nehru Architecture and Fine Arts University", "location": "Hyderabad, Telangana", "website": "https://www.jnafau.ac.in/" }
+  ],
+  "Nutrition & Dietetics": [
+    { "name": "Lady Irwin College", "location": "New Delhi, Delhi", "website": "http://ladyirwin.edu.in/" },
+    { "name": "SNDT Women's University", "location": "Mumbai, Maharashtra", "website": "https://sndt.ac.in/" },
+    { "name": "Mount Carmel College", "location": "Bengaluru, Karnataka", "website": "https://mccblr.edu.in/" },
+    { "name": "St. Teresa's College", "location": "Ernakulam, Kerala", "website": "https://teresas.ac.in/" },
+    { "name": "Ethiraj College for Women", "location": "Chennai, Tamil Nadu", "website": "https://ethirajcollege.edu.in/" },
+    { "name": "Women's Christian College", "location": "Chennai, Tamil Nadu", "website": "https://wcc.edu.in/" },
+    { "name": "Justice Basheer Ahmed Sayeed College", "location": "Chennai, Tamil Nadu", "website": "http://www.jbascollege.edu.in/" },
+    { "name": "Avinashilingam Institute", "location": "Coimbatore, Tamil Nadu", "website": "https://avinuty.ac.in/" },
+    { "name": "JD Birla Institute", "location": "Kolkata, West Bengal", "website": "https://www.jdbit.edu.in/" },
+    { "name": "Institute of Home Economics", "location": "New Delhi, Delhi", "website": "http://ihe.du.ac.in/" }
   ]
 }
 

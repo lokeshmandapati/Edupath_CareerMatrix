@@ -44,7 +44,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/register", "/api/login").permitAll()
-                        .requestMatchers("/api/chat", "/api/roadmap").permitAll()
+                        .requestMatchers("/api/chat", "/api/roadmap", "/api/options/**").permitAll()
+                        .requestMatchers("/api/toolkit/**").permitAll()
                         // Public lookup endpoints
                         .requestMatchers(HttpMethod.GET, "/api/colleges/**").permitAll()
                         .requestMatchers("/api/**").authenticated()

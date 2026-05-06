@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -55,6 +57,7 @@ public class CareerFitPredictionService {
     private final ObjectMapper objectMapper;
     private final CfpaMappingService mappingService;
     private final BranchCareerConfigService branchConfig;
+    private final GeminiService geminiService;
 
     public CareerFitPredictionService(
             UserRepository userRepository,
@@ -62,7 +65,8 @@ public class CareerFitPredictionService {
             CareerResultRepository careerResultRepository,
             ObjectMapper objectMapper,
             CfpaMappingService mappingService,
-            BranchCareerConfigService branchConfig
+            BranchCareerConfigService branchConfig,
+            GeminiService geminiService
     ) {
         this.userRepository = userRepository;
         this.userInputRepository = userInputRepository;
@@ -70,6 +74,7 @@ public class CareerFitPredictionService {
         this.objectMapper = objectMapper;
         this.mappingService = mappingService;
         this.branchConfig = branchConfig;
+        this.geminiService = geminiService;
     }
 
     public PredictionResponse predict(String authenticatedUserId, PredictionRequest req) {
@@ -208,7 +213,9 @@ public class CareerFitPredictionService {
                 crossSuggestions,
                 null,
                 null,
-                null
+                null,
+                req.technicalSkills(),
+                req.interests()
         );
     }
 
@@ -224,7 +231,8 @@ public class CareerFitPredictionService {
         } else if (stream.equals("ARTS")) {
             careers = List.of("Lawyer", "Psychologist", "Journalist", "Graphic Designer", "Civil Servant", "Content Strategist", "Human Resources Manager");
         } else {
-            careers = List.of("General Manager", "Entrepreneur", "Educator", "Civil Servant");
+            // For CUSTOM streams, call Gemini to generate relevant careers
+            careers = generateCareersForCustomStream(req.branch());
         }
         
         for (String c : careers) raw.put(c, 1.0);
@@ -294,8 +302,58 @@ public class CareerFitPredictionService {
                 List.of(),
                 null,
                 null,
-                null
+                null,
+                req.technicalSkills(),
+                req.interests()
         );
+    }
+
+    /**
+     * Calls Gemini to generate 6 relevant career titles for a custom stream.
+     * Falls back to generic options if Gemini is unavailable.
+     */
+    private List<String> generateCareersForCustomStream(String customStream) {
+        String normalized = customStream.toLowerCase(Locale.ROOT).trim();
+        // Handle common typos and variations
+        if (normalized.contains("aeronat") || normalized.contains("aerospace")) {
+            return List.of("Aerospace Engineer", "Aircraft Maintenance Engineer", "Propulsion System Designer", "Flight Test Engineer", "Avionics Specialist", "UAV Developer");
+        }
+        if (normalized.contains("petrol") || normalized.contains("oil") || normalized.contains("gas")) {
+            return List.of("Petroleum Engineer", "Drilling Engineer", "Reservoir Engineer", "Production Technologist", "Mud Logger", "HSE Officer");
+        }
+        if (normalized.contains("food") && (normalized.contains("tech") || normalized.contains("eng"))) {
+            return List.of("Food Technologist", "Quality Control Manager", "Product Development Scientist", "Food Safety Auditor", "Production Manager", "Packaging Engineer");
+        }
+        if (normalized.contains("biotech") || normalized.contains("biomed")) {
+            return List.of("Biomedical Engineer", "Clinical Researcher", "Bioinformatics Scientist", "Genetic Engineer", "Bioprocess Engineer", "Quality Assurance (Pharma)");
+        }
+        if (normalized.contains("agriculture") || normalized.contains("agri")) {
+            return List.of("Agricultural Engineer", "Farm Manager", "Soil Scientist", "Agri-Business Consultant", "Food Scientist", "Precision Farming Specialist");
+        }
+
+        if (!geminiService.isConfigured()) {
+            return List.of("Professional Specialist", "Entrepreneur", "Consultant", "Educator", "Content Creator", "Researcher");
+        }
+        try {
+            String prompt = "List exactly 6 realistic and specific career titles for someone studying or pursuing a career in: \""
+                    + customStream + "\". "
+                    + "Return ONLY a comma-separated list of career titles, nothing else. No numbering, no explanation. "
+                    + "Example format: Fashion Designer, Textile Engineer, Wardrobe Stylist, Fashion Merchandiser, Costume Designer, Brand Manager";
+            String response = geminiService.chatCompletion(
+                    "You are a career counselor. Respond only with a comma-separated list of career titles. No extra text.",
+                    List.of(),
+                    prompt
+            );
+            List<String> careers = Arrays.stream(response.split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isBlank())
+                    .limit(6)
+                    .collect(Collectors.toList());
+            if (careers.size() >= 2) return careers;
+        } catch (Exception e) {
+            System.err.println("Gemini career generation failed for custom stream '" + customStream + "': " + e.getMessage());
+        }
+        return List.of("Professional Specialist", "Entrepreneur", "Consultant", "Educator", "Content Creator", "Researcher");
     }
 
     public PredictionResponse predictClass10Stream(String authenticatedUserId, Class10StreamRequest req) {
@@ -309,12 +367,12 @@ public class CareerFitPredictionService {
 
         double m = req.math() / 100.0;
         double s = req.science() / 100.0;
-        double e = req.english() / 100.0;
+        double en = req.english() / 100.0;
         double so = req.social() / 100.0;
 
-        raw.merge("Science", 0.40 * m + 0.35 * s + 0.15 * e + 0.10 * so, Double::sum);
-        raw.merge("Commerce", 0.20 * m + 0.15 * s + 0.25 * e + 0.40 * so, Double::sum);
-        raw.merge("Humanities", 0.10 * m + 0.10 * s + 0.40 * e + 0.40 * so, Double::sum);
+        raw.merge("Science", 0.40 * m + 0.35 * s + 0.15 * en + 0.10 * so, Double::sum);
+        raw.merge("Commerce", 0.20 * m + 0.15 * s + 0.25 * en + 0.40 * so, Double::sum);
+        raw.merge("Humanities", 0.10 * m + 0.10 * s + 0.40 * en + 0.40 * so, Double::sum);
 
         for (String interest : req.interests()) {
             if (interest == null) continue;
@@ -388,7 +446,20 @@ public class CareerFitPredictionService {
                 "Create a simple weekly plan: 60% strengths + 40% weak areas"
         );
 
-        String metadataJson = buildGuidanceMetadataJson(subjects, exams, nextSteps);
+        Map<String, Object> metaMap = new LinkedHashMap<>();
+        metaMap.put("recommendedSubjects", subjects);
+        metaMap.put("examPaths", exams);
+        metaMap.put("nextSteps", nextSteps);
+        metaMap.put("rawInterests", req.interests());
+        metaMap.put("rawAptitudeTags", req.aptitudeTags());
+        metaMap.put("rawMarks", Map.of("Math", req.math(), "Science", req.science(), "English", req.english(), "Social", req.social()));
+
+        String metadataJson;
+        try {
+            metadataJson = objectMapper.writeValueAsString(metaMap);
+        } catch (JsonProcessingException e) {
+            metadataJson = "{}";
+        }
         persistAssessmentResult(user, "CLASS10", percentages, top, explanation, metadataJson);
 
         return new PredictionResponse(
@@ -405,7 +476,9 @@ public class CareerFitPredictionService {
                 List.of(),
                 subjects,
                 exams,
-                nextSteps
+                nextSteps,
+                req.aptitudeTags(),
+                req.interests()
         );
     }
 
@@ -415,40 +488,68 @@ public class CareerFitPredictionService {
 
         String stream = req.stream() == null ? "" : req.stream().trim().toUpperCase(Locale.ROOT);
         List<String> careers = switch (stream) {
-            case "COMMERCE" -> List.of("B.Com / Accounting", "CA / CS", "Business & Management", "Finance & Banking", "Digital Marketing");
+            case "COMMERCE", "COMMERCE_MATHS" -> List.of("B.Com / Accounting", "CA / CS", "Business & Management", "Finance & Banking", "Digital Marketing");
             case "ARTS" -> List.of("Law", "Psychology", "Journalism & Media", "Design", "Civil Services (UPSC/State)");
+            case "AGRICULTURE" -> List.of("B.Sc Agriculture", "Agricultural Engineering", "Horticulture / Forestry", "Food Technology", "Agribusiness Management");
+            case "FINE_ARTS" -> List.of("Applied Arts (BFA)", "Animation & VFX", "Fashion Design", "Interior Design", "Performing Arts");
+            case "HOME_SCIENCE" -> List.of("Nutrition & Dietetics", "Textile & Apparel Design", "Human Development", "Home Science (B.Sc)", "Interior Decoration");
+            case "VOCATIONAL" -> List.of("Technical Diploma", "Skill-based Certification", "Paramedical Sciences", "Hotel Management", "Digital Skills Path");
             default -> List.of("Engineering (B.Tech)", "Medicine (MBBS/BDS)", "Computer Science & IT", "Pure Sciences (B.Sc)", "Architecture / Design");
         };
 
         Map<String, Double> raw = new LinkedHashMap<>();
-        for (String c : careers) raw.put(c, 1.0);
+        // Start with a low base so that interests/aptitude dominate the score
+        for (String c : careers) raw.put(c, 0.2);
 
         double pct = (req.percentage() == null ? 0 : req.percentage()) / 100.0;
         for (String c : careers) {
-            raw.merge(c, 0.35 * pct, Double::sum);
+            raw.merge(c, 0.5 * pct, Double::sum);
         }
 
         for (String interest : req.interests()) {
             if (interest == null) continue;
             String it = interest.trim().toLowerCase(Locale.ROOT);
-            if (it.contains("engineering")) raw.merge("Engineering (B.Tech)", 0.35, Double::sum);
-            if (it.contains("medicine")) raw.merge("Medicine (MBBS/BDS)", 0.35, Double::sum);
-            if (it.contains("computer")) raw.merge("Computer Science & IT", 0.35, Double::sum);
-            if (it.contains("research")) raw.merge("Pure Sciences (B.Sc)", 0.30, Double::sum);
-            if (it.contains("design")) {
-                raw.merge("Architecture / Design", 0.28, Double::sum);
-                raw.merge("Design", 0.28, Double::sum);
+            // Increased weights from 0.35 to 1.2 to make interests much more impactful
+            if (it.contains("engineering")) raw.merge("Engineering (B.Tech)", 1.2, Double::sum);
+            if (it.contains("medicine") || it.contains("doctor") || it.contains("nurse")) raw.merge("Medicine (MBBS/BDS)", 1.2, Double::sum);
+            if (it.contains("computer") || it.contains("software") || it.contains("coding")) raw.merge("Computer Science & IT", 1.2, Double::sum);
+            if (it.contains("research") || it.contains("science") || it.contains("lab")) raw.merge("Pure Sciences (B.Sc)", 1.0, Double::sum);
+            if (it.contains("design") || it.contains("creative")) {
+                raw.merge("Architecture / Design", 0.9, Double::sum);
+                raw.merge("Design", 0.9, Double::sum);
             }
-            if (it.contains("business")) raw.merge("Business & Management", 0.35, Double::sum);
-            if (it.contains("finance")) raw.merge("Finance & Banking", 0.35, Double::sum);
-            if (it.contains("law")) raw.merge("Law", 0.35, Double::sum);
-            if (it.contains("psychology")) raw.merge("Psychology", 0.35, Double::sum);
-            if (it.contains("media")) raw.merge("Journalism & Media", 0.35, Double::sum);
-            if (it.contains("government")) raw.merge("Civil Services (UPSC/State)", 0.35, Double::sum);
-            if (it.contains("entrepreneur")) raw.merge("Business & Management", 0.25, Double::sum);
-            if (it.contains("marketing")) raw.merge("Digital Marketing", 0.30, Double::sum);
-            if (it.contains("account") || it.contains("commerce")) raw.merge("B.Com / Accounting", 0.30, Double::sum);
-            if (it.contains("ca") || it.contains("cs")) raw.merge("CA / CS", 0.32, Double::sum);
+            if (it.contains("business") || it.contains("management")) raw.merge("Business & Management", 1.2, Double::sum);
+            if (it.contains("finance") || it.contains("investment") || it.contains("bank")) raw.merge("Finance & Banking", 1.2, Double::sum);
+            if (it.contains("law") || it.contains("legal") || it.contains("justice")) raw.merge("Law", 1.2, Double::sum);
+            if (it.contains("psychology") || it.contains("mental") || it.contains("counseling")) raw.merge("Psychology", 1.2, Double::sum);
+            if (it.contains("media") || it.contains("journalist") || it.contains("news")) raw.merge("Journalism & Media", 1.2, Double::sum);
+            if (it.contains("government") || it.contains("civil") || it.contains("upsc")) raw.merge("Civil Services (UPSC/State)", 1.2, Double::sum);
+            if (it.contains("entrepreneur") || it.contains("startup")) raw.merge("Business & Management", 0.8, Double::sum);
+            if (it.contains("marketing") || it.contains("social media")) raw.merge("Digital Marketing", 1.0, Double::sum);
+            if (it.contains("account") || it.contains("commerce") || it.contains("audit")) raw.merge("B.Com / Accounting", 1.0, Double::sum);
+            if (it.contains("ca") || it.contains("cs") || it.contains("chartered")) raw.merge("CA / CS", 1.1, Double::sum);
+            
+            // Agriculture & Home Science specific interests
+            if (it.contains("crop") || it.contains("farm") || it.contains("agriculture") || it.contains("plant") || it.contains("soil")) {
+                raw.merge("B.Sc Agriculture", 1.5, Double::sum);
+                raw.merge("Agricultural Engineering", 1.1, Double::sum);
+                raw.merge("Horticulture / Forestry", 1.2, Double::sum);
+                raw.merge("Agribusiness Management", 1.0, Double::sum);
+            }
+            if (it.contains("food") || it.contains("nutrition") || it.contains("diet") || it.contains("health")) {
+                raw.merge("Food Technology", 1.1, Double::sum);
+                raw.merge("Nutrition & Dietetics", 1.5, Double::sum);
+                raw.merge("Home Science (B.Sc)", 1.0, Double::sum);
+            }
+            if (it.contains("fashion") || it.contains("textile") || it.contains("cloth") || it.contains("apparel")) {
+                raw.merge("Fashion Design", 1.5, Double::sum);
+                raw.merge("Textile & Apparel Design", 1.5, Double::sum);
+            }
+            if (it.contains("art") || it.contains("draw") || it.contains("animation") || it.contains("sketch")) {
+                raw.merge("Applied Arts (BFA)", 1.2, Double::sum);
+                raw.merge("Animation & VFX", 1.5, Double::sum);
+                raw.merge("Interior Design", 1.0, Double::sum);
+            }
         }
 
         if (req.aptitudeTags() != null) {
@@ -490,8 +591,14 @@ public class CareerFitPredictionService {
             raw.merge("Law", 0.04, Double::sum);
         }
 
+        // Boosted normalization: Exponential scaling to make the top match stand out
+        Map<String, Double> boosted = new LinkedHashMap<>();
+        for (Map.Entry<String, Double> e : raw.entrySet()) {
+            boosted.put(e.getKey(), Math.pow(e.getValue(), 2.2));
+        }
+
         LinkedHashMap<String, Double> percentages = new LinkedHashMap<>(CfpaMappingService.sortByValueDesc(
-                CfpaMappingService.normalizeToPercentages(raw)
+                CfpaMappingService.normalizeToPercentages(boosted)
         ));
         String top = percentages.entrySet().iterator().next().getKey();
         String explanation = buildSimpleExplanation(
@@ -502,7 +609,22 @@ public class CareerFitPredictionService {
         );
 
         Guidance g = guidanceForAfter12(top);
-        String metadataJson = buildGuidanceMetadataJson(g.subjects, g.exams, g.nextSteps);
+        Map<String, Object> metaMap = new LinkedHashMap<>();
+        metaMap.put("recommendedSubjects", g.subjects);
+        metaMap.put("examPaths", g.exams);
+        metaMap.put("nextSteps", g.nextSteps);
+        metaMap.put("rawInterests", req.interests());
+        metaMap.put("rawAptitudeTags", req.aptitudeTags());
+        metaMap.put("rawStream", req.stream());
+        metaMap.put("rawPercentage", req.percentage());
+        metaMap.put("rawCategory", req.category());
+
+        String metadataJson;
+        try {
+            metadataJson = objectMapper.writeValueAsString(metaMap);
+        } catch (JsonProcessingException e) {
+            metadataJson = "{}";
+        }
         persistAssessmentResult(user, "AFTER12", percentages, top, explanation, metadataJson);
 
         return new PredictionResponse(
@@ -519,7 +641,9 @@ public class CareerFitPredictionService {
                 List.of(),
                 g.subjects,
                 g.exams,
-                g.nextSteps
+                g.nextSteps,
+                req.aptitudeTags(),
+                req.interests()
         );
     }
 
@@ -604,7 +728,9 @@ public class CareerFitPredictionService {
                     branchProfile.code(),
                     branchProfile.label(),
                     whyBranchFit,
-                    crossBranchSuggestions
+                    crossBranchSuggestions,
+                    req.technicalSkills(),
+                    req.interests()
             ));
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not serialize scores");
@@ -621,7 +747,9 @@ public class CareerFitPredictionService {
             String branchCode,
             String branchLabel,
             String whyBranchFit,
-            List<String> crossBranchSuggestions
+            List<String> crossBranchSuggestions,
+            List<String> rawSkills,
+            List<String> rawInterests
     ) throws JsonProcessingException {
         Map<String, Object> meta = new LinkedHashMap<>();
         meta.put("confidencePercent", confidence);
@@ -631,6 +759,8 @@ public class CareerFitPredictionService {
         meta.put("branchLabel", branchLabel);
         meta.put("whyBranchFit", whyBranchFit);
         meta.put("crossBranchSuggestions", crossBranchSuggestions);
+        meta.put("rawSkills", rawSkills);
+        meta.put("rawInterests", rawInterests);
         return objectMapper.writeValueAsString(meta);
     }
 
@@ -659,6 +789,8 @@ public class CareerFitPredictionService {
             List<String> subjects = null;
             List<String> exams = null;
             List<String> nextSteps = null;
+            List<String> rawSkills = null;
+            List<String> rawInterests = null;
             if (latest.getMetadataJson() != null && !latest.getMetadataJson().isBlank()) {
                 JsonNode meta = objectMapper.readTree(latest.getMetadataJson());
                 if (meta.has("confidencePercent")) {
@@ -691,7 +823,38 @@ public class CareerFitPredictionService {
                 if (meta.has("nextSteps")) {
                     nextSteps = objectMapper.convertValue(meta.get("nextSteps"), new TypeReference<>() {});
                 }
+                if (meta.has("rawSkills")) {
+                    rawSkills = objectMapper.convertValue(meta.get("rawSkills"), new TypeReference<>() {});
+                }
+                if (meta.has("rawInterests")) {
+                    rawInterests = objectMapper.convertValue(meta.get("rawInterests"), new TypeReference<>() {});
+                }
+                if (meta.has("rawAptitudeTags")) {
+                    rawSkills = objectMapper.convertValue(meta.get("rawAptitudeTags"), new TypeReference<>() {});
+                }
+                // For Class 10
+                if (meta.has("rawMarks")) {
+                   // Optional: add to response if needed, but for now rawSkills/rawInterests are prioritized
+                }
+                // For After 12
+                if (meta.has("rawStream")) {
+                    // Optional: add to response if needed
+                }
             }
+
+            Map<String, Object> assessmentInputs = new HashMap<>();
+            if (latest.getMetadataJson() != null && !latest.getMetadataJson().isBlank()) {
+                try {
+                    JsonNode meta = objectMapper.readTree(latest.getMetadataJson());
+                    if (meta.has("rawInterests")) assessmentInputs.put("interests", objectMapper.convertValue(meta.get("rawInterests"), new TypeReference<>() {}));
+                    if (meta.has("rawAptitudeTags")) assessmentInputs.put("aptitudeTags", objectMapper.convertValue(meta.get("rawAptitudeTags"), new TypeReference<>() {}));
+                    if (meta.has("rawPercentage")) assessmentInputs.put("percentage", meta.get("rawPercentage").asText());
+                    if (meta.has("rawStream")) assessmentInputs.put("stream", meta.get("rawStream").asText());
+                    if (meta.has("rawCategory")) assessmentInputs.put("category", meta.get("rawCategory").asText());
+                    if (meta.has("rawMarks")) assessmentInputs.put("marks", objectMapper.convertValue(meta.get("rawMarks"), new TypeReference<>() {}));
+                } catch (Exception e) { /* ignore */ }
+            }
+
             return new ResultsHistoryResponse(
                     String.valueOf(latest.getId()),
                     latest.getTopCareer(),
@@ -708,7 +871,10 @@ public class CareerFitPredictionService {
                     subjects,
                     exams,
                     nextSteps,
-                    latest.getAssessmentType()
+                    latest.getAssessmentType(),
+                    rawSkills,
+                    rawInterests,
+                    assessmentInputs
             );
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not read scores");
@@ -911,6 +1077,56 @@ public class CareerFitPredictionService {
                     List.of("History", "Polity", "Geography", "Current Affairs"),
                     List.of("UPSC (later, after graduation)", "State PSC (later)"),
                     List.of("Pick a graduation path you can excel in", "Build reading habit + notes system", "Understand the 3–5 year long-term plan early")
+            );
+            case "B.Sc Agriculture" -> new Guidance(
+                    List.of("Biology", "Chemistry", "Agricultural Science (if available)"),
+                    List.of("CUET (Agriculture)", "State-level Agriculture CETs", "ICAR AIEEA"),
+                    List.of("Research government vs private job roles", "Visit an agricultural university", "Explore specialized fields like Horticulture/Agronomy")
+            );
+            case "Agricultural Engineering" -> new Guidance(
+                    List.of("Mathematics", "Physics", "Chemistry", "Biology"),
+                    List.of("JEE Main", "State Engineering Entrance (with Agri choice)", "ICAR AIEEA"),
+                    List.of("Focus on Math and Physics fundamentals", "Look into farm machinery and irrigation tech", "Visit an Agri-Engineering college")
+            );
+            case "Horticulture / Forestry" -> new Guidance(
+                    List.of("Biology", "Chemistry", "Physics"),
+                    List.of("State-level Agriculture/Horticulture CETs", "ICAR AIEEA"),
+                    List.of("Explore careers in landscape design or forest conservation", "Start a small home garden/nursery project", "Research state forest service exams")
+            );
+            case "Food Technology" -> new Guidance(
+                    List.of("Chemistry", "Biology", "Mathematics"),
+                    List.of("JEE Main (for B.Tech Food Tech)", "CUET", "State CETs"),
+                    List.of("Research food processing and preservation tech", "Explore internships in food production units", "Look into FSSAI and safety standards")
+            );
+            case "Agribusiness Management" -> new Guidance(
+                    List.of("Economics", "Business Studies", "Mathematics"),
+                    List.of("CUET", "State level management entrances (for integrated MBA)"),
+                    List.of("Learn about supply chain and market trends", "Visit a local wholesale market (Mandi)", "Explore B.Sc Agriculture + MBA path")
+            );
+            case "Nutrition & Dietetics" -> new Guidance(
+                    List.of("Biology", "Chemistry", "Home Science"),
+                    List.of("CUET", "University-specific entrances"),
+                    List.of("Research hospital vs sports nutrition roles", "Follow registered dietitians for insights", "Consider future Registered Dietitian (RD) certification")
+            );
+            case "Textile & Apparel Design" -> new Guidance(
+                    List.of("Art/Design", "Home Science", "Chemistry (for fabrics)"),
+                    List.of("NIFT Entrance", "NID DAT", "CUET"),
+                    List.of("Build a portfolio of fabric/design work", "Learn about sustainable fashion trends", "Visit textile units or fashion boutiques")
+            );
+            case "Applied Arts (BFA)" -> new Guidance(
+                    List.of("Art/Sketching", "History of Art", "Communication"),
+                    List.of("State-level Fine Arts CETs", "College-specific practical tests"),
+                    List.of("Practice sketching and painting daily", "Build a diverse portfolio of 15+ works", "Explore commercial vs fine arts career paths")
+            );
+            case "Animation & VFX" -> new Guidance(
+                    List.of("Digital Art", "Physics (for motion)", "English"),
+                    List.of("NID DAT", "Private institute entrance tests (e.g. Arena/MAAC)"),
+                    List.of("Start learning tools like Blender/After Effects", "Analyze VFX in movies and games", "Create a short 30-sec animation clip")
+            );
+            case "Fashion Design" -> new Guidance(
+                    List.of("Art/Sketching", "English/Communication", "Home Science"),
+                    List.of("NIFT Entrance", "NID DAT", "UCEED"),
+                    List.of("Practice fashion illustration", "Keep up with seasonal fashion weeks", "Build a portfolio with 5–8 complete concepts")
             );
             default -> new Guidance(
                     List.of("English/Communication", "Mathematics (optional)", "Subject aligned with your degree choice"),

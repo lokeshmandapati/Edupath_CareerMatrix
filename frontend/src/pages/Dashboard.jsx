@@ -48,6 +48,7 @@ function resolveCareerForRoadmap(latest) {
 export default function Dashboard() {
   const { userId, name, branch } = useAuth()
   const [latest, setLatest] = useState(null)
+  const [upcomingExams, setUpcomingExams] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -56,13 +57,19 @@ export default function Dashboard() {
     ;(async () => {
       setError('')
       try {
-        const { data } = await api.get(`/api/results/${userId}`)
-        if (!cancelled) setLatest(data)
+        const [{ data: resultsData }, { data: examsData }] = await Promise.all([
+          api.get(`/api/results/${userId}`),
+          api.get('/api/toolkit/upcoming-exams')
+        ])
+        if (!cancelled) {
+          setLatest(resultsData)
+          setUpcomingExams(examsData)
+        }
       } catch (e) {
         if (!cancelled) {
           setLatest(null)
           if (e.response?.status !== 404) {
-            setError('Could not load latest results. Try again later.')
+            setError('Could not load dashboard data.')
           }
         }
       } finally {
@@ -77,6 +84,9 @@ export default function Dashboard() {
   const roadmapCareer = resolveCareerForRoadmap(latest)
 
   const branchMeta = ENGINEERING_BRANCHES.find((b) => b.id === (latest?.branchCode || branch || '').toUpperCase())
+
+  // Use AI results if available, else fallback to static
+  const activeExams = upcomingExams.length > 0 ? upcomingExams : ADMISSION_EXAMS.slice(0, 3)
 
   return (
     <PageTransition>
@@ -179,20 +189,20 @@ export default function Dashboard() {
                   <h3 className="mt-6 font-display text-xl font-bold text-accent">Upcoming Deadlines</h3>
                   
                   <div className="mt-6 space-y-4">
-                    {ADMISSION_EXAMS.slice(0, 3).map(exam => {
+                    {activeExams.map(exam => {
                       const diff = +new Date(exam.date) - +new Date()
                       const days = Math.floor(diff / (1000 * 60 * 60 * 24))
                       const color = days < 7 ? 'bg-red-500' : days < 15 ? 'bg-amber-500' : 'bg-emerald-500'
                       
                       return (
-                        <div key={exam.id} className="flex items-center justify-between rounded-2xl bg-black/5 p-4 ring-1 ring-black/5">
+                        <div key={exam.id || exam.name} className="flex items-center justify-between rounded-2xl bg-black/5 p-4 ring-1 ring-black/5">
                           <div className="min-w-0 flex-1">
                             <p className="truncate text-sm font-bold text-accent">{exam.name}</p>
                             <p className="text-[10px] font-bold text-muted uppercase tracking-wider">{exam.category}</p>
                           </div>
                           <div className="flex flex-col items-end shrink-0 ml-2">
                             <span className={`rounded-lg px-2 py-1 text-[10px] font-black text-white ${color}`}>
-                              {days}d left
+                              {days > 0 ? `${days}d left` : 'Deadline Today'}
                             </span>
                           </div>
                         </div>

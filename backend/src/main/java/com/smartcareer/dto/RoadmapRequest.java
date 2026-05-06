@@ -15,6 +15,10 @@ public record RoadmapRequest(
         /** Branch code (CSE) or full name; optional — defaults to generic roadmap */
         String branch,
         /** ENGINEERING (default), CLASS10, AFTER12 */
-        String type
+        String type,
+        /** Student's selected or custom technical skills */
+        java.util.List<String> skills,
+        /** Student's selected or custom interests */
+        java.util.List<String> interests
 ) {
 }

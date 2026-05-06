@@ -5,25 +5,51 @@
 @tailwind utilities;
 
 :root {
-  --page: 248 250 252;
-  --surface: 255 255 255;
-  --primary: 99 102 241; /* Indigo-500 */
+  --page: 13 16 37;           /* #0d1025 — deep navy */
+  --surface: 22 26 50;        /* slightly lighter navy for cards */
+  --primary: 99 102 241;      /* Indigo-500 */
   --primary-glow: 99, 102, 241, 0.4;
+  --accent: 241 245 249;      /* slate-100 — near white for headings */
+  --muted: 148 163 184;       /* slate-400 — readable on dark */
+  --borderline: 255, 255, 255, 0.08;
+  --shadow-premium: 0 30px 60px -12px rgba(0, 0, 0, 0.5), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-soft: 0 2px 8px rgba(0,0,0,0.25);
+  --chart-grid: 255, 255, 255, 0.06;
+  --chart-tick: 148, 163, 184;
+  --tooltip-bg: 22, 26, 50;
+}
+
+[data-theme='light'] {
+  --page: 250 250 253;
+  --surface: 255 255 255;
+  --primary: 79 70 229;
+  --primary-glow: 79, 70, 229, 0.4;
   --accent: 15 23 42;
-  --muted: 71 85 105;
+  --muted: 100 116 139;
   --borderline: 226, 232, 240, 0.8;
-  --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
+  --shadow-premium: 0 30px 60px -12px rgba(0, 0, 0, 0.08), 0 18px 36px -18px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-soft: 0 2px 8px rgba(0,0,0,0.06);
+  --chart-grid: 15, 23, 42, 0.08;
+  --chart-tick: 100, 116, 139;
+  --tooltip-bg: 255, 255, 255;
 }
 
 [data-theme='dark'] {
-  --page: 8 8 12;
-  --surface: 15 15 20;
-  --primary: 139 92 246; /* Violet-500 */
+  --page: 13 16 37;
+  --surface: 22 26 50;
+  --primary: 139 92 246;
   --primary-glow: 139, 92, 246, 0.5;
   --accent: 248 250 252;
   --muted: 148 163 184;
   --borderline: 255, 255, 255, 0.08;
-  --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.4);
+  --shadow-premium: 0 30px 60px -12px rgba(0, 0, 0, 0.5), 0 18px 36px -18px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-soft: 0 2px 8px rgba(0,0,0,0.25);
+  --chart-grid: 255, 255, 255, 0.06;
+  --chart-tick: 148, 163, 184;
+  --tooltip-bg: 22, 26, 50;
 }
 
 * {
@@ -44,21 +70,24 @@ body {
 .mesh-gradient {
   background-color: rgb(var(--page));
   background-image: 
-    radial-gradient(at 0% 0%, rgba(var(--primary), 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(var(--primary), 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(var(--primary), 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(var(--primary), 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%);
+  background-attachment: fixed;
 }
 
 .glass {
-  background: rgba(var(--surface), 0.65);
-  backdrop-filter: blur(12px) saturate(180%);
+  background: rgba(var(--surface), 0.7);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(var(--borderline));
 }
 
 .glass-dark {
-  background: rgba(var(--surface), 0.8);
-  backdrop-filter: blur(16px);
+  background: rgba(var(--surface), 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(var(--borderline));
 }
 
@@ -68,7 +97,7 @@ body {
 }
 
 .hover-lift:hover {
-  transform: translateY(-6px) scale(1.01);
+  transform: translateY(-4px) scale(1.01);
   box-shadow: var(--shadow-premium);
 }
 
@@ -79,11 +108,16 @@ button, a {
 
 /* Scrollbar Customization */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--primary) / 0.4);
+  background: rgb(var(--primary) / 0.3);
   border-radius: 10px;
 }
 
@@ -99,7 +133,65 @@ button, a {
 
 .recharts-text {
   fill: rgb(var(--muted)) !important;
-  font-size: 11px;
+  font-size: 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 500;
 }
 
+/* ── Premium Animation Utilities ── */
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-8px); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, rgb(var(--primary)), #7c3aed, #ec4899);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Glow shadows */
+.shadow-glow-primary {
+  box-shadow: 0 0 20px rgba(var(--primary), 0.35), 0 4px 12px rgba(var(--primary), 0.2);
+}
+
+.shadow-glow {
+  box-shadow: 0 0 16px rgba(var(--primary), 0.2);
+}
+
+/* Premium card hover */
+.card-hover {
+  transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 24px 48px -12px rgba(0,0,0,0.12), 0 0 24px rgba(var(--primary), 0.1);
+}
+
+/* Blob decoration */
+.blob {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  animation: float 6s ease-in-out infinite;
+}

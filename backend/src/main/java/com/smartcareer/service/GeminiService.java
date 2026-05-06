@@ -44,21 +44,31 @@ public class GeminiService {
     }
 
     public String chatCompletion(String systemPrompt, List<ChatTurnDto> history, String userMessage) {
-        String[] models = {model, "gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-pro"};
+        String[] models = {model, "gemini-flash-latest", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-3.1-pro-preview"};
         Exception lastEx = null;
 
         for (String m : models) {
-            try {
-                return callModel(m, systemPrompt, history, userMessage);
-            } catch (Exception e) {
-                String msg = e.getMessage();
-                if (msg != null && (msg.contains("429") || msg.contains("503") || msg.contains("404"))) {
-                    System.err.println("Model " + m + " failed (" + msg + "), trying next...");
-                    lastEx = e;
-                    continue;
+            int retries = 0;
+            while (retries < 2) {
+                try {
+                    return callModel(m, systemPrompt, history, userMessage);
+                } catch (Exception e) {
+                    String msg = e.getMessage();
+                    if (msg != null && (msg.contains("429") || msg.contains("503"))) {
+                        System.err.println("Model " + m + " failed (" + msg + "), waiting 3.5s to retry...");
+                        lastEx = e;
+                        retries++;
+                        try { Thread.sleep(3500); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
+                        continue;
+                    }
+                    if (msg != null && msg.contains("404")) {
+                        System.err.println("Model " + m + " failed (404), trying next model...");
+                        lastEx = e;
+                        break; // break the retry loop, try next model
+                    }
+                    if (e instanceof RuntimeException) throw (RuntimeException) e;
+                    throw new RuntimeException(e);
                 }
-                if (e instanceof RuntimeException) throw (RuntimeException) e;
-                throw new RuntimeException(e);
             }
         }
         throw new RuntimeException("All Gemini models exhausted: " + (lastEx != null ? lastEx.getMessage() : "Unknown error"));

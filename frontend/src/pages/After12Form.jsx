@@ -16,7 +16,7 @@ const stepVariants = {
   exit: { opacity: 0, x: -12, transition: { duration: 0.2 } },
 }
 
-const QUIZ_QUESTIONS = [
+const ALL_QUIZ_QUESTIONS = [
   {
     id: 'q1',
     prompt: 'When you start something new, how do you prefer to learn?',
@@ -125,39 +125,237 @@ const QUIZ_QUESTIONS = [
       { label: 'Not confident', points: 0 },
     ],
   },
+  {
+    id: 'q13',
+    prompt: 'How do you handle failure or rejection?',
+    options: [
+      { label: 'I learn from it and try again', points: 2 },
+      { label: 'It takes time, but I recover', points: 1 },
+      { label: 'I tend to give up or feel very demotivated', points: 0 },
+    ],
+  },
+  {
+    id: 'q14',
+    prompt: 'Do you enjoy working in teams or prefer working alone?',
+    options: [
+      { label: 'I enjoy both equally', points: 2 },
+      { label: 'I prefer working in teams', points: 1 },
+      { label: 'I prefer working alone', points: 1 },
+    ],
+  },
+  {
+    id: 'q15',
+    prompt: 'How much time can you dedicate daily to self-study or skill-building?',
+    options: [
+      { label: 'More than 3 hours', points: 2 },
+      { label: '1–3 hours', points: 1 },
+      { label: 'Less than 1 hour', points: 0 },
+    ],
+  },
+  {
+    id: 'q16',
+    prompt: 'What motivates you most in your career?',
+    options: [
+      { label: 'High salary and financial security', points: 2 },
+      { label: 'Passion and personal growth', points: 2 },
+      { label: 'Social impact and helping others', points: 2 },
+    ],
+  },
+  {
+    id: 'q17',
+    prompt: 'How do you react when given a complex project with unclear instructions?',
+    options: [
+      { label: 'I ask questions and plan before starting', points: 2 },
+      { label: 'I start and figure it out along the way', points: 1 },
+      { label: 'I wait for clearer instructions', points: 0 },
+    ],
+  },
+  {
+    id: 'q18',
+    prompt: 'How often do you read or research on topics you are curious about?',
+    options: [
+      { label: 'Regularly — it\'s a habit', points: 2 },
+      { label: 'Occasionally when I find something interesting', points: 1 },
+      { label: 'Rarely', points: 0 },
+    ],
+  },
+  {
+    id: 'q19',
+    prompt: 'How important is job security to you compared to salary?',
+    options: [
+      { label: 'Job security is more important', points: 1 },
+      { label: 'Salary is more important', points: 1 },
+      { label: 'Both matter equally', points: 2 },
+    ],
+  },
+  {
+    id: 'q20',
+    prompt: 'How well do you manage your time when given freedom over your schedule?',
+    options: [
+      { label: 'Very well — I make and follow plans', points: 2 },
+      { label: 'Okay — I manage but miss things sometimes', points: 1 },
+      { label: 'Poorly — I often waste time', points: 0 },
+    ],
+  },
+  {
+    id: 'q21',
+    prompt: 'Do you enjoy teaching or explaining things to others?',
+    options: [
+      { label: 'Yes, I enjoy it and am good at it', points: 2 },
+      { label: 'Sometimes, depends on the topic', points: 1 },
+      { label: 'Not really', points: 0 },
+    ],
+  },
+  {
+    id: 'q22',
+    prompt: 'How do you approach a goal that seems too big?',
+    options: [
+      { label: 'Break it into small milestones', points: 2 },
+      { label: 'Focus on the end result and push through', points: 1 },
+      { label: 'Feel overwhelmed and delay starting', points: 0 },
+    ],
+  },
+  {
+    id: 'q23',
+    prompt: 'How comfortable are you with public speaking or presenting?',
+    options: [
+      { label: 'Very comfortable', points: 2 },
+      { label: 'Nervous but I manage', points: 1 },
+      { label: 'I avoid it whenever possible', points: 0 },
+    ],
+  },
+  {
+    id: 'q24',
+    prompt: 'If you discover you made a mistake in your work, what do you do?',
+    options: [
+      { label: 'Fix it immediately and understand why', points: 2 },
+      { label: 'Fix it but move on quickly', points: 1 },
+      { label: 'Hope no one notices', points: 0 },
+    ],
+  },
+  {
+    id: 'q25',
+    prompt: 'How do you feel about learning new technical skills (coding, data, design tools)?',
+    options: [
+      { label: 'Excited — I enjoy picking up new tools', points: 2 },
+      { label: 'Open to it if required', points: 1 },
+      { label: 'Prefer not to unless necessary', points: 0 },
+    ],
+  },
+  {
+    id: 'q26',
+    prompt: 'How would you describe your attitude toward feedback and criticism?',
+    options: [
+      { label: 'I welcome it as a way to improve', points: 2 },
+      { label: 'I accept it but it takes me a while', points: 1 },
+      { label: 'I find it hard to accept criticism', points: 0 },
+    ],
+  },
+  {
+    id: 'q27',
+    prompt: 'How would you rate your ability to stay focused without external supervision?',
+    options: [
+      { label: 'High — I am self-driven', points: 2 },
+      { label: 'Medium — I need reminders', points: 1 },
+      { label: 'Low — I need constant supervision', points: 0 },
+    ],
+  },
+  {
+    id: 'q28',
+    prompt: 'Which of these best describes your learning style?',
+    options: [
+      { label: 'Visual (videos, diagrams)', points: 2 },
+      { label: 'Hands-on (practice, labs)', points: 2 },
+      { label: 'Reading (books, articles)', points: 2 },
+    ],
+  },
+  {
+    id: 'q29',
+    prompt: 'How do you typically spend your free time?',
+    options: [
+      { label: 'Building something, learning, or exploring ideas', points: 2 },
+      { label: 'Social media, gaming, entertainment', points: 1 },
+      { label: 'Mostly idle or undecided', points: 0 },
+    ],
+  },
+  {
+    id: 'q30',
+    prompt: 'How prepared do you feel for your chosen career path right now?',
+    options: [
+      { label: 'Well prepared — I have a clear plan', points: 2 },
+      { label: 'Somewhat prepared — still figuring things out', points: 1 },
+      { label: 'Not prepared — I have no idea what to do', points: 0 },
+    ],
+  },
 ]
 
+// Questions are picked and shuffled in the component's useEffect
+
 const STREAMS = [
-  { id: 'SCIENCE', label: 'Science (PCM/PCB)' },
-  { id: 'COMMERCE', label: 'Commerce' },
-  { id: 'ARTS', label: 'Arts / Humanities' },
+  { id: 'SCIENCE_PCM', label: 'Science — PCM', icon: '🔬', desc: 'Physics, Chemistry, Maths' },
+  { id: 'SCIENCE_PCB', label: 'Science — PCB', icon: '🧬', desc: 'Physics, Chemistry, Biology' },
+  { id: 'SCIENCE_PCMB', label: 'Science — PCMB', icon: '⚗️', desc: 'Physics, Chemistry, Maths & Biology' },
+  { id: 'COMMERCE', label: 'Commerce', icon: '📊', desc: 'Accountancy, Business Studies, Economics' },
+  { id: 'COMMERCE_MATHS', label: 'Commerce with Maths', icon: '📈', desc: 'Commerce + Mathematics' },
+  { id: 'ARTS', label: 'Arts / Humanities', icon: '🎨', desc: 'History, Geography, Political Science' },
+  { id: 'VOCATIONAL', label: 'Vocational / Diploma', icon: '🛠️', desc: 'ITI, Polytechnic, Skill-based courses' },
+  { id: 'AGRICULTURE', label: 'Agriculture', icon: '🌾', desc: 'Agricultural Sciences & rural studies' },
+  { id: 'FINE_ARTS', label: 'Fine Arts / Design', icon: '🖌️', desc: 'Visual arts, performing arts, design' },
+  { id: 'HOME_SCIENCE', label: 'Home Science', icon: '🏡', desc: 'Nutrition, Child Development, Textiles' },
+  { id: 'CUSTOM', label: 'Custom / Other', icon: '✏️', desc: 'Type your own stream or field' },
 ]
 
 const INTERESTS = [
-  'Engineering',
-  'Medicine',
-  'Research',
-  'Computer Science',
-  'Design',
-  'Business',
-  'Finance',
-  'Law',
-  'Psychology',
-  'Media',
-  'Government Exams',
-  'Entrepreneurship',
-  'Architecture',
-  'Defence',
-  'Sports & fitness',
-  'Teaching',
-  'Environment / sustainability',
-  'Art / music',
-  'Content creation',
-  'Data & analytics',
-  'Cybersecurity',
-  'Hospitality & tourism',
-  'International studies',
+  'Engineering', 'Medicine', 'Research', 'Computer Science', 'Design',
+  'Business', 'Finance', 'Law', 'Psychology', 'Media',
+  'Government Exams', 'Entrepreneurship', 'Architecture', 'Defence',
+  'Sports & fitness', 'Teaching', 'Environment / sustainability',
+  'Art / music', 'Content creation', 'Data & analytics', 'Cybersecurity',
+  'Hospitality & tourism', 'International studies',
 ]
+
+const STREAM_RECOMMENDATIONS = {
+  SCIENCE_PCM: {
+    interests: ['Engineering', 'Computer Science', 'Research', 'Data & analytics', 'Cybersecurity', 'Defence', 'Architecture'],
+    aptitude: ['Numbers & logic', 'Problem solving', 'Hands-on building', 'Research mindset', 'Attention to detail']
+  },
+  SCIENCE_PCB: {
+    interests: ['Medicine', 'Research', 'Psychology', 'Environment / sustainability', 'Teaching'],
+    aptitude: ['Biology / health', 'Research mindset', 'People & empathy', 'Attention to detail', 'Discipline & consistency']
+  },
+  SCIENCE_PCMB: {
+    interests: ['Engineering', 'Medicine', 'Research', 'Computer Science', 'Data & analytics'],
+    aptitude: ['Numbers & logic', 'Biology / health', 'Problem solving', 'Research mindset', 'Attention to detail']
+  },
+  COMMERCE: {
+    interests: ['Business', 'Finance', 'Entrepreneurship', 'Data & analytics', 'Law', 'Hospitality & tourism'],
+    aptitude: ['Numbers & logic', 'Communication', 'Leadership', 'Presentation & persuasion', 'Attention to detail']
+  },
+  COMMERCE_MATHS: {
+    interests: ['Finance', 'Data & analytics', 'Business', 'Entrepreneurship', 'Research'],
+    aptitude: ['Numbers & logic', 'Problem solving', 'Attention to detail', 'Leadership', 'Communication']
+  },
+  ARTS: {
+    interests: ['Law', 'Psychology', 'Media', 'Teaching', 'International studies', 'Art / music', 'Content creation'],
+    aptitude: ['Communication', 'Writing & expression', 'Creativity & visuals', 'Presentation & persuasion', 'People & empathy']
+  },
+  AGRICULTURE: {
+    interests: ['Environment / sustainability', 'Research', 'Business', 'Teaching', 'Government Exams', 'Engineering'],
+    aptitude: ['Hands-on building', 'Problem solving', 'Biology / health', 'Research mindset', 'Discipline & consistency']
+  },
+  FINE_ARTS: {
+    interests: ['Design', 'Art / music', 'Content creation', 'Architecture', 'Media'],
+    aptitude: ['Creativity & visuals', 'Hands-on building', 'Writing & expression', 'Communication', 'Attention to detail']
+  },
+  HOME_SCIENCE: {
+    interests: ['Psychology', 'Teaching', 'Hospitality & tourism', 'Art / music', 'Design'],
+    aptitude: ['People & empathy', 'Creativity & visuals', 'Teamwork', 'Communication', 'Writing & expression']
+  },
+  VOCATIONAL: {
+    interests: ['Engineering', 'Design', 'Hospitality & tourism', 'Cybersecurity', 'Content creation'],
+    aptitude: ['Hands-on building', 'Problem solving', 'Communication', 'Teamwork', 'Discipline & consistency']
+  }
+}
 
 const APTITUDE_TAGS = [
   'Numbers & logic',
@@ -196,9 +394,14 @@ function clampPct(v) {
   return Math.max(0, Math.min(100, n))
 }
 
-function computeQuiz(answers) {
-  const total = QUIZ_QUESTIONS.reduce((sum, q) => sum + Math.max(...q.options.map((o) => o.points)), 0)
-  const score = QUIZ_QUESTIONS.reduce((sum, q) => sum + (Number(answers?.[q.id]) || 0), 0)
+function computeQuiz(answers, questions) {
+  if (!questions || questions.length === 0) return { score: 0, total: 0, percent: 0, band: 'N/A' }
+  const total = questions.reduce((sum, q) => sum + Math.max(...q.options.map((o) => o.points)), 0)
+  const score = questions.reduce((sum, q) => {
+    const selectedLabel = answers?.[q.id]
+    const option = q.options.find(o => o.label === selectedLabel)
+    return sum + (option ? option.points : 0)
+  }, 0)
   const percent = total > 0 ? Math.round((score / total) * 100) : 0
   const band = percent >= 75 ? 'Strong fit' : percent >= 50 ? 'Moderate fit' : 'Needs improvement'
   return { score, total, percent, band }
@@ -208,7 +411,7 @@ function shuffleArray(array) {
   const arr = [...array]
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+      ;[arr[i], arr[j]] = [arr[j], arr[i]]
   }
   return arr
 }
@@ -221,13 +424,18 @@ export default function After12Form() {
   const [shuffledQuiz, setShuffledQuiz] = useState([])
 
   useEffect(() => {
-    const shuffled = QUIZ_QUESTIONS.map((q) => ({
+    // Pick 12 random questions from the full 30-question bank every session
+    const shuffledAll = shuffleArray([...ALL_QUIZ_QUESTIONS])
+    const picked12 = shuffledAll.slice(0, 12).map((q) => ({
       ...q,
       options: shuffleArray(q.options),
     }))
-    setShuffledQuiz(shuffleArray(shuffled))
+    setShuffledQuiz(picked12)
   }, [])
-  const [stream, setStream] = useState('SCIENCE')
+  const [stream, setStream] = useState('SCIENCE_PCM')
+  const [customStream, setCustomStream] = useState('')
+  const [customInterest, setCustomInterest] = useState('')
+  const [customAptitude, setCustomAptitude] = useState('')
   const [percentage, setPercentage] = useState('80')
   const [interests, setInterests] = useState([])
   const [aptitudeTags, setAptitudeTags] = useState([])
@@ -252,7 +460,7 @@ export default function After12Form() {
         setError('Please select one option to continue.')
         return
       }
-      if (quizIndex < QUIZ_QUESTIONS.length - 1) {
+      if (quizIndex < shuffledQuiz.length - 1) {
         setQuizIndex((v) => v + 1)
         return
       }
@@ -260,6 +468,10 @@ export default function After12Form() {
     if (step === 2) {
       if (!stream) {
         setError('Select your stream.')
+        return
+      }
+      if (stream === 'CUSTOM' && !customStream.trim()) {
+        setError('Please describe your custom stream.')
         return
       }
       if (clampPct(percentage) <= 0) {
@@ -286,11 +498,15 @@ export default function After12Form() {
     setAptitudeTags((prev) => (prev.includes(label) ? prev.filter((x) => x !== label) : [...prev, label]))
   }
 
+  const recInterests = STREAM_RECOMMENDATIONS[stream]?.interests || []
+  const recAptitude = STREAM_RECOMMENDATIONS[stream]?.aptitude || []
+
   const payload = useMemo(() => {
-    const quiz = computeQuiz(quizAnswers)
+    const quiz = computeQuiz(quizAnswers, shuffledQuiz)
     return {
       quiz,
-      stream,
+      stream: stream === 'CUSTOM' ? customStream : stream,
+      customStream,
       percentage: clampPct(percentage),
       interests,
       aptitudeTags,
@@ -302,7 +518,7 @@ export default function After12Form() {
       category,
       examReadiness,
     }
-  }, [quizAnswers, stream, percentage, interests, aptitudeTags, workPreference, budget, locationFlexibility, preferredCity, preferredState, category, examReadiness])
+  }, [quizAnswers, stream, customStream, percentage, interests, aptitudeTags, workPreference, budget, locationFlexibility, preferredCity, preferredState, category, examReadiness])
 
   const submit = async () => {
     setError('')
@@ -313,14 +529,15 @@ export default function After12Form() {
         ...data,
         quiz: payload.quiz,
         assessmentInputs: {
+          ...payload,
           locationFlexibility,
-          preferredCity: payload.preferredCity,
-          preferredState: payload.preferredState,
-          category: payload.category,
         },
       }
       try {
         localStorage.setItem(AFTER12_LAST_PREDICTION_KEY, JSON.stringify(merged))
+        // Save for roadmap
+        localStorage.setItem('careermatrix_last_interests', JSON.stringify(interests))
+        localStorage.setItem('careermatrix_last_skills', JSON.stringify(aptitudeTags))
       } catch {
         /* ignore */
       }
@@ -338,7 +555,7 @@ export default function After12Form() {
       <div className="mesh-gradient min-h-screen px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl space-y-8">
           <div className="relative">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold tracking-wider text-primary uppercase ring-1 ring-primary/20"
@@ -359,10 +576,10 @@ export default function After12Form() {
             </div>
 
             {error && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mx-8 mt-6 rounded-2xl border border-red-500/10 bg-red-500/5 px-6 py-4 text-sm font-bold text-red-500 backdrop-blur-md" 
+                className="mx-8 mt-6 rounded-2xl border border-red-500/10 bg-red-500/5 px-6 py-4 text-sm font-bold text-red-500 backdrop-blur-md"
                 role="alert"
               >
                 {error}
@@ -370,166 +587,274 @@ export default function After12Form() {
             )}
 
             <div className="p-8">
-            <AnimatePresence mode="wait">
-              {step === 1 && (
-                <motion.section key="quiz" variants={stepVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
-                  <div>
-                    <h2 className="font-display text-lg font-semibold text-accent">Quick quiz (12 questions)</h2>
-                    <p className="mt-1 text-sm text-slate-600">This decides your assessment result level (strong / moderate / needs improvement).</p>
-                  </div>
+              <AnimatePresence mode="wait">
+                {step === 1 && (
+                  <motion.section key="quiz" variants={stepVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
+                    <div>
+                      <h2 className="font-display text-lg font-semibold text-accent">Quick quiz (12 questions)</h2>
+                      <p className="mt-1 text-sm text-slate-600">This decides your assessment result level (strong / moderate / needs improvement).</p>
+                    </div>
 
-                  {(() => {
-                    const q = shuffledQuiz[quizIndex]
-                    if (!q) return null
-                    return (
-                      <div className="rounded-2xl border border-borderline bg-surface p-4 shadow-sm">
-                        <div className="flex flex-wrap items-center justify-between gap-2">
-                          <p className="text-sm font-semibold text-accent">
-                            Question {quizIndex + 1} of {shuffledQuiz.length}
-                          </p>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setError('')
-                              setQuizAnswers({})
-                              setQuizIndex(0)
-                              const reshuffled = QUIZ_QUESTIONS.map((q) => ({
-                                ...q,
-                                options: shuffleArray(q.options),
-                              }))
-                              setShuffledQuiz(shuffleArray(reshuffled))
-                            }}
-                            className="text-xs font-semibold text-slate-600 underline-offset-4 hover:underline"
-                          >
-                            Reset quiz
-                          </button>
-                        </div>
-
-                        <p className="mt-3 text-sm font-semibold text-accent">{q.prompt}</p>
-
-                        <div className="mt-4 grid gap-2">
-                          {q.options.map((opt) => {
-                            const active = Number(quizAnswers?.[q.id]) === opt.points
-                            return (
-                              <button
-                                key={opt.label}
-                                type="button"
-                                onClick={() => {
-                                  setError('')
-                                  setQuizAnswers((prev) => ({ ...prev, [q.id]: opt.points }))
-                                }}
-                                className={`rounded-xl border px-4 py-2.5 text-left text-sm font-medium transition-all duration-300 ${
-                                  active
-                                    ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
-                                    : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
-                                }`}
-                              >
-                                {opt.label}
-                              </button>
-                            )
-                          })}
-                        </div>
-
-                        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-                          <Button
-                            variant="secondary"
-                            type="button"
-                            onClick={() => {
-                              setError('')
-                              setQuizIndex((v) => Math.max(0, v - 1))
-                            }}
-                            disabled={quizIndex === 0}
-                          >
-                            Previous question
-                          </Button>
-                          <Button type="button" onClick={next}>
-                            {quizIndex < QUIZ_QUESTIONS.length - 1 ? 'Next question' : 'Finish quiz'}
-                          </Button>
-                        </div>
-                      </div>
-                    )
-                  })()}
-
-                  <div className="rounded-2xl border border-primary/20 bg-page/70 px-4 py-3">
                     {(() => {
-                      const q = computeQuiz(quizAnswers)
+                      const q = shuffledQuiz[quizIndex]
+                      if (!q) return null
                       return (
-                        <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-                          <span className="font-semibold text-accent">
-                            Current score: {q.score}/{q.total} ({q.percent}%)
-                          </span>
-                          <span className="text-slate-600">
-                            Result level: <span className="font-semibold text-accent">{q.band}</span>
-                          </span>
+                        <div className="rounded-2xl border border-borderline bg-surface p-4 shadow-sm">
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <p className="text-sm font-semibold text-accent">
+                              Question {quizIndex + 1} of {shuffledQuiz.length}
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setError('')
+                                setQuizAnswers({})
+                                setQuizIndex(0)
+                                const reshuffledAll = shuffleArray([...ALL_QUIZ_QUESTIONS])
+                                const newPicked12 = reshuffledAll.slice(0, 12).map((q) => ({
+                                  ...q,
+                                  options: shuffleArray(q.options),
+                                }))
+                                setShuffledQuiz(newPicked12)
+                              }}
+                              className="text-xs font-semibold text-slate-600 underline-offset-4 hover:underline"
+                            >
+                              Reset quiz
+                            </button>
+                          </div>
+
+                          <p className="mt-3 text-sm font-semibold text-accent">{q.prompt}</p>
+
+                          <div className="mt-4 grid gap-2">
+                            {q.options.map((opt) => {
+                              const active = quizAnswers?.[q.id] === opt.label
+                              return (
+                                <button
+                                  key={opt.label}
+                                  type="button"
+                                  onClick={() => {
+                                    setError('')
+                                    setQuizAnswers((prev) => ({ ...prev, [q.id]: opt.label }))
+                                  }}
+                                  className={`rounded-xl border px-4 py-2.5 text-left text-sm font-medium transition-all duration-300 ${active
+                                      ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                      : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
+                                    }`}
+                                >
+                                  {opt.label}
+                                </button>
+                              )
+                            })}
+                          </div>
+
+                          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+                            <Button
+                              variant="secondary"
+                              type="button"
+                              onClick={() => {
+                                setError('')
+                                setQuizIndex((v) => Math.max(0, v - 1))
+                              }}
+                              disabled={quizIndex === 0}
+                            >
+                              Previous question
+                            </Button>
+                            <Button type="button" onClick={next}>
+                              {quizIndex < shuffledQuiz.length - 1 ? 'Next question' : 'Finish quiz'}
+                            </Button>
+                          </div>
                         </div>
                       )
                     })()}
-                  </div>
-                </motion.section>
-              )}
 
-              {step === 2 && (
-                <motion.section key="a1" variants={stepVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
-                  <div>
-                    <h2 className="font-display text-lg font-semibold text-accent">Select your stream</h2>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                      {STREAMS.map((s) => {
-                        const active = stream === s.id
+                    <div className="rounded-2xl border border-primary/20 bg-page/70 px-4 py-3">
+                      {(() => {
+                        const q = computeQuiz(quizAnswers, shuffledQuiz)
                         return (
-                          <button
-                            key={s.id}
-                            type="button"
-                            onClick={() => setStream(s.id)}
-                            className={`rounded-2xl border px-4 py-3 text-left text-sm font-medium transition-all duration-300 ${
-                              active
+                          <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+                            <span className="font-semibold text-accent">
+                              Current score: {q.score}/{q.total} ({q.percent}%)
+                            </span>
+                            <span className="text-slate-600">
+                              Result level: <span className="font-semibold text-accent">{q.band}</span>
+                            </span>
+                          </div>
+                        )
+                      })()}
+                    </div>
+                  </motion.section>
+                )}
+
+                {step === 2 && (
+                  <motion.section key="a1" variants={stepVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
+                    <div>
+                      <h2 className="font-display text-lg font-semibold text-accent">Select your stream</h2>
+                      <p className="mt-1 text-xs" style={{ color: '#64748b' }}>Choose the stream you studied in Class 12.</p>
+                      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                        {STREAMS.map((s) => {
+                          const active = stream === s.id
+                          return (
+                            <button
+                              key={s.id}
+                              type="button"
+                              onClick={() => setStream(s.id)}
+                              className={`rounded-2xl border px-4 py-3 text-left text-sm font-medium transition-all duration-300 ${active
                                 ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
                                 : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
-                            }`}
-                          >
-                            {s.label}
-                          </button>
-                        )
-                      })}
+                                }`}
+                            >
+                              <div className="flex items-center gap-3">
+                                <span className="text-xl">{s.icon}</span>
+                                <div>
+                                  <div className="font-bold text-sm">{s.label}</div>
+                                  <div className={`text-[11px] mt-0.5 ${active ? 'text-white/70' : 'text-muted'}`}>{s.desc}</div>
+                                </div>
+                              </div>
+                            </button>
+                          )
+                        })}
+                      </div>
                     </div>
-                  </div>
 
-                  <label className="block">
-                    <span className="text-sm font-medium text-slate-700">Class 12 percentage (0–100)</span>
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-base font-medium text-accent shadow-sm transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
-                      value={percentage}
-                      onChange={(e) => setPercentage(e.target.value)}
-                    />
-                  </label>
-                </motion.section>
-              )}
+                    <label className="block">
+                      <span className="text-sm font-medium text-slate-700">Class 12 percentage (0–100)</span>
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-base font-medium text-accent shadow-sm transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                        value={percentage}
+                        onChange={(e) => setPercentage(e.target.value)}
+                      />
+                    </label>
+
+                    {/* Custom stream input */}
+                    {stream === 'CUSTOM' && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        className="mt-4 rounded-2xl border p-4"
+                        style={{ borderColor: 'rgba(99,102,241,0.25)', background: 'rgba(99,102,241,0.06)' }}
+                      >
+                        <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#818cf8' }}>✏️ Describe your stream / field *</p>
+                        <input
+                          type="text"
+                          placeholder="e.g. Fashion Design, Aviation, Culinary Arts, Animation, Hotel Management…"
+                          className="w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-sm font-medium text-accent transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                          value={customStream}
+                          onChange={(e) => setCustomStream(e.target.value)}
+                        />
+                        <p className="mt-2 text-xs" style={{ color: '#64748b' }}>AI will generate personalised career paths and skill roadmaps for your exact field.</p>
+                      </motion.div>
+                    )}
+                  </motion.section>
+                )}
 
               {step === 3 && (
                 <motion.section key="a2" variants={stepVariants} initial="initial" animate="animate" exit="exit">
                   <h2 className="font-display text-lg font-semibold text-accent">Interests</h2>
                   <p className="mt-1 text-sm text-slate-600">Pick what you feel excited to build a career in.</p>
 
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {INTERESTS.map((it) => {
-                      const active = interests.includes(it)
-                      return (
+                  {recInterests.length > 0 && (
+                    <div className="mt-5">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-md bg-primary/10 text-xs">✨</span>
+                        Recommended for your stream
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {recInterests.map((it) => {
+                          const active = interests.includes(it)
+                          return (
+                            <button
+                              key={it}
+                              type="button"
+                              onClick={() => toggleInterest(it)}
+                              className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                                active
+                                  ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                  : 'border-primary/20 bg-primary/5 text-accent hover:border-primary/40 hover:bg-primary/10'
+                              }`}
+                            >
+                              {it}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-6">
+                    {recInterests.length > 0 && (
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3">All Interests</p>
+                    )}
+                    <div className="flex flex-wrap gap-2">
+                      {INTERESTS.filter(it => !recInterests.includes(it)).map((it) => {
+                        const active = interests.includes(it)
+                        return (
+                          <button
+                            key={it}
+                            type="button"
+                            onClick={() => toggleInterest(it)}
+                            className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                              active
+                                ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
+                            }`}
+                          >
+                            {it}
+                          </button>
+                        )
+                      })}
+                      {interests.filter(i => !INTERESTS.includes(i)).map((it) => (
                         <button
                           key={it}
                           type="button"
                           onClick={() => toggleInterest(it)}
-                          className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                            active
-                              ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
-                              : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
-                          }`}
+                          className="rounded-full border border-pink-500/40 bg-gradient-to-br from-pink-500 to-rose-500 px-4 py-2 text-sm font-medium text-white shadow-glow transition-all"
                         >
-                          {it}
+                          ✏️ {it} ×
                         </button>
-                      )
-                    })}
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Custom interest input */}
+                  <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: 'rgba(99,102,241,0.2)', background: 'rgba(99,102,241,0.05)' }}>
+                    <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#818cf8' }}>✏️ Add your own career interest</p>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="e.g. Fashion Design, Animation, Journalism, Pilot…"
+                        className="flex-1 rounded-xl border border-borderline bg-surface px-4 py-2.5 text-sm font-medium text-accent transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                        value={customInterest}
+                        onChange={(e) => setCustomInterest(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            const val = customInterest.trim()
+                            if (val && !interests.includes(val)) {
+                              setInterests(prev => [...prev, val])
+                            }
+                            setCustomInterest('')
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const val = customInterest.trim()
+                          if (val && !interests.includes(val)) {
+                            setInterests(prev => [...prev, val])
+                          }
+                          setCustomInterest('')
+                        }}
+                        className="rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-all hover:scale-105"
+                        style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
+                      >
+                        + Add
+                      </button>
+                    </div>
+                    <p className="mt-2 text-xs" style={{ color: '#475569' }}>Press Enter or click Add. Your custom interests appear as pink tags above.</p>
                   </div>
                 </motion.section>
               )}
@@ -539,25 +864,108 @@ export default function After12Form() {
                   <div>
                     <h2 className="font-display text-lg font-semibold text-accent">Aptitude signals</h2>
                     <p className="mt-1 text-sm text-slate-600">Pick what fits you best (choose multiple).</p>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {APTITUDE_TAGS.map((t) => {
-                        const active = aptitudeTags.includes(t)
-                        return (
+
+                    {recAptitude.length > 0 && (
+                      <div className="mt-5">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
+                          <span className="flex h-5 w-5 items-center justify-center rounded-md bg-primary/10 text-xs">⚡</span>
+                          Recommended for your stream
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {recAptitude.map((t) => {
+                            const active = aptitudeTags.includes(t)
+                            return (
+                              <button
+                                key={t}
+                                type="button"
+                                onClick={() => toggleAptitude(t)}
+                                className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                                  active
+                                    ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                    : 'border-primary/20 bg-primary/5 text-accent hover:border-primary/40 hover:bg-primary/10'
+                                }`}
+                              >
+                                {t}
+                              </button>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="mt-6">
+                      {recAptitude.length > 0 && (
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3">All Aptitudes</p>
+                      )}
+                      <div className="flex flex-wrap gap-2">
+                        {APTITUDE_TAGS.filter(t => !recAptitude.includes(t)).map((t) => {
+                          const active = aptitudeTags.includes(t)
+                          return (
+                            <button
+                              key={t}
+                              type="button"
+                              onClick={() => toggleAptitude(t)}
+                              className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                                active
+                                  ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                  : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
+                              }`}
+                            >
+                              {t}
+                            </button>
+                          )
+                        })}
+                        {aptitudeTags.filter(t => !APTITUDE_TAGS.includes(t)).map((t) => (
                           <button
                             key={t}
                             type="button"
                             onClick={() => toggleAptitude(t)}
-                            className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                              active
-                              ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
-                                : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
-                            }`}
+                            className="rounded-full border border-cyan-500/40 bg-gradient-to-br from-cyan-500 to-teal-500 px-4 py-2 text-sm font-medium text-white shadow-glow transition-all"
                           >
-                            {t}
+                            ⚡ {t} ×
                           </button>
-                        )
-                      })}
+                        ))}
+                      </div>
                     </div>
+                  </div>
+
+                  {/* Custom aptitude input */}
+                  <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: 'rgba(34,211,238,0.2)', background: 'rgba(34,211,238,0.05)' }}>
+                    <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#22d3ee' }}>⚡ Add your own skill or aptitude</p>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="e.g. Video Editing, Event Planning, Public Speaking…"
+                        className="flex-1 rounded-xl border border-borderline bg-surface px-4 py-2.5 text-sm font-medium text-accent transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                        value={customAptitude}
+                        onChange={(e) => setCustomAptitude(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            const val = customAptitude.trim()
+                            if (val && !aptitudeTags.includes(val)) {
+                              setAptitudeTags(prev => [...prev, val])
+                            }
+                            setCustomAptitude('')
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const val = customAptitude.trim()
+                          if (val && !aptitudeTags.includes(val)) {
+                            setAptitudeTags(prev => [...prev, val])
+                          }
+                          setCustomAptitude('')
+                        }}
+                        className="rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-all hover:scale-105"
+                        style={{ background: 'linear-gradient(135deg, #06b6d4, #0891b2)' }}
+                      >
+                        + Add
+                      </button>
+                    </div>
+                    <p className="mt-2 text-xs" style={{ color: '#475569' }}>Press Enter or click Add. Custom skills appear as cyan tags above.</p>
                   </div>
 
                   <div>
@@ -584,173 +992,169 @@ export default function After12Form() {
                 </motion.section>
               )}
 
-              {step === 5 && (
-                <motion.section key="a4" variants={stepVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
-                  <div>
-                    <h2 className="font-display text-lg font-semibold text-accent">Budget</h2>
-                    <p className="mt-1 text-sm text-slate-600">This helps shortlist realistic college paths.</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {BUDGETS.map((b) => {
-                        const active = budget === b
-                        return (
-                          <button
-                            key={b}
-                            type="button"
-                            onClick={() => setBudget(b)}
-                            className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
-                              active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
-                            }`}
-                          >
-                            {b}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
+      {step === 5 && (
+        <motion.section key="a4" variants={stepVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
+          <div>
+            <h2 className="font-display text-lg font-semibold text-accent">Budget</h2>
+            <p className="mt-1 text-sm text-slate-600">This helps shortlist realistic college paths.</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {BUDGETS.map((b) => {
+                const active = budget === b
+                return (
+                  <button
+                    key={b}
+                    type="button"
+                    onClick={() => setBudget(b)}
+                    className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
+                      }`}
+                  >
+                    {b}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
 
-                  <div>
-                    <h2 className="font-display text-lg font-semibold text-accent">Location flexibility</h2>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {LOCATIONS.map((l) => {
-                        const active = locationFlexibility === l
-                        return (
-                          <button
-                            key={l}
-                            type="button"
-                            onClick={() => setLocationFlexibility(l)}
-                            className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
-                              active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
-                            }`}
-                          >
-                            {l}
-                          </button>
-                        )
-                      })}
-                    </div>
-
-                    {locationFlexibility === 'Same city' && (
-                      <label className="mt-5 block">
-                        <span className="text-sm font-medium text-slate-700">Choose your city</span>
-                        <select
-                          className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-sm font-medium text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
-                          value={preferredCity}
-                          onChange={(e) => setPreferredCity(e.target.value)}
-                        >
-                          {CITY_OPTIONS.map((c) => (
-                            <option key={c} value={c}>
-                              {c}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                    )}
-
-                    {locationFlexibility === 'Same state' && (
-                      <label className="mt-5 block">
-                        <span className="text-sm font-medium text-slate-700">Choose your state</span>
-                        <select
-                          className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-sm font-medium text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
-                          value={preferredState}
-                          onChange={(e) => setPreferredState(e.target.value)}
-                        >
-                          {STATE_OPTIONS.map((s) => (
-                            <option key={s} value={s}>
-                              {s}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                    )}
-                  </div>
-
-                  <div>
-                    <h2 className="font-display text-lg font-semibold text-accent">Exam readiness</h2>
-                    <p className="mt-1 text-sm text-slate-600">How prepared are you right now?</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {EXAM_READINESS.map((r) => {
-                        const active = examReadiness === r
-                        return (
-                          <button
-                            key={r}
-                            type="button"
-                            onClick={() => setExamReadiness(r)}
-                            className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
-                              active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
-                            }`}
-                          >
-                            {r}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h2 className="font-display text-lg font-semibold text-accent">Category</h2>
-                    <p className="mt-1 text-sm text-slate-600">Used to show category-wise college cutoffs.</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {CATEGORY_OPTIONS.map((c) => {
-                        const active = category === c.id
-                        return (
-                          <button
-                            key={c.id}
-                            type="button"
-                            onClick={() => setCategory(c.id)}
-                            className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
-                              active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
-                            }`}
-                          >
-                            {c.label}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </motion.section>
-              )}
-            </AnimatePresence>
+          <div>
+            <h2 className="font-display text-lg font-semibold text-accent">Location flexibility</h2>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {LOCATIONS.map((l) => {
+                const active = locationFlexibility === l
+                return (
+                  <button
+                    key={l}
+                    type="button"
+                    onClick={() => setLocationFlexibility(l)}
+                    className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
+                      }`}
+                  >
+                    {l}
+                  </button>
+                )
+              })}
             </div>
 
-            <div className="flex flex-wrap justify-between gap-4 border-t border-borderline bg-primary/5 p-8">
-              <Button 
-                variant="secondary" 
-                type="button" 
-                onClick={back} 
-                disabled={step === 1 && quizIndex === 0}
-                className="glass-dark border-none font-bold shadow-sm"
-              >
-                Previous
-              </Button>
-              {step < totalSteps ? (
-                <Button 
-                  type="button" 
-                  onClick={next}
-                  className="bg-gradient-to-r from-primary to-violet-600 font-bold shadow-lg shadow-primary/25"
+            {locationFlexibility === 'Same city' && (
+              <label className="mt-5 block">
+                <span className="text-sm font-medium text-slate-700">Choose your city</span>
+                <select
+                  className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-sm font-medium text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                  value={preferredCity}
+                  onChange={(e) => setPreferredCity(e.target.value)}
                 >
-                  Continue
-                </Button>
-              ) : (
-                <Button 
-                  type="button" 
-                  onClick={submit} 
-                  disabled={loading}
-                  className="bg-gradient-to-r from-primary to-violet-600 font-bold shadow-lg shadow-primary/25"
+                  {CITY_OPTIONS.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+
+            {locationFlexibility === 'Same state' && (
+              <label className="mt-5 block">
+                <span className="text-sm font-medium text-slate-700">Choose your state</span>
+                <select
+                  className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-sm font-medium text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                  value={preferredState}
+                  onChange={(e) => setPreferredState(e.target.value)}
                 >
-                  {loading ? (
-                    <span className="inline-flex items-center gap-2">
-                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                      Analyzing...
-                    </span>
-                  ) : (
-                    'Finalize Path'
-                  )}
-                </Button>
-              )}
+                  {STATE_OPTIONS.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+          </div>
+
+          <div>
+            <h2 className="font-display text-lg font-semibold text-accent">Exam readiness</h2>
+            <p className="mt-1 text-sm text-slate-600">How prepared are you right now?</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {EXAM_READINESS.map((r) => {
+                const active = examReadiness === r
+                return (
+                  <button
+                    key={r}
+                    type="button"
+                    onClick={() => setExamReadiness(r)}
+                    className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
+                      }`}
+                  >
+                    {r}
+                  </button>
+                )
+              })}
             </div>
-          </Card>
-        </div>
-      </div>
-    </PageTransition>
+          </div>
+
+          <div>
+            <h2 className="font-display text-lg font-semibold text-accent">Category</h2>
+            <p className="mt-1 text-sm text-slate-600">Used to show category-wise college cutoffs.</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {CATEGORY_OPTIONS.map((c) => {
+                const active = category === c.id
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => setCategory(c.id)}
+                    className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
+                      }`}
+                  >
+                    {c.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </motion.section>
+      )}
+    </AnimatePresence>
+            </div >
+
+    <div className="flex flex-wrap justify-between gap-4 border-t border-borderline bg-primary/5 p-8">
+      <Button
+        variant="secondary"
+        type="button"
+        onClick={back}
+        disabled={step === 1 && quizIndex === 0}
+        className="glass-dark border-none font-bold shadow-sm"
+      >
+        Previous
+      </Button>
+      {step < totalSteps ? (
+        <Button
+          type="button"
+          onClick={next}
+          className="bg-gradient-to-r from-primary to-violet-600 font-bold shadow-lg shadow-primary/25"
+        >
+          Continue
+        </Button>
+      ) : (
+        <Button
+          type="button"
+          onClick={submit}
+          disabled={loading}
+          className="bg-gradient-to-r from-primary to-violet-600 font-bold shadow-lg shadow-primary/25"
+        >
+          {loading ? (
+            <span className="inline-flex items-center gap-2">
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              Analyzing...
+            </span>
+          ) : (
+            'Finalize Path'
+          )}
+        </Button>
+      )}
+    </div>
+          </Card >
+        </div >
+      </div >
+    </PageTransition >
   )
 }
 

@@ -17,6 +17,8 @@ import After12Form from './pages/After12Form'
 import After12Results from './pages/After12Results'
 import AdmissionCalendar from './pages/AdmissionCalendar'
 import LearningResources from './pages/LearningResources'
+import LandingPage from './pages/LandingPage'
+import JEECollegePredictor from './pages/JEECollegePredictor'
 import Chatbot from './components/Chatbot'
 
 function HomeRedirect() {
@@ -30,12 +32,51 @@ function ProtectedRoute({ children }) {
   return children
 }
 
-/** Authenticated layout — light blue page bg, scrollable main content */
+/** Authenticated layout — deep navy animated background */
 function AppShell({ children }) {
   return (
-    <div className="flex min-h-screen flex-col bg-page">
+    <div className="relative flex min-h-screen flex-col overflow-x-hidden" style={{ background: '#0d1025' }}>
+      {/* Fixed gradient base */}
+      <div
+        className="pointer-events-none fixed inset-0 -z-10"
+        style={{
+          background: '#0d1025',
+          backgroundImage: [
+            'radial-gradient(ellipse 80% 60% at 10% -10%, rgba(99,102,241,0.12) 0%, transparent 60%)',
+            'radial-gradient(ellipse 60% 50% at 90% 110%, rgba(139,92,246,0.10) 0%, transparent 60%)',
+            'radial-gradient(ellipse 40% 40% at 50% 50%, rgba(236,72,153,0.04) 0%, transparent 70%)',
+          ].join(', '),
+        }}
+      />
+      {/* Floating animated orbs — subtle */}
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div
+          className="absolute -top-[250px] -left-[180px] h-[600px] w-[600px] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)',
+            filter: 'blur(90px)',
+            animation: 'float 14s ease-in-out infinite',
+          }}
+        />
+        <div
+          className="absolute -bottom-[250px] -right-[180px] h-[550px] w-[550px] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)',
+            filter: 'blur(90px)',
+            animation: 'float 18s ease-in-out infinite reverse',
+          }}
+        />
+        <div
+          className="absolute top-[35%] -right-[120px] h-[300px] w-[300px] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(236,72,153,0.08) 0%, transparent 70%)',
+            filter: 'blur(70px)',
+            animation: 'float 11s ease-in-out infinite 2s',
+          }}
+        />
+      </div>
       <Navbar />
-      <main className="mx-auto w-full max-w-6xl flex-1 overflow-y-auto px-4 py-8 sm:px-6 sm:py-10">{children}</main>
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">{children}</main>
       <Footer />
     </div>
   )
@@ -177,7 +218,17 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-      <Route path="/" element={<HomeRedirect />} />
+      <Route
+        path="/toolkit/jee-predictor"
+        element={
+          <ProtectedRoute>
+            <AppShell>
+              <JEECollegePredictor />
+            </AppShell>
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/" element={<LandingPage />} />
       <Route path="*" element={<HomeRedirect />} />
     </Routes>
     <Chatbot />
