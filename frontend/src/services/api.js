@@ -3,7 +3,7 @@ import axios from 'axios'
 /**
  * Axios client for CareerMatrix API. Set VITE_API_URL in .env for production.
  */
-const baseURL = import.meta.env.VITE_API_URL || 'https://careermatrix-r8gl.onrender.com'
+const baseURL = import.meta.env.VITE_API_URL || 'https://edupath-careermatrix.onrender.com'
 
 export const api = axios.create({
   baseURL,
