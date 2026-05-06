@@ -125,7 +125,7 @@ public class ChatService {
 
     private String smartFallback(String message) {
         String m = message.toLowerCase(Locale.ROOT);
-        if (m.contains("hi") || m.contains("hello") || m.contains("hey")) {
+        if (m.matches(".*\\b(hi|hello|hey)\\b.*")) {
             return "Hello! I'm CareerMatrix Assistant. How can I help you with your career goals today?";
         }
         if (m.contains("full form") && m.contains("ai")) {
