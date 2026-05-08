@@ -1,4 +1,5 @@
 # CareerMatrix — Career Path Prediction System
+(Latest Update: May 8, 2026 — Production Deploy)
 
 Full-stack app: **React (Vite)** + **Tailwind CSS** frontend, **Spring Boot** REST API, **MySQL** or **H2** database, **JWT** authentication, and a **branch-aware CareerFit Prediction Algorithm (CFPA)** that scores **expanded career titles** using skill/interest mappings, **branch priors**, and optional **cross-branch** boosts. Includes **AI career chat** and **branch-aware career roadmaps** (rich steps with tools, projects, and resources when data or OpenAI is available).
 
