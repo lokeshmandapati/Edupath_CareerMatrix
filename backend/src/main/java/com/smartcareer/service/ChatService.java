@@ -201,6 +201,26 @@ public class ChatService {
                     • It involves heating the liquid to a specific temperature for a set time and then cooling it immediately.
                     • It makes food safer to consume and extends its shelf life without significantly changing the taste.""".stripIndent().trim();
         }
+        if (m.contains("precision agriculture") || (m.contains("agri") && m.contains("tech"))) {
+            return """
+                    **Precision Agriculture:**
+                    Precision agriculture uses technology (GPS, sensors, drones) to ensure that crops and soil receive exactly what they need for optimum health and productivity.
+                    
+                    **Benefits:**
+                    • Optimized resource use (water, fertilizer).
+                    • Reduced environmental impact.
+                    • Higher crop yields and quality.""".stripIndent().trim();
+        }
+        if (m.contains("hydroponics")) {
+            return """
+                    **Hydroponics:**
+                    Hydroponics is a method of growing plants without soil, using mineral nutrient solutions in a water solvent.
+                    
+                    **Advantages:**
+                    • Faster growth than soil-based farming.
+                    • Can be done indoors or in limited space.
+                    • Uses significantly less water.""".stripIndent().trim();
+        }
         return null;
     }
 

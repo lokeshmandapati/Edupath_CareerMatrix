@@ -102,10 +102,15 @@ public class GeminiService {
             contents.add(buildContent("model", "Acknowledged."));
         }
         
-        String combinedMessage = "SYSTEM: " + systemPrompt + "\n\nUSER: " + userMessage;
-        contents.add(buildContent("user", combinedMessage));
+        contents.add(buildContent("user", userMessage));
 
         Map<String, Object> body = new HashMap<>();
+        
+        // Use modern system_instruction field for Gemini 1.5+ and 2.0
+        Map<String, Object> systemInstruction = new HashMap<>();
+        systemInstruction.put("parts", List.of(Map.of("text", systemPrompt)));
+        body.put("system_instruction", systemInstruction);
+
         body.put("contents", contents);
 
         String json = objectMapper.writeValueAsString(body);
