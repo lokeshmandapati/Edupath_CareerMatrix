@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/options")
-@CrossOrigin(origins = "*")
 public class DynamicOptionsController {
 
     private final DynamicOptionsService dynamicOptionsService;

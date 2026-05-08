@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  * Career prediction and persisted results (JWT required).
  */
 @RestController
-@CrossOrigin(origins = {"http://localhost:5173", "http://127.0.0.1:5173"})
 public class PredictionController {
 
     private final CareerFitPredictionService predictionService;

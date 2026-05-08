@@ -118,6 +118,15 @@
       }
     },
     {
+      "code": "AGRI",
+      "label": "Agriculture Engineering / Science",
+      "chatHints": {
+        "tools": ["GIS tools", "Soil testing kits", "Precision agri software", "Drone mapping"],
+        "technologies": ["Irrigation systems", "Crop genetics", "Pest control", "Farm mechanization", "Sustainable farming"],
+        "careers": ["Agricultural Engineer", "Farm Manager", "Soil Scientist", "Agronomist", "Food Technologist"]
+      }
+    },
+    {
       "code": "OTHER",
       "label": "Other",
       "chatHints": {
@@ -216,6 +225,7 @@
       "Judicial Officer",
       "Company Secretary"
     ],
+    "AGRI": ["Agricultural Engineer", "Agronomist", "Farm Manager", "Soil Scientist", "Food Technologist", "Plant Breeder", "Irrigation Specialist"],
     "OTHER": ["Software Engineer", "Data Analyst", "Product Manager", "Consultant", "Entrepreneur"]
   },
   "richRoadmaps": {
