@@ -72,7 +72,7 @@ export default function Navbar() {
         </div>
 
         {/* Right: Actions */}
-        <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
+        <div className="flex flex-1 items-center justify-end gap-4 sm:gap-6">
           <button
             onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
             className="flex h-10 w-10 items-center justify-center rounded-xl transition-all hover:scale-110"
