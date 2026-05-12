@@ -116,18 +116,42 @@ export default function LandingPage() {
   return (
     <div className="relative min-h-screen overflow-x-hidden" style={{ color: '#f1f5f9' }}>
 
-      {/* ── Gradient Background ── */}
+      {/* ── Animated Background ── */}
       <div className="pointer-events-none fixed inset-0 -z-10" style={{
-        background: 'linear-gradient(135deg, #1a0a2e 0%, #16082b 25%, #0f0720 50%, #0a0518 75%, #09090f 100%)',
+        background: 'linear-gradient(160deg, #1e0a3c 0%, #180830 20%, #10061e 45%, #0a0414 70%, #08080f 100%)',
       }}>
-        {/* Warm purple/amber glow — left side */}
-        <div className="absolute -top-32 -left-32 h-[700px] w-[700px] rounded-full opacity-40 blur-[120px]"
-          style={{ background: 'radial-gradient(circle, #7c3aed, #a855f7, transparent 70%)' }} />
-        <div className="absolute top-20 left-20 h-[400px] w-[400px] rounded-full opacity-20 blur-[100px]"
-          style={{ background: 'radial-gradient(circle, #d97706, #f59e0b, transparent 70%)' }} />
-        {/* Subtle purple glow — right side */}
-        <div className="absolute -bottom-40 -right-32 h-[500px] w-[500px] rounded-full opacity-20 blur-[100px]"
-          style={{ background: 'radial-gradient(circle, #6d28d9, transparent 70%)' }} />
+        {/* Large slow-drifting orbs */}
+        <motion.div
+          animate={{ x: [0, 60, -30, 0], y: [0, -40, 20, 0], scale: [1, 1.15, 0.95, 1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -top-20 -left-20 h-[600px] w-[600px] rounded-full opacity-35 blur-[120px]"
+          style={{ background: 'radial-gradient(circle, #7c3aed, #6d28d9, transparent 70%)' }}
+        />
+        <motion.div
+          animate={{ x: [0, -50, 30, 0], y: [0, 30, -50, 0], scale: [1, 0.9, 1.1, 1] }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-32 left-[15%] h-[350px] w-[350px] rounded-full opacity-20 blur-[100px]"
+          style={{ background: 'radial-gradient(circle, #d97706, #f59e0b, transparent 70%)' }}
+        />
+        <motion.div
+          animate={{ x: [0, 40, -20, 0], y: [0, -60, 30, 0], scale: [1, 1.1, 0.9, 1] }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-[50%] right-[10%] h-[500px] w-[500px] rounded-full opacity-25 blur-[130px]"
+          style={{ background: 'radial-gradient(circle, #4f46e5, #6366f1, transparent 70%)' }}
+        />
+        <motion.div
+          animate={{ x: [0, -30, 50, 0], y: [0, 40, -20, 0] }}
+          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -bottom-32 left-[30%] h-[400px] w-[400px] rounded-full opacity-15 blur-[100px]"
+          style={{ background: 'radial-gradient(circle, #ec4899, #be185d, transparent 70%)' }}
+        />
+
+        {/* Subtle noise/grain overlay for depth */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '128px 128px',
+        }} />
       </div>
 
       {/* ── Navbar ── */}
