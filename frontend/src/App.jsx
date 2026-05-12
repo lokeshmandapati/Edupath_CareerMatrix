@@ -18,7 +18,7 @@ import After12Results from './pages/After12Results'
 import AdmissionCalendar from './pages/AdmissionCalendar'
 import LearningResources from './pages/LearningResources'
 import LandingPage from './pages/LandingPage'
-import JEECollegePredictor from './toolkit/JEECollegePredictor'
+import JEECollegePredictor from './pages/JEECollegePredictor'
 import SkillGapAnalysis from './pages/SkillGapAnalysis'
 import Chatbot from './components/Chatbot'
 
