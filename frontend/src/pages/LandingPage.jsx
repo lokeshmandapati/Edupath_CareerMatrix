@@ -52,11 +52,11 @@ export default function LandingPage() {
       {/* ── Navbar ── */}
       <header className="sticky top-0 z-50 backdrop-blur-xl border-b" style={{ background: 'rgba(9,9,15,0.8)', borderColor: 'rgba(255,255,255,0.07)' }}>
         <div className="mx-auto flex w-full items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl text-lg" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl text-2xl shadow-lg ring-2 ring-white/10" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
             <div>
-              <div className="text-sm font-extrabold tracking-tight" style={{ color: '#f1f5f9' }}>CareerMatrix</div>
-              <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: '#6366f1' }}>Career Path Prediction</div>
+              <div className="text-xl font-black tracking-tighter sm:text-2xl" style={{ color: '#f1f5f9' }}>CareerMatrix</div>
+              <div className="text-[10px] font-bold uppercase tracking-[0.2em] sm:text-[11px]" style={{ color: '#818cf8' }}>Career Path Prediction</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
