@@ -41,7 +41,7 @@ public class ChatService {
 
     public ChatResponse chat(ChatRequest request) {
         String message = request.message().trim();
-        List<ChatTurnDto> history = trimHistory(request.history(), 12);
+        List<ChatTurnDto> history = trimHistory(request.history(), 6);
 
         String type = request.assessmentType() == null ? "ENGINEERING" : request.assessmentType().trim().toUpperCase(Locale.ROOT);
         Optional<BranchCareerMappingService.BranchMeta> branchOpt = branchCareerMappingService.findBranch(request.branch());
