@@ -10,7 +10,9 @@ import Button from '../components/Button'
 import { 
   CLASS10_LAST_PREDICTION_KEY, 
   AFTER12_LAST_PREDICTION_KEY, 
-  ENGINEERING_LAST_PREDICTION_KEY 
+  ENGINEERING_LAST_PREDICTION_KEY,
+  ROADMAP_CAREER_KEY,
+  ROADMAP_CONTEXT_LABEL_KEY
 } from '../constants/storageKeys'
 
 export default function Profile() {
