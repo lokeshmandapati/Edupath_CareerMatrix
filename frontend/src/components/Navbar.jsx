@@ -31,15 +31,15 @@ export default function Navbar() {
         boxShadow: '0 1px 40px rgba(99,102,241,0.08), 0 1px 8px rgba(0,0,0,0.3)',
       }}
     >
-      <div className="mx-auto grid w-full grid-cols-3 items-center gap-4 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
         
         {/* Left: Logo */}
-        <div className="flex justify-start">
+        <div className="flex flex-1 justify-start">
           <Logo to={isAuthenticated ? '/dashboard' : '/login'} size="md" className="transition-transform duration-300 ease-out hover:scale-[1.02]" />
         </div>
 
         {/* Center: Navigation Links (Desktop) */}
-        <div className="flex justify-center">
+        <div className="flex items-center justify-center">
           {isAuthenticated && (
             <nav className="hidden items-center gap-1 md:flex">
               {[
@@ -72,7 +72,7 @@ export default function Navbar() {
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center justify-end gap-2 sm:gap-3">
+        <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
           <button
             onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
             className="flex h-10 w-10 items-center justify-center rounded-xl transition-all hover:scale-110"
