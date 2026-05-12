@@ -33,9 +33,8 @@ export default function Navbar() {
     >
       <div className="mx-auto flex w-full items-center justify-between px-4 py-3 sm:px-10">
         
-        {/* Left: Logo */}
         <div className="flex flex-1 justify-start">
-          <Logo to={isAuthenticated ? '/dashboard' : '/login'} size="md" className="transition-transform duration-300 ease-out hover:scale-[1.02]" />
+          <Logo to={isAuthenticated ? '/dashboard' : '/login'} size="lg" className="transition-transform duration-300 ease-out hover:scale-[1.02]" />
         </div>
 
         {/* Center: Navigation Links (Desktop) */}

@@ -52,9 +52,9 @@ export default function Logo({ to = '/login', size = 'md', className = '', showT
     <span className="inline-flex items-center gap-3">
       <LogoMark size={size} className="ring-2 ring-white/60 shadow-md transition group-hover:ring-primary/30" />
       <span className="flex flex-col items-start leading-tight">
-        <span className="font-display text-lg font-bold tracking-tight text-accent sm:text-xl">CareerMatrix</span>
+        <span className="font-display text-xl font-extrabold tracking-tight text-accent sm:text-2xl">CareerMatrix</span>
         {showTagline && (
-          <span className="text-[11px] font-medium text-slate-500 sm:text-xs">Career Path Prediction</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500/80 sm:text-[11px]">Career Path Prediction</span>
         )}
       </span>
     </span>
