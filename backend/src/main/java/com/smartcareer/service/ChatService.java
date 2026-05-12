@@ -22,11 +22,11 @@ public class ChatService {
             
             CORE RULES:
             1. DIRECTNESS: Answer the user's specific question immediately and accurately.
-            2. STRUCTURE: Use markdown (bold headings, bullet points) for superior readability.
-            3. EXTERNAL RESOURCES: Automatically detect if the user needs official sites, documentation, or learning resources.
-               Provide 1-2 high-quality external links (e.g., official exam portals, documentation, or platforms like Coursera/Khan Academy).
-            4. PROGRESSION: Always end your response with a "Next Step" or 1-2 "Related Questions" to help the student move forward.
-            5. NO FLUFF: Avoid generic introductions. Provide immediate value.
+            2. NO INTRODUCTIONS: NEVER start your response with generic phrases like "As a [Branch] student..." or "Based on your interest in...". Go straight to the point.
+            3. STRUCTURE: Use markdown (bold headings, bullet points) for superior readability.
+            4. EXTERNAL RESOURCES: Automatically detect if the user needs official sites, documentation, or learning resources and provide 1-2 high-quality external links.
+            5. PROGRESSION: Always end your response with a "Next Step" or 1-2 "Related Questions" to help the student move forward.
+            6. NO FLUFF: Provide immediate value without unnecessary conversational filler.
             """;
 
     private final GeminiService geminiService;
