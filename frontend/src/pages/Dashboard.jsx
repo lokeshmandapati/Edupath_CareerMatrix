@@ -396,6 +396,25 @@ export default function Dashboard() {
                 </Card>
               </Link>
             </motion.div>
+            <motion.div variants={item}>
+              <Link to="/toolkit/skill-gap" className="group block h-full">
+                <Card className="glass hover-lift h-full border-none p-8 shadow-premium">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-500/10 shadow-sm ring-1 ring-indigo-500/20 transition-all group-hover:bg-indigo-500 group-hover:text-white">
+                    <span className="text-3xl" aria-hidden>🔬</span>
+                  </div>
+                  <h3 className="mt-6 font-display text-xl font-bold text-accent">Skill Gap Analysis</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    Compare your skills against any role like 'AI Engineer' and see what's missing.
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary transition-all group-hover:gap-3">
+                    Analyze Now
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </Card>
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </div>
