@@ -235,41 +235,91 @@ public class CareerFitPredictionService {
             careers = generateCareersForCustomStream(req.branch());
         }
         
+        // Base weight for all potential careers
         for (String c : careers) raw.put(c, 1.0);
         
+        // 1. Process Interests (matching with career titles)
         for (String interest : req.interests()) {
             if (interest == null) continue;
             String it = interest.trim().toLowerCase(Locale.ROOT);
             for (String c : careers) {
-                if (c.toLowerCase(Locale.ROOT).contains(it)) raw.merge(c, 0.5, Double::sum);
+                String cl = c.toLowerCase(Locale.ROOT);
+                if (cl.contains(it) || it.contains(cl)) {
+                    raw.merge(c, 1.2, Double::sum);
+                } else {
+                    // Partial word match boost
+                    for (String word : it.split("\\s+")) {
+                        if (word.length() > 3 && cl.contains(word)) raw.merge(c, 0.4, Double::sum);
+                    }
+                }
             }
+            // Stream-specific interest boosts
             if (stream.equals("MEDICAL")) {
-                if (it.contains("surgery") || it.contains("patient")) raw.merge("Doctor (MBBS)", 0.6, Double::sum);
-                if (it.contains("medicine") || it.contains("chemistry")) raw.merge("Pharmacist", 0.6, Double::sum);
-                if (it.contains("care") || it.contains("nursing")) raw.merge("Nurse", 0.6, Double::sum);
+                if (it.contains("surgery") || it.contains("patient")) raw.merge("Doctor (MBBS)", 0.7, Double::sum);
+                if (it.contains("medicine") || it.contains("chemistry")) raw.merge("Pharmacist", 0.7, Double::sum);
             }
             if (stream.equals("COMMERCE")) {
-                if (it.contains("finance") || it.contains("market")) raw.merge("Investment Banker", 0.6, Double::sum);
-                if (it.contains("account") || it.contains("tax")) raw.merge("Chartered Accountant", 0.6, Double::sum);
-                if (it.contains("business") || it.contains("strategy")) raw.merge("Business Consultant", 0.6, Double::sum);
+                if (it.contains("finance") || it.contains("market")) raw.merge("Investment Banker", 0.7, Double::sum);
+                if (it.contains("account") || it.contains("tax")) raw.merge("Chartered Accountant", 0.7, Double::sum);
+            }
+        }
+
+        // 2. Process Technical Skills (matching with career titles)
+        for (String skill : req.technicalSkills()) {
+            if (skill == null) continue;
+            String sl = skill.trim().toLowerCase(Locale.ROOT);
+            for (String c : careers) {
+                String cl = c.toLowerCase(Locale.ROOT);
+                if (cl.contains(sl) || sl.contains(cl)) {
+                    raw.merge(c, 1.5, Double::sum);
+                } else {
+                    // Partial word match boost for skills
+                    for (String word : sl.split("\\s+")) {
+                        if (word.length() > 3 && cl.contains(word)) raw.merge(c, 0.5, Double::sum);
+                    }
+                }
             }
         }
         
-        String branch = req.branch().toUpperCase(Locale.ROOT);
-        if (branch.contains("MBBS")) raw.merge("Doctor (MBBS)", 0.8, Double::sum);
-        if (branch.contains("BDS") || branch.contains("DENTAL")) raw.merge("Dentist (BDS)", 0.8, Double::sum);
-        if (branch.contains("PHARM")) raw.merge("Pharmacist", 0.8, Double::sum);
-        if (branch.contains("NURSING")) raw.merge("Nurse", 0.8, Double::sum);
-        if (branch.contains("CA")) raw.merge("Chartered Accountant", 0.8, Double::sum);
-        if (branch.contains("CS")) raw.merge("Company Secretary", 0.8, Double::sum);
-        if (branch.contains("LAW")) raw.merge("Lawyer", 0.8, Double::sum);
+        // 3. Process Branch/Custom Stream name matching
+        String branch = req.branch().toLowerCase(Locale.ROOT);
+        for (String c : careers) {
+            String cl = c.toLowerCase(Locale.ROOT);
+            if (cl.contains(branch) || branch.contains(cl)) {
+                raw.merge(c, 2.0, Double::sum);
+            } else {
+                for (String word : branch.split("\\s+")) {
+                    if (word.length() > 3 && cl.contains(word)) raw.merge(c, 0.6, Double::sum);
+                }
+            }
+        }
+
+        // Canonical branch boosts
+        if (branch.contains("mbbs")) raw.merge("Doctor (MBBS)", 1.0, Double::sum);
+        if (branch.contains("bds") || branch.contains("dental")) raw.merge("Dentist (BDS)", 1.0, Double::sum);
+        if (branch.contains("ca")) raw.merge("Chartered Accountant", 1.0, Double::sum);
+        if (branch.contains("law")) raw.merge("Lawyer", 1.0, Double::sum);
+
+        // 4. Boost top choice based on Academic/Project signals
+        double cgpaFactor = normalizeCgpaToScale10(req.cgpa()) / 10.0;
+        double projectMultiplier = projectTierMultiplier(req.projectExperience());
+        String topCandidate = raw.entrySet().stream().max(Map.Entry.comparingByValue()).map(Map.Entry::getKey).orElse("");
+        if (!topCandidate.isEmpty()) {
+            raw.merge(topCandidate, (cgpaFactor * 0.5) + (projectMultiplier * 0.3), Double::sum);
+        }
+
+        // Apply exponential scaling to make the top match more distinct
+        Map<String, Double> boosted = new LinkedHashMap<>();
+        for (Map.Entry<String, Double> e : raw.entrySet()) {
+            boosted.put(e.getKey(), Math.pow(e.getValue(), 2.0));
+        }
 
         LinkedHashMap<String, Double> percentages = new LinkedHashMap<>(CfpaMappingService.sortByValueDesc(
-                CfpaMappingService.normalizeToPercentages(raw)
+                CfpaMappingService.normalizeToPercentages(boosted)
         ));
 
         String top = percentages.entrySet().iterator().next().getKey();
-        String explanation = "Based on your " + stream + " stream (" + branch + ") and selected interests, " + top + " is an excellent fit. This path leverages your specific academic background and aligns strongly with your preferences.";
+        String explanation = "Based on your " + stream + " background (" + req.branch() + "), your technical skills, and selected interests, " + top + " is the strongest career alignment. This path leverages your specific academic background and matches your professional preferences.";
 
         Map<String, Double> breakdown = CfpaMappingService.immutableCopy(percentages);
 
@@ -283,7 +333,7 @@ public class CareerFitPredictionService {
                 85.0,
                 breakdown,
                 breakdown,
-                "Your academic background naturally aligns with this career trajectory.",
+                "Your skills and academic background naturally align with this career trajectory.",
                 List.of()
         );
 
@@ -298,7 +348,7 @@ public class CareerFitPredictionService {
                 breakdown,
                 req.branch(),
                 req.branch(),
-                "Your academic background naturally aligns with this career trajectory.",
+                "Your skills and academic background naturally align with this career trajectory.",
                 List.of(),
                 null,
                 null,
