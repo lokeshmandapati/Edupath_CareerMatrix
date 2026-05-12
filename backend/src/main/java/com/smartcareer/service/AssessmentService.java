@@ -37,7 +37,8 @@ public class AssessmentService {
 
         if (geminiService.isConfigured()) {
             try {
-                String response = geminiService.generateContent(prompt);
+                String systemPrompt = "You are an expert educational psychologist and aptitude test designer. Generate valid JSON arrays only.";
+                String response = geminiService.chatCompletion(systemPrompt, List.of(), prompt);
                 // Clean up markdown if present
                 if (response.contains("```json")) {
                     response = response.substring(response.indexOf("```json") + 7, response.lastIndexOf("```"));
