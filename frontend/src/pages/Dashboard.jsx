@@ -176,7 +176,7 @@ export default function Dashboard() {
 
         <div>
           <h2 className="mb-8 font-display text-2xl font-bold text-accent">Personalized Toolkit</h2>
-          <motion.div variants={container} initial="hidden" animate="show" className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <motion.div variants={container} initial="hidden" animate="show" className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <motion.div variants={item}>
               <Card className="glass group overflow-hidden border-none p-0 shadow-premium h-full">
                 <div className="p-8">
