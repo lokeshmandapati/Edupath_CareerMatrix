@@ -439,32 +439,40 @@ export default function After12Form() {
   const [shuffledQuiz, setShuffledQuiz] = useState([])
   const [quizLoading, setQuizLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchDynamicQuestions = async () => {
-      try {
-        const { data } = await api.get('/api/assessment/questions?type=AFTER12')
-        if (data && Array.isArray(data) && data.length > 0) {
-          const processed = data.map(q => ({
-            ...q,
-            options: shuffleArray(q.options || [])
-          }))
-          setShuffledQuiz(processed)
-        } else {
-          throw new Error('Empty questions data')
-        }
-      } catch (err) {
-        console.warn('Using static quiz fallback:', err.message)
-        // Pick 12 random questions from the full 30-question bank
-        const shuffledAll = shuffleArray([...ALL_QUIZ_QUESTIONS])
-        const picked12 = shuffledAll.slice(0, 12).map((q) => ({
+  const fetchDynamicQuestions = useCallback(async () => {
+    setQuizLoading(true)
+    setError('')
+    try {
+      const { data } = await api.get('/api/assessment/questions?type=AFTER12')
+      if (data && Array.isArray(data) && data.length > 0) {
+        const processed = data.map(q => ({
           ...q,
-          options: shuffleArray(q.options),
+          options: shuffleArray(q.options || [])
         }))
-        setShuffledQuiz(picked12)
+        setShuffledQuiz(processed)
+        setQuizAnswers({})
+        setQuizIndex(0)
+      } else {
+        throw new Error('Empty questions data')
       }
+    } catch (err) {
+      console.warn('Using static quiz fallback:', err.message)
+      const shuffledAll = shuffleArray([...ALL_QUIZ_QUESTIONS])
+      const picked12 = shuffledAll.slice(0, 12).map((q) => ({
+        ...q,
+        options: shuffleArray(q.options),
+      }))
+      setShuffledQuiz(picked12)
+      setQuizAnswers({})
+      setQuizIndex(0)
+    } finally {
+      setQuizLoading(false)
     }
-    fetchDynamicQuestions().finally(() => setQuizLoading(false))
   }, [])
+
+  useEffect(() => {
+    fetchDynamicQuestions()
+  }, [fetchDynamicQuestions])
   const [stream, setStream] = useState('SCIENCE_PCM')
   const [customStream, setCustomStream] = useState('')
   const [customInterest, setCustomInterest] = useState('')
@@ -648,22 +656,12 @@ export default function After12Form() {
                               Question {quizIndex + 1} of {shuffledQuiz.length}
                             </p>
                             <button
-                              type="button"
-                              onClick={() => {
-                                setError('')
-                                setQuizAnswers({})
-                                setQuizIndex(0)
-                                const reshuffledAll = shuffleArray([...ALL_QUIZ_QUESTIONS])
-                                const newPicked12 = reshuffledAll.slice(0, 12).map((q) => ({
-                                  ...q,
-                                  options: shuffleArray(q.options),
-                                }))
-                                setShuffledQuiz(newPicked12)
-                              }}
-                              className="text-xs font-semibold text-slate-600 underline-offset-4 hover:underline"
-                            >
-                              Reset quiz
-                            </button>
+                               type="button"
+                               onClick={fetchDynamicQuestions}
+                               className="text-xs font-semibold text-slate-600 underline-offset-4 hover:underline"
+                             >
+                               Reset quiz
+                             </button>
                           </div>
 
                           <p className="mt-3 text-sm font-semibold text-accent">{q.prompt}</p>

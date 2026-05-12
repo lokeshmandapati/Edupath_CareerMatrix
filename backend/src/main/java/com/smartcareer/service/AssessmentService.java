@@ -17,7 +17,9 @@ public class AssessmentService {
     }
 
     public JsonNode generateDynamicQuestions(String type) {
-        String prompt = "Generate a JSON array of 12 unique aptitude and personality questions for a " + type + " assessment. " +
+        long timestamp = System.currentTimeMillis();
+        String prompt = "Generate a JSON array of 12 unique, randomized aptitude and personality questions for a " + type + " assessment. " +
+                "Reference ID: " + timestamp + ". Ensure these questions are DIFFERENT from previous ones. " +
                 "Each question must have: 'id' (unique string), 'prompt' (string), and 'options' (array of 3 objects with 'label' and 'points' 0-2). " +
                 "Ensure the questions are diverse (logic, emotional intelligence, technical interest, work style). " +
                 "Return ONLY the raw JSON array.";
