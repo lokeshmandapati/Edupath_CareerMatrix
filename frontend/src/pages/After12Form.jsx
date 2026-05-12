@@ -437,6 +437,7 @@ export default function After12Form() {
   const [quizAnswers, setQuizAnswers] = useState({})
   const [quizIndex, setQuizIndex] = useState(0)
   const [shuffledQuiz, setShuffledQuiz] = useState([])
+  const [quizLoading, setQuizLoading] = useState(true)
 
   useEffect(() => {
     const fetchDynamicQuestions = async () => {
@@ -462,7 +463,7 @@ export default function After12Form() {
         setShuffledQuiz(picked12)
       }
     }
-    fetchDynamicQuestions()
+    fetchDynamicQuestions().finally(() => setQuizLoading(false))
   }, [])
   const [stream, setStream] = useState('SCIENCE_PCM')
   const [customStream, setCustomStream] = useState('')
@@ -627,9 +628,19 @@ export default function After12Form() {
                       <p className="mt-1 text-sm text-slate-600">This decides your assessment result level (strong / moderate / needs improvement).</p>
                     </div>
 
-                    {(() => {
+                    {quizLoading ? (
+                      <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                        <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+                        <p className="text-sm font-bold text-primary animate-pulse">Generating your unique assessment questions...</p>
+                      </div>
+                    ) : (() => {
                       const q = shuffledQuiz[quizIndex]
-                      if (!q) return null
+                      if (!q) return (
+                        <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-8 text-center">
+                          <p className="text-sm font-bold text-red-500">Failed to load assessment. Please try resetting the quiz.</p>
+                          <Button variant="secondary" className="mt-4" onClick={() => window.location.reload()}>Retry Now</Button>
+                        </div>
+                      )
                       return (
                         <div className="rounded-2xl border border-borderline bg-surface p-4 shadow-sm">
                           <div className="flex flex-wrap items-center justify-between gap-2">

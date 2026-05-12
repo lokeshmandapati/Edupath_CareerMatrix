@@ -39,11 +39,13 @@ public class AssessmentService {
             try {
                 String systemPrompt = "You are an expert educational psychologist and aptitude test designer. Generate valid JSON arrays only.";
                 String response = geminiService.chatCompletion(systemPrompt, List.of(), prompt);
-                // Clean up markdown if present
-                if (response.contains("```json")) {
-                    response = response.substring(response.indexOf("```json") + 7, response.lastIndexOf("```"));
-                } else if (response.contains("```")) {
-                    response = response.substring(response.indexOf("```") + 3, response.lastIndexOf("```"));
+                
+                // Robust JSON extraction
+                int start = response.indexOf("[");
+                int end = response.lastIndexOf("]");
+                
+                if (start != -1 && end != -1 && end > start) {
+                    response = response.substring(start, end + 1);
                 }
                 
                 JsonNode root = objectMapper.readTree(response);
