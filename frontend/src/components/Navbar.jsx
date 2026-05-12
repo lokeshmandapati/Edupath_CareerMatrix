@@ -31,7 +31,7 @@ export default function Navbar() {
         boxShadow: '0 1px 40px rgba(99,102,241,0.08), 0 1px 8px rgba(0,0,0,0.3)',
       }}
     >
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+      <div className="mx-auto flex w-full items-center justify-between px-4 py-3 sm:px-10">
         
         {/* Left: Logo */}
         <div className="flex flex-1 justify-start">
