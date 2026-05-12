@@ -51,7 +51,7 @@ export default function LandingPage() {
 
       {/* ── Navbar ── */}
       <header className="sticky top-0 z-50 backdrop-blur-xl border-b" style={{ background: 'rgba(9,9,15,0.8)', borderColor: 'rgba(255,255,255,0.07)' }}>
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex w-full items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl text-lg" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
             <div>
@@ -69,7 +69,7 @@ export default function LandingPage() {
       </header>
 
       {/* ── Hero ── */}
-      <section className="mx-auto max-w-6xl px-6 pt-24 pb-20 text-center">
+      <section className="mx-auto w-full px-6 pt-24 pb-20 text-center">
         <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest" style={{ borderColor: 'rgba(99,102,241,0.4)', background: 'rgba(99,102,241,0.1)', color: '#818cf8' }}>
             <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: '#818cf8' }} />
@@ -116,7 +116,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ── */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
+      <section className="mx-auto w-full px-6 pb-24">
         <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-extrabold sm:text-4xl" style={{ color: '#f1f5f9' }}>Everything you need to plan your future</h2>
@@ -135,7 +135,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── How it works ── */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
+      <section className="mx-auto w-full px-6 pb-24">
         <div className="rounded-3xl border p-10 sm:p-14" style={{ borderColor: 'rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.02)' }}>
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-extrabold sm:text-4xl" style={{ color: '#f1f5f9' }}>How it works</h2>
@@ -154,7 +154,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
+      <section className="mx-auto w-full px-6 pb-24">
         <motion.div initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="relative overflow-hidden rounded-3xl p-12 text-center" style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15), rgba(236,72,153,0.1))', border: '1px solid rgba(99,102,241,0.25)' }}>
           <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full blur-3xl" style={{ background: 'rgba(99,102,241,0.3)' }} />
           <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full blur-3xl" style={{ background: 'rgba(139,92,246,0.3)' }} />

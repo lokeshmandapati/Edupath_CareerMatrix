@@ -91,7 +91,7 @@ export default function Dashboard() {
   return (
     <PageTransition>
       <div className="mesh-gradient min-h-screen px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl space-y-12 pb-10">
+        <div className="mx-auto w-full space-y-12 pb-10">
           {/* Header Section */}
           <header className="relative space-y-4">
             <motion.div 
