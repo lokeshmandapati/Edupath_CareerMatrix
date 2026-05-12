@@ -18,14 +18,15 @@ import java.util.regex.Pattern;
 public class ChatService {
 
     private static final String SYSTEM_PROMPT = """
-            You are CareerMatrix Assistant, a helpful and knowledgeable career coach.
-            Your priority is to provide DIRECT and ACCURATE answers to the user's specific questions.
-            Guidelines:
-            1. Answer the specific question asked FIRST.
-            2. Use a CLEAR and STRUCTURED format (bullet points, numbered lists, or bold headings) for every response.
-            3. Provide direct and accurate technical information.
-            4. After answering, you may BRIEFLY relate it to their career context if it adds value.
-            5. Avoid unnecessary fluff or 'unknown matter' that isn't related to the user's question.
+            You are CareerMatrix Assistant, a professional career coach for students.
+            
+            CORE RULES:
+            1. DIRECTNESS: Answer the user's specific question immediately and accurately.
+            2. STRUCTURE: Use markdown (bold headings, bullet points) for superior readability.
+            3. EXTERNAL RESOURCES: Automatically detect if the user needs official sites, documentation, or learning resources.
+               Provide 1-2 high-quality external links (e.g., official exam portals, documentation, or platforms like Coursera/Khan Academy).
+            4. PROGRESSION: Always end your response with a "Next Step" or 1-2 "Related Questions" to help the student move forward.
+            5. NO FLUFF: Avoid generic introductions. Provide immediate value.
             """;
 
     private final GeminiService geminiService;
@@ -133,13 +134,14 @@ public class ChatService {
         }
         if (m.contains("rnn") || (m.contains("recurrent") && m.contains("neural"))) {
             return """
-                    **Recurrent Neural Networks (RNN):**
-                    RNNs are a class of neural networks designed for processing sequential data (like text, speech, or time-series).
+                    **Advanced Variants**: LSTMs (Long Short-Term Memory) and GRUs are used to handle long-term dependencies better than basic RNNs.
                     
-                    **Key Features:**
-                    • **Internal Memory**: They maintain a "hidden state" that captures information from previous steps in the sequence.
-                    • **Sequential Processing**: Unlike standard neural networks, RNNs process inputs one by one while keeping track of context.
-                    • **Advanced Variants**: LSTMs (Long Short-Term Memory) and GRUs are used to handle long-term dependencies better than basic RNNs.""".stripIndent().trim();
+                    **Useful Resources:**
+                    • [DeepLearning.AI - Sequence Models](https://www.deeplearning.ai/program/deep-learning-specialization/)
+                    • [PyTorch - RNN Tutorial](https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html)
+                    
+                    **Next Step:** Would you like to know how LSTMs solve the vanishing gradient problem?
+                    """.stripIndent().trim();
         }
         if (m.contains("cnn") || (m.contains("convolutional") && m.contains("neural"))) {
             return """
@@ -160,7 +162,13 @@ public class ChatService {
                     • **Programming**: Python or R.
                     • **Statistics**: Probability, hypothesis testing, and data distribution.
                     • **Tools**: SQL, Pandas, Scikit-learn, and Tableau/PowerBI for visualization.
-                    • **Machine Learning**: Regression, classification, and clustering algorithms.""".stripIndent().trim();
+                    
+                    **Useful Resources:**
+                    • [Coursera - Data Science Specialization](https://www.coursera.org/specializations/jhu-data-science)
+                    • [Kaggle - Learn Data Science](https://www.kaggle.com/learn)
+                    
+                    **Next Step:** I recommend starting with Python basics on Kaggle! Would you like a roadmap for that?
+                    """.stripIndent().trim();
         }
         if (m.contains("diff") && m.contains("ai") && (m.contains("ml") || m.contains("machine learning") || m.contains("dl") || m.contains("deep learning"))) {
             return """
@@ -180,16 +188,14 @@ public class ChatService {
         }
         if (m.contains("food technology") || (m.contains("food") && m.contains("tech"))) {
             return """
-                    **Food Technology Overview:**
-                    Food technology is the branch of food science that deals with the production, preservation, quality control, and research and development of food products.
+                    **Logistics**: Moving products at the right temperature (Cold Chain) to retailers.
                     
-                    **Supply Chain in Food Tech:**
-                    1. **Sourcing**: Obtaining raw ingredients from farmers.
-                    2. **Processing**: Transforming raw materials into finished food products.
-                    3. **Packaging**: Ensuring safety and shelf-life.
-                    4. **Logistics**: Moving products at the right temperature (Cold Chain) to retailers.
+                    **Useful Resources:**
+                    • [Institute of Food Technologists (IFT)](https://www.ift.org/)
+                    • [Coursera - Food Science Courses](https://www.coursera.org/search?query=food%20science)
                     
-                    It is a great field if you are interested in Science and Engineering applied to the food industry!""".stripIndent().trim();
+                    **Next Step:** Are you interested in the chemical side (R&D) or the industrial side (Production) of food tech?
+                    """.stripIndent().trim();
         }
         if (m.contains("pasteurization") || m.contains("pasturization")) {
             return """
