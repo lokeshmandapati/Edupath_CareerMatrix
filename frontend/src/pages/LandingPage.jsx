@@ -60,9 +60,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/signup" className="rounded-xl px-4 py-2 text-sm font-bold transition-all hover:bg-white/5" style={{ color: '#94a3b8' }}>
-              Sign Up
-            </Link>
+
             <Link to="/signup" className="rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 20px rgba(99,102,241,0.4)' }}>
               Get Started Free
             </Link>
