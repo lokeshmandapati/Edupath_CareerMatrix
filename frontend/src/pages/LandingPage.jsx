@@ -43,8 +43,12 @@ const container = {
 function OrbitVisual() {
   return (
     <div className="relative h-[480px] w-[480px] sm:h-[540px] sm:w-[540px]">
-      {/* Rings */}
-      {[200, 160, 110].map((r, i) => (
+      {/* Outer glow behind orbit */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[520px] w-[520px] rounded-full opacity-30 blur-[80px]"
+        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.5), transparent 70%)' }} />
+
+      {/* Rings — brighter, more visible */}
+      {[240, 180, 120].map((r, i) => (
         <div
           key={i}
           className="absolute left-1/2 top-1/2 rounded-full"
@@ -52,38 +56,50 @@ function OrbitVisual() {
             width: r * 2,
             height: r * 2,
             transform: 'translate(-50%, -50%)',
-            border: `1px solid rgba(167, 139, 250, ${0.12 - i * 0.03})`,
+            border: `${i === 0 ? 1.5 : 1}px solid rgba(139, 92, 246, ${0.25 - i * 0.06})`,
+            boxShadow: i === 0 ? '0 0 30px rgba(139,92,246,0.08)' : 'none',
           }}
         />
       ))}
 
-      {/* Center Stat */}
+      {/* Center Stat — bold and prominent */}
       <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center">
-        <div className="text-5xl font-black text-white" style={{ letterSpacing: '-0.04em' }}>10+</div>
-        <div className="mt-1 text-xs font-bold uppercase tracking-[0.2em] text-violet-300">Career Paths</div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6, duration: 0.6, ease: 'backOut' }}
+        >
+          <div className="text-6xl font-black text-white sm:text-7xl" style={{ letterSpacing: '-0.05em' }}>10+</div>
+          <div className="mt-2 text-sm font-bold uppercase tracking-[0.25em] text-violet-300/80">Career Paths</div>
+        </motion.div>
       </div>
 
-      {/* Floating icons on orbit */}
+      {/* Floating icons on orbit — larger, glassmorphism style */}
       {orbitIcons.map((icon, i) => {
-        const angle = (i / orbitIcons.length) * 360
-        const radius = i % 2 === 0 ? 180 : 140
+        const angle = (i / orbitIcons.length) * 360 - 90
+        const isOuter = i % 2 === 0
+        const radius = isOuter ? 220 : 165
         const x = Math.cos((angle * Math.PI) / 180) * radius
         const y = Math.sin((angle * Math.PI) / 180) * radius
-        const delay = i * 0.6
+        const size = isOuter ? 'h-16 w-16 text-2xl' : 'h-12 w-12 text-lg'
         return (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8 + delay * 0.15, duration: 0.5, ease: 'backOut' }}
+            transition={{ delay: 0.8 + i * 0.12, duration: 0.5, ease: 'backOut' }}
             className="absolute left-1/2 top-1/2 z-20"
             style={{ transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))` }}
           >
             <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-lg ring-1 ring-white/10"
-              style={{ background: 'rgba(30, 20, 60, 0.85)', backdropFilter: 'blur(10px)' }}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
+              className={`flex ${size} items-center justify-center rounded-2xl shadow-xl ring-1 ring-white/15`}
+              style={{
+                background: 'linear-gradient(145deg, rgba(30, 15, 60, 0.9), rgba(20, 10, 45, 0.95))',
+                backdropFilter: 'blur(12px)',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(139,92,246,0.15)',
+              }}
             >
               {icon}
             </motion.div>
@@ -91,21 +107,44 @@ function OrbitVisual() {
         )
       })}
 
-      {/* Floating tag */}
+      {/* Floating tag — cursor-like */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
-        className="absolute bottom-12 left-8 z-20"
+        transition={{ delay: 1.8, duration: 0.6 }}
+        className="absolute bottom-16 left-6 z-20"
       >
-        <div className="rounded-full px-4 py-1.5 text-xs font-bold shadow-lg"
-          style={{ background: 'linear-gradient(135deg, #a78bfa, #818cf8)', color: '#fff' }}
+        <div className="flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold shadow-xl"
+          style={{ background: 'linear-gradient(135deg, #a78bfa, #7c3aed)', color: '#fff', boxShadow: '0 4px 20px rgba(139,92,246,0.4)' }}
         >
-          AI Powered 🚀
+          <span className="h-2 w-2 animate-pulse rounded-full bg-white/80" />
+          AI Powered
         </div>
       </motion.div>
+
+      {/* Small decorative dot particles */}
+      {[
+        { top: '15%', right: '10%', size: 6, delay: 0 },
+        { top: '75%', right: '20%', size: 4, delay: 1 },
+        { top: '25%', left: '15%', size: 5, delay: 0.5 },
+        { bottom: '20%', right: '35%', size: 3, delay: 1.5 },
+      ].map((dot, i) => (
+        <motion.div
+          key={`dot-${i}`}
+          animate={{ opacity: [0.3, 0.8, 0.3] }}
+          transition={{ duration: 2.5, repeat: Infinity, delay: dot.delay }}
+          className="absolute z-10 rounded-full"
+          style={{
+            ...dot,
+            width: dot.size,
+            height: dot.size,
+            background: '#a78bfa',
+          }}
+        />
+      ))}
     </div>
   )
+
 }
 
 /* ── Page ── */
