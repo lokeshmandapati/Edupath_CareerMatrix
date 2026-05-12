@@ -56,37 +56,37 @@ export default function Signup() {
       </div>
 
       {/* Left panel — perks */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-14">
-        <Link to="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl text-xl" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-16">
+        <Link to="/" className="flex items-center gap-4 transition-transform hover:scale-105">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl text-2xl shadow-lg ring-2 ring-white/10" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
           <div>
-            <div className="text-sm font-extrabold" style={{ color: '#f1f5f9' }}>CareerMatrix</div>
-            <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: '#6366f1' }}>Career Path Prediction</div>
+            <div className="text-xl font-black tracking-tighter" style={{ color: '#f1f5f9' }}>CareerMatrix</div>
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: '#818cf8' }}>Career Path Prediction</div>
           </div>
         </Link>
 
-        <div className="space-y-8">
+        <div className="space-y-10">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-widest mb-6" style={{ borderColor: 'rgba(99,102,241,0.4)', background: 'rgba(99,102,241,0.1)', color: '#818cf8' }}>
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: '#818cf8' }} />
+            <div className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] mb-8" style={{ borderColor: 'rgba(99,102,241,0.4)', background: 'rgba(99,102,241,0.1)', color: '#818cf8' }}>
+              <span className="h-2 w-2 animate-pulse rounded-full" style={{ background: '#818cf8' }} />
               Join 1000+ Students
             </div>
-            <h2 className="text-4xl font-extrabold leading-tight" style={{ letterSpacing: '-0.03em' }}>
+            <h2 className="text-5xl font-black leading-tight sm:text-6xl" style={{ letterSpacing: '-0.04em' }}>
               Your career clarity{' '}
               <span style={{ background: 'linear-gradient(135deg, #818cf8, #a78bfa, #ec4899)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 starts here.
               </span>
             </h2>
-            <p className="mt-4 text-base leading-relaxed" style={{ color: '#64748b' }}>
+            <p className="mt-6 max-w-lg text-lg font-medium leading-relaxed" style={{ color: '#94a3b8' }}>
               Create your profile once. Get AI-powered career predictions, personalised roadmaps, and a career counselor — all in one place.
             </p>
           </div>
 
-          <ul className="space-y-3">
+          <ul className="grid gap-4">
             {perks.map((p) => (
-              <li key={p.text} className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-sm" style={{ background: 'rgba(99,102,241,0.15)' }}>{p.icon}</span>
-                <span className="text-sm leading-relaxed" style={{ color: '#94a3b8' }}>{p.text}</span>
+              <li key={p.text} className="flex items-center gap-4 group">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg transition-transform group-hover:scale-110" style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.2)' }}>{p.icon}</span>
+                <span className="text-base font-semibold leading-relaxed" style={{ color: '#cbd5e1' }}>{p.text}</span>
               </li>
             ))}
           </ul>
@@ -109,9 +109,9 @@ export default function Signup() {
             <span className="text-base font-extrabold" style={{ color: '#f1f5f9' }}>CareerMatrix</span>
           </div>
 
-          <div className="rounded-3xl border p-8 sm:p-10" style={{ background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)' }}>
-            <h1 className="text-2xl font-extrabold sm:text-3xl" style={{ color: '#f1f5f9' }}>Create account</h1>
-            <p className="mt-2 text-sm" style={{ color: '#64748b' }}>Join CareerMatrix and discover your best-fit career paths.</p>
+          <div className="rounded-3xl border p-10 sm:p-12 shadow-2xl" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(30px)' }}>
+            <h1 className="text-3xl font-black sm:text-4xl" style={{ color: '#f1f5f9' }}>Create account</h1>
+            <p className="mt-3 text-base font-medium" style={{ color: '#64748b' }}>Join CareerMatrix and discover your best-fit career paths.</p>
 
             {error && (
               <div className="mt-5 rounded-xl border px-4 py-3 text-sm font-medium" style={{ borderColor: 'rgba(239,68,68,0.3)', background: 'rgba(239,68,68,0.08)', color: '#f87171' }} role="alert">
@@ -122,44 +122,44 @@ export default function Signup() {
             <form onSubmit={submit} className="mt-8 space-y-5">
               {/* Name */}
               <div>
-                <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Name *</label>
+                <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: '#94a3b8' }}>Name *</label>
                 <input
                   required value={name} onChange={(e) => setName(e.target.value)}
                   placeholder="Your full name"
-                  className="w-full rounded-xl px-4 py-3 text-sm font-medium outline-none transition-all"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#f1f5f9' }}
-                  onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,0.6)'}
-                  onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                  className="w-full rounded-2xl px-5 py-4 text-sm font-semibold outline-none transition-all"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#f1f5f9' }}
+                  onFocus={e => { e.target.style.borderColor = 'rgba(99,102,241,0.6)'; e.target.style.background = 'rgba(255,255,255,0.07)' }}
+                  onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.background = 'rgba(255,255,255,0.04)' }}
                 />
               </div>
 
               {/* Email */}
               <div>
-                <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Email <span style={{ color: '#475569', fontWeight: 400, textTransform: 'none' }}>(optional)</span></label>
+                <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: '#94a3b8' }}>Email <span style={{ color: '#475569', fontWeight: 400, textTransform: 'none' }}>(optional)</span></label>
                 <input
                   type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full rounded-xl px-4 py-3 text-sm font-medium outline-none transition-all"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#f1f5f9' }}
-                  onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,0.6)'}
-                  onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                  className="w-full rounded-2xl px-5 py-4 text-sm font-semibold outline-none transition-all"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#f1f5f9' }}
+                  onFocus={e => { e.target.style.borderColor = 'rgba(99,102,241,0.6)'; e.target.style.background = 'rgba(255,255,255,0.07)' }}
+                  onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.background = 'rgba(255,255,255,0.04)' }}
                 />
               </div>
 
               {/* Password */}
               <div>
-                <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider" style={{ color: '#94a3b8' }}>Password *</label>
+                <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: '#94a3b8' }}>Password *</label>
                 <div className="relative">
                   <input
                     type={showPass ? 'text' : 'password'} required minLength={6}
                     value={password} onChange={(e) => setPassword(e.target.value)}
                     placeholder="Min. 6 characters"
-                    className="w-full rounded-xl px-4 py-3 pr-12 text-sm font-medium outline-none transition-all"
-                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#f1f5f9' }}
-                    onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,0.6)'}
-                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                    className="w-full rounded-2xl px-5 py-4 pr-14 text-sm font-semibold outline-none transition-all"
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#f1f5f9' }}
+                    onFocus={e => { e.target.style.borderColor = 'rgba(99,102,241,0.6)'; e.target.style.background = 'rgba(255,255,255,0.07)' }}
+                    onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.background = 'rgba(255,255,255,0.04)' }}
                   />
-                  <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold" style={{ color: '#6366f1' }}>
+                  <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-black uppercase tracking-widest transition-colors hover:text-white" style={{ color: '#6366f1' }}>
                     {showPass ? 'Hide' : 'Show'}
                   </button>
                 </div>
