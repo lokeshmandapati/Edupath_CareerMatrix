@@ -92,8 +92,8 @@ npm run dev
 
 (`npm start` does the same thing.)
 
-- **API:** [http://localhost:8080](http://localhost:8080)
-- **Web UI:** [http://localhost:5173](http://localhost:5173)
+- **Production URL:** [https://edupath-careermatrix.onrender.com](https://edupath-careermatrix.onrender.com)
+- **API Status:** Check the Render dashboard for health logs.
 
 The launcher uses the **H2** profile by default so you do not need MySQL running. To use **MySQL** with the same command, ensure MySQL is up and credentials match `application.properties`, then:
 
@@ -160,7 +160,7 @@ Then use the default `application.properties` credentials (`root` / `root` — m
 
 **Maven without a global install:** download the [Maven binary zip](https://maven.apache.org/download.cgi), extract to `backend/tools/apache-maven-3.9.6` (that folder is gitignored), then run `.\run-backend.ps1` or `.\tools\apache-maven-3.9.6\bin\mvn.cmd spring-boot:run`.
 
-API base URL: `http://localhost:8080`
+API base URL: `https://edupath-careermatrix.onrender.com`
 
 ### REST endpoints
 
@@ -193,7 +193,7 @@ API base URL: `http://localhost:8080`
 1. Optional: create `frontend/.env`:
 
 ```env
-VITE_API_URL=http://localhost:8080
+VITE_API_URL=https://edupath-careermatrix.onrender.com
 ```
 
 If omitted, the client defaults to `http://localhost:8080` (see `frontend/src/services/api.js`).
