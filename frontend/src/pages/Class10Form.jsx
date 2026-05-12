@@ -193,7 +193,40 @@ export default function Class10Form() {
 
   return (
     <PageTransition>
-      <div className="mesh-gradient min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mesh-gradient relative min-h-screen px-4 py-8 sm:px-6 lg:px-8 overflow-hidden">
+
+        {/* ── Animated Background Glows ── */}
+        <div className="pointer-events-none fixed inset-0 -z-10">
+          <motion.div
+            animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full blur-[120px]"
+            style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.4), transparent 70%)' }}
+          />
+          <motion.div
+            animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            className="absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full blur-[100px]"
+            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)' }}
+          />
+        </div>
+
+        {/* ── Floating Particles ── */}
+        {[
+          { top: '8%', left: '10%', size: 4, dur: 3 },
+          { top: '22%', right: '18%', size: 5, dur: 4 },
+          { bottom: '20%', left: '6%', size: 3, dur: 2.5 },
+          { top: '60%', right: '10%', size: 6, dur: 3.5 },
+        ].map((p, i) => (
+          <motion.div
+            key={`particle-${i}`}
+            animate={{ opacity: [0.15, 0.5, 0.15], y: [0, -8, 0] }}
+            transition={{ duration: p.dur, repeat: Infinity, delay: i * 0.5 }}
+            className="pointer-events-none absolute rounded-full"
+            style={{ ...p, width: p.size, height: p.size, background: 'rgba(139,92,246,0.6)' }}
+          />
+        ))}
+
         <div className="mx-auto max-w-4xl space-y-8">
           <div className="relative">
             <motion.div 
