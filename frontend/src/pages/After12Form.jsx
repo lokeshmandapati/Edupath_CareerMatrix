@@ -437,15 +437,33 @@ export default function After12Form() {
   const [quizAnswers, setQuizAnswers] = useState({})
   const [quizIndex, setQuizIndex] = useState(0)
   const [shuffledQuiz, setShuffledQuiz] = useState([])
+  const [quizLoading, setQuizLoading] = useState(true)
 
   useEffect(() => {
-    // Pick 12 random questions from the full 30-question bank every session
-    const shuffledAll = shuffleArray([...ALL_QUIZ_QUESTIONS])
-    const picked12 = shuffledAll.slice(0, 12).map((q) => ({
-      ...q,
-      options: shuffleArray(q.options),
-    }))
-    setShuffledQuiz(picked12)
+    const fetchDynamicQuestions = async () => {
+      try {
+        const { data } = await api.get('/api/assessment/questions?type=AFTER12')
+        if (data && Array.isArray(data) && data.length > 0) {
+          const processed = data.map(q => ({
+            ...q,
+            options: shuffleArray(q.options || [])
+          }))
+          setShuffledQuiz(processed)
+        } else {
+          throw new Error('Empty questions data')
+        }
+      } catch (err) {
+        console.warn('Using static quiz fallback:', err.message)
+        // Pick 12 random questions from the full 30-question bank
+        const shuffledAll = shuffleArray([...ALL_QUIZ_QUESTIONS])
+        const picked12 = shuffledAll.slice(0, 12).map((q) => ({
+          ...q,
+          options: shuffleArray(q.options),
+        }))
+        setShuffledQuiz(picked12)
+      }
+    }
+    fetchDynamicQuestions().finally(() => setQuizLoading(false))
   }, [])
   const [stream, setStream] = useState('SCIENCE_PCM')
   const [customStream, setCustomStream] = useState('')
@@ -610,9 +628,19 @@ export default function After12Form() {
                       <p className="mt-1 text-sm text-slate-600">This decides your assessment result level (strong / moderate / needs improvement).</p>
                     </div>
 
-                    {(() => {
+                    {quizLoading ? (
+                      <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                        <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+                        <p className="text-sm font-bold text-primary animate-pulse">Generating your unique assessment questions...</p>
+                      </div>
+                    ) : (() => {
                       const q = shuffledQuiz[quizIndex]
-                      if (!q) return null
+                      if (!q) return (
+                        <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-8 text-center">
+                          <p className="text-sm font-bold text-red-500">Failed to load assessment. Please try resetting the quiz.</p>
+                          <Button variant="secondary" className="mt-4" onClick={() => window.location.reload()}>Retry Now</Button>
+                        </div>
+                      )
                       return (
                         <div className="rounded-2xl border border-borderline bg-surface p-4 shadow-sm">
                           <div className="flex flex-wrap items-center justify-between gap-2">
