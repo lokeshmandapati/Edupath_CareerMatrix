@@ -376,16 +376,31 @@ const APTITUDE_TAGS = [
 
 const WORK_PREFERENCES = ['Stable / government', 'Startup / fast-paced', 'Research / academics', 'Not sure yet']
 
-const BUDGETS = ['Low', 'Medium', 'High', 'Not sure']
-const LOCATIONS = ['Same city', 'Same state', 'Anywhere in India', 'Not sure']
-const EXAM_READINESS = ['Not started', 'Basic started', 'Regular preparation', 'Already giving mocks']
+const BUDGET_OPTIONS = [
+  { id: 'Low', label: 'Low', icon: '📉', desc: 'Govt / Budget Private' },
+  { id: 'Medium', label: 'Medium', icon: '📊', desc: 'Standard Universities' },
+  { id: 'High', label: 'High', icon: '💎', desc: 'Premium Institutions' },
+  { id: 'Not sure', label: 'Not sure', icon: '❓', desc: 'Decide later' },
+]
 
-const CITY_OPTIONS = ['Delhi', 'Mumbai', 'Bengaluru', 'Chandigarh', 'Not sure']
-const STATE_OPTIONS = ['Delhi', 'Maharashtra', 'Karnataka', 'Punjab', 'Not sure']
+const LOCATION_OPTIONS = [
+  { id: 'Same city', label: 'Same city', icon: '🏠', desc: 'Stay close to home' },
+  { id: 'Same state', label: 'Same state', icon: '🗺️', desc: 'Within your region' },
+  { id: 'Anywhere in India', label: 'Anywhere in India', icon: '🇮🇳', desc: 'Best college anywhere' },
+  { id: 'Not sure', label: 'Not sure', icon: '🌍', desc: 'No preference' },
+]
+
+const READINESS_OPTIONS = [
+  { id: 'Not started', label: 'Not started', icon: '🌱', desc: 'Just exploring' },
+  { id: 'Basic started', label: 'Basic started', icon: '🌿', desc: 'Learning fundamentals' },
+  { id: 'Regular preparation', label: 'Regular preparation', icon: '🌳', desc: 'Active study/coaching' },
+  { id: 'Already giving mocks', label: 'Already giving mocks', icon: '🏆', desc: 'Ready for the exam' },
+]
+
 const CATEGORY_OPTIONS = [
-  { id: 'GENERAL', label: 'General' },
-  { id: 'OBC', label: 'OBC' },
-  { id: 'SCST', label: 'SC / ST' },
+  { id: 'GENERAL', label: 'General', icon: '👤' },
+  { id: 'OBC', label: 'OBC', icon: '👥' },
+  { id: 'SCST', label: 'SC / ST', icon: '👥' },
 ]
 
 function clampPct(v) {
@@ -424,13 +439,30 @@ export default function After12Form() {
   const [shuffledQuiz, setShuffledQuiz] = useState([])
 
   useEffect(() => {
-    // Pick 12 random questions from the full 30-question bank every session
-    const shuffledAll = shuffleArray([...ALL_QUIZ_QUESTIONS])
-    const picked12 = shuffledAll.slice(0, 12).map((q) => ({
-      ...q,
-      options: shuffleArray(q.options),
-    }))
-    setShuffledQuiz(picked12)
+    const fetchDynamicQuestions = async () => {
+      try {
+        const { data } = await api.get('/api/assessment/questions?type=AFTER12')
+        if (data && Array.isArray(data) && data.length > 0) {
+          const processed = data.map(q => ({
+            ...q,
+            options: shuffleArray(q.options || [])
+          }))
+          setShuffledQuiz(processed)
+        } else {
+          throw new Error('Empty questions data')
+        }
+      } catch (err) {
+        console.warn('Using static quiz fallback:', err.message)
+        // Pick 12 random questions from the full 30-question bank
+        const shuffledAll = shuffleArray([...ALL_QUIZ_QUESTIONS])
+        const picked12 = shuffledAll.slice(0, 12).map((q) => ({
+          ...q,
+          options: shuffleArray(q.options),
+        }))
+        setShuffledQuiz(picked12)
+      }
+    }
+    fetchDynamicQuestions()
   }, [])
   const [stream, setStream] = useState('SCIENCE_PCM')
   const [customStream, setCustomStream] = useState('')
@@ -992,126 +1024,164 @@ export default function After12Form() {
                 </motion.section>
               )}
 
-      {step === 5 && (
-        <motion.section key="a4" variants={stepVariants} initial="initial" animate="animate" exit="exit" className="space-y-6">
-          <div>
-            <h2 className="font-display text-lg font-semibold text-accent">Budget</h2>
-            <p className="mt-1 text-sm text-slate-600">This helps shortlist realistic college paths.</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {BUDGETS.map((b) => {
-                const active = budget === b
-                return (
-                  <button
-                    key={b}
-                    type="button"
-                    onClick={() => setBudget(b)}
-                    className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
-                      }`}
-                  >
-                    {b}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
+                {step === 5 && (
+                  <motion.section key="a4" variants={stepVariants} initial="initial" animate="animate" exit="exit" className="space-y-10">
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-lg">💰</span>
+                        <div>
+                          <h2 className="font-display text-lg font-semibold text-accent">Financial Budget</h2>
+                          <p className="text-xs text-slate-500">Helps us shortlist colleges within your reachable fee range.</p>
+                        </div>
+                      </div>
+                      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        {BUDGET_OPTIONS.map((b) => {
+                          const active = budget === b.id
+                          return (
+                            <button
+                              key={b.id}
+                              type="button"
+                              onClick={() => setBudget(b.id)}
+                              className={`group relative flex flex-col items-center gap-2 rounded-2xl border p-4 text-center transition-all duration-300 ${active
+                                ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
+                                }`}
+                            >
+                              <span className="text-2xl">{b.icon}</span>
+                              <div className="space-y-0.5">
+                                <div className="text-sm font-bold">{b.label}</div>
+                                <div className={`text-[10px] ${active ? 'text-white/70' : 'text-muted'}`}>{b.desc}</div>
+                              </div>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
 
-          <div>
-            <h2 className="font-display text-lg font-semibold text-accent">Location flexibility</h2>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {LOCATIONS.map((l) => {
-                const active = locationFlexibility === l
-                return (
-                  <button
-                    key={l}
-                    type="button"
-                    onClick={() => setLocationFlexibility(l)}
-                    className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
-                      }`}
-                  >
-                    {l}
-                  </button>
-                )
-              })}
-            </div>
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-lg">📍</span>
+                        <div>
+                          <h2 className="font-display text-lg font-semibold text-accent">Location Preference</h2>
+                          <p className="text-xs text-slate-500">Where would you prefer to spend the next 3-4 years?</p>
+                        </div>
+                      </div>
+                      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        {LOCATION_OPTIONS.map((l) => {
+                          const active = locationFlexibility === l.id
+                          return (
+                            <button
+                              key={l.id}
+                              type="button"
+                              onClick={() => setLocationFlexibility(l.id)}
+                              className={`group relative flex flex-col items-center gap-2 rounded-2xl border p-4 text-center transition-all duration-300 ${active
+                                ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
+                                }`}
+                            >
+                              <span className="text-2xl">{l.icon}</span>
+                              <div className="space-y-0.5">
+                                <div className="text-sm font-bold">{l.label}</div>
+                                <div className={`text-[10px] ${active ? 'text-white/70' : 'text-muted'}`}>{l.desc}</div>
+                              </div>
+                            </button>
+                          )
+                        })}
+                      </div>
 
-            {locationFlexibility === 'Same city' && (
-              <label className="mt-5 block">
-                <span className="text-sm font-medium text-slate-700">Choose your city</span>
-                <select
-                  className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-sm font-medium text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
-                  value={preferredCity}
-                  onChange={(e) => setPreferredCity(e.target.value)}
-                >
-                  {CITY_OPTIONS.map((c) => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            )}
+                      {locationFlexibility === 'Same city' && (
+                        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-5">
+                          <label className="block">
+                            <span className="text-xs font-bold uppercase tracking-wider text-primary">Target City</span>
+                            <input
+                              type="text"
+                              placeholder="Enter your city (e.g. Mumbai, Bengaluru)..."
+                              className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-sm font-medium text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                              value={preferredCity}
+                              onChange={(e) => setPreferredCity(e.target.value)}
+                            />
+                          </label>
+                        </motion.div>
+                      )}
 
-            {locationFlexibility === 'Same state' && (
-              <label className="mt-5 block">
-                <span className="text-sm font-medium text-slate-700">Choose your state</span>
-                <select
-                  className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-sm font-medium text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
-                  value={preferredState}
-                  onChange={(e) => setPreferredState(e.target.value)}
-                >
-                  {STATE_OPTIONS.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            )}
-          </div>
+                      {locationFlexibility === 'Same state' && (
+                        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-5">
+                          <label className="block">
+                            <span className="text-xs font-bold uppercase tracking-wider text-primary">Target State</span>
+                            <input
+                              type="text"
+                              placeholder="Enter your state (e.g. Karnataka, Delhi)..."
+                              className="mt-2 w-full rounded-xl border border-borderline bg-surface px-4 py-3 text-sm font-medium text-accent shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                              value={preferredState}
+                              onChange={(e) => setPreferredState(e.target.value)}
+                            />
+                          </label>
+                        </motion.div>
+                      )}
+                    </div>
 
-          <div>
-            <h2 className="font-display text-lg font-semibold text-accent">Exam readiness</h2>
-            <p className="mt-1 text-sm text-slate-600">How prepared are you right now?</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {EXAM_READINESS.map((r) => {
-                const active = examReadiness === r
-                return (
-                  <button
-                    key={r}
-                    type="button"
-                    onClick={() => setExamReadiness(r)}
-                    className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
-                      }`}
-                  >
-                    {r}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-lg">📚</span>
+                        <div>
+                          <h2 className="font-display text-lg font-semibold text-accent">Entrance Exam Readiness</h2>
+                          <p className="text-xs text-slate-500">Your current preparation level for competitive exams.</p>
+                        </div>
+                      </div>
+                      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        {READINESS_OPTIONS.map((r) => {
+                          const active = examReadiness === r.id
+                          return (
+                            <button
+                              key={r.id}
+                              type="button"
+                              onClick={() => setExamReadiness(r.id)}
+                              className={`group relative flex flex-col items-center gap-2 rounded-2xl border p-4 text-center transition-all duration-300 ${active
+                                ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
+                                }`}
+                            >
+                              <span className="text-2xl">{r.icon}</span>
+                              <div className="space-y-0.5">
+                                <div className="text-sm font-bold">{r.label}</div>
+                                <div className={`text-[10px] ${active ? 'text-white/70' : 'text-muted'}`}>{r.desc}</div>
+                              </div>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
 
-          <div>
-            <h2 className="font-display text-lg font-semibold text-accent">Category</h2>
-            <p className="mt-1 text-sm text-slate-600">Used to show category-wise college cutoffs.</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {CATEGORY_OPTIONS.map((c) => {
-                const active = category === c.id
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => setCategory(c.id)}
-                    className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-300 ${active ? 'border-primary bg-page text-accent shadow-sm ring-1 ring-primary/20' : 'border-borderline bg-surface text-slate-700 hover:bg-page/80'
-                      }`}
-                  >
-                    {c.label}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        </motion.section>
-      )}
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-lg">👤</span>
+                        <div>
+                          <h2 className="font-display text-lg font-semibold text-accent">Reservation Category</h2>
+                          <p className="text-xs text-slate-500">Ensures accurate mapping to government college seat cutoffs.</p>
+                        </div>
+                      </div>
+                      <div className="mt-5 grid grid-cols-3 gap-3">
+                        {CATEGORY_OPTIONS.map((c) => {
+                          const active = category === c.id
+                          return (
+                            <button
+                              key={c.id}
+                              type="button"
+                              onClick={() => setCategory(c.id)}
+                              className={`group relative flex items-center justify-center gap-3 rounded-2xl border p-4 text-center transition-all duration-300 ${active
+                                ? 'border-primary/40 bg-gradient-to-br from-primary to-primary/80 text-white shadow-glow'
+                                : 'border-borderline bg-surface text-accent hover:border-primary/30 hover:bg-page/20'
+                                }`}
+                            >
+                              <span className="text-xl">{c.icon}</span>
+                              <div className="text-sm font-bold">{c.label}</div>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </motion.section>
+                )}
     </AnimatePresence>
             </div >
 
