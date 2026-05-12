@@ -2,21 +2,16 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { Navigate } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
 
+/* ── Data ── */
 const features = [
-  { icon: '🎯', title: 'Career Fit Prediction', desc: 'AI-powered assessment weighing your skills, academics, interests, and projects to rank your best career matches.', color: 'from-violet-500/20 to-primary/10', border: 'border-violet-500/20' },
-  { icon: '🤖', title: 'AI Career Blueprint', desc: 'Get a week-by-week personalized roadmap with tools, projects, and milestones tailored to your exact field.', color: 'from-blue-500/20 to-cyan-500/10', border: 'border-blue-500/20' },
-  { icon: '📚', title: 'Class 10 & 12 Guidance', desc: 'Stream suggestions for Class 10 and career direction for after Class 12 based on your marks and interests.', color: 'from-emerald-500/20 to-teal-500/10', border: 'border-emerald-500/20' },
-  { icon: '✨', title: 'Custom Stream AI', desc: 'Pursuing fashion, aviation, or culinary arts? Enter any custom field and get AI-generated skills and career paths.', color: 'from-pink-500/20 to-rose-500/10', border: 'border-pink-500/20' },
-  { icon: '🗓️', title: 'Admission Calendar', desc: 'Never miss a deadline. Track JEE, NEET, CUET, and state exam dates filtered by stream and region.', color: 'from-orange-500/20 to-amber-500/10', border: 'border-orange-500/20' },
-  { icon: '💬', title: 'AI Career Counselor', desc: 'Chat with your personal career assistant anytime — get skill tips, resume advice, and exam strategies.', color: 'from-indigo-500/20 to-purple-500/10', border: 'border-indigo-500/20' },
-]
-
-const stats = [
-  { value: '10+', label: 'Career Paths' },
-  { value: 'AI', label: 'Powered Engine' },
-  { value: '3', label: 'Assessment Tracks' },
-  { value: '100%', label: 'Personalized' },
+  { icon: '🎯', title: 'Career Fit Prediction', desc: 'AI-powered assessment weighing your skills, academics, interests, and projects to rank your best career matches.' },
+  { icon: '🤖', title: 'AI Career Blueprint', desc: 'Get a week-by-week personalized roadmap with tools, projects, and milestones tailored to your exact field.' },
+  { icon: '📚', title: 'Class 10 & 12 Guidance', desc: 'Stream suggestions for Class 10 and career direction for after Class 12 based on your marks and interests.' },
+  { icon: '✨', title: 'Custom Stream AI', desc: 'Pursuing fashion, aviation, or culinary arts? Enter any custom field and get AI-generated skills and career paths.' },
+  { icon: '🗓️', title: 'Admission Calendar', desc: 'Never miss a deadline. Track JEE, NEET, CUET, and state exam dates filtered by stream and region.' },
+  { icon: '💬', title: 'AI Career Counselor', desc: 'Chat with your personal career assistant anytime — get skill tips, resume advice, and exam strategies.' },
 ]
 
 const steps = [
@@ -25,128 +20,279 @@ const steps = [
   { num: '03', title: 'Get Your Blueprint', desc: 'Receive AI-ranked career matches and a personalized roadmap.' },
 ]
 
+const trustLogos = [
+  { name: 'JEE Mains', icon: '🏛️' },
+  { name: 'NEET', icon: '🩺' },
+  { name: 'CUET', icon: '📖' },
+  { name: 'State Boards', icon: '🎓' },
+  { name: 'AI Powered', icon: '🤖' },
+]
+
+const orbitIcons = ['🎯', '🤖', '📊', '🗺️', '💡', '🏆']
+
 const item = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
 }
-
 const container = {
   hidden: { opacity: 0 },
   show: { opacity: 1, transition: { staggerChildren: 0.1 } },
 }
 
+/* ── Orbit Component ── */
+function OrbitVisual() {
+  return (
+    <div className="relative h-[480px] w-[480px] sm:h-[540px] sm:w-[540px]">
+      {/* Rings */}
+      {[200, 160, 110].map((r, i) => (
+        <div
+          key={i}
+          className="absolute left-1/2 top-1/2 rounded-full"
+          style={{
+            width: r * 2,
+            height: r * 2,
+            transform: 'translate(-50%, -50%)',
+            border: `1px solid rgba(167, 139, 250, ${0.12 - i * 0.03})`,
+          }}
+        />
+      ))}
+
+      {/* Center Stat */}
+      <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center">
+        <div className="text-5xl font-black text-white" style={{ letterSpacing: '-0.04em' }}>10+</div>
+        <div className="mt-1 text-xs font-bold uppercase tracking-[0.2em] text-violet-300">Career Paths</div>
+      </div>
+
+      {/* Floating icons on orbit */}
+      {orbitIcons.map((icon, i) => {
+        const angle = (i / orbitIcons.length) * 360
+        const radius = i % 2 === 0 ? 180 : 140
+        const x = Math.cos((angle * Math.PI) / 180) * radius
+        const y = Math.sin((angle * Math.PI) / 180) * radius
+        const delay = i * 0.6
+        return (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8 + delay * 0.15, duration: 0.5, ease: 'backOut' }}
+            className="absolute left-1/2 top-1/2 z-20"
+            style={{ transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))` }}
+          >
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-lg ring-1 ring-white/10"
+              style={{ background: 'rgba(30, 20, 60, 0.85)', backdropFilter: 'blur(10px)' }}
+            >
+              {icon}
+            </motion.div>
+          </motion.div>
+        )
+      })}
+
+      {/* Floating tag */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.6 }}
+        className="absolute bottom-12 left-8 z-20"
+      >
+        <div className="rounded-full px-4 py-1.5 text-xs font-bold shadow-lg"
+          style={{ background: 'linear-gradient(135deg, #a78bfa, #818cf8)', color: '#fff' }}
+        >
+          AI Powered 🚀
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+
+/* ── Page ── */
 export default function LandingPage() {
   const { isAuthenticated } = useAuth()
   if (isAuthenticated) return <Navigate to="/dashboard" replace />
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden" style={{ background: '#09090f', color: '#f1f5f9' }}>
+    <div className="relative min-h-screen overflow-x-hidden" style={{ color: '#f1f5f9' }}>
 
-      {/* ── Animated Background ── */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div style={{ background: 'radial-gradient(ellipse 80% 60% at 10% -10%, rgba(99,102,241,0.18) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 90% 110%, rgba(139,92,246,0.15) 0%, transparent 60%)', position: 'absolute', inset: 0 }} />
-        <div className="absolute -top-52 -left-40 h-[700px] w-[700px] rounded-full opacity-20 blur-[100px] animate-pulse" style={{ background: 'radial-gradient(circle, #6366f1, transparent 70%)' }} />
-        <div className="absolute -bottom-52 -right-40 h-[600px] w-[600px] rounded-full opacity-15 blur-[100px] animate-pulse" style={{ background: 'radial-gradient(circle, #8b5cf6, transparent 70%)', animationDelay: '2s' }} />
+      {/* ── Gradient Background ── */}
+      <div className="pointer-events-none fixed inset-0 -z-10" style={{
+        background: 'linear-gradient(135deg, #1a0a2e 0%, #16082b 25%, #0f0720 50%, #0a0518 75%, #09090f 100%)',
+      }}>
+        {/* Warm purple/amber glow — left side */}
+        <div className="absolute -top-32 -left-32 h-[700px] w-[700px] rounded-full opacity-40 blur-[120px]"
+          style={{ background: 'radial-gradient(circle, #7c3aed, #a855f7, transparent 70%)' }} />
+        <div className="absolute top-20 left-20 h-[400px] w-[400px] rounded-full opacity-20 blur-[100px]"
+          style={{ background: 'radial-gradient(circle, #d97706, #f59e0b, transparent 70%)' }} />
+        {/* Subtle purple glow — right side */}
+        <div className="absolute -bottom-40 -right-32 h-[500px] w-[500px] rounded-full opacity-20 blur-[100px]"
+          style={{ background: 'radial-gradient(circle, #6d28d9, transparent 70%)' }} />
       </div>
 
       {/* ── Navbar ── */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl border-b" style={{ background: 'rgba(9,9,15,0.8)', borderColor: 'rgba(255,255,255,0.07)' }}>
-        <div className="mx-auto flex w-full items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl text-2xl shadow-lg ring-2 ring-white/10" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
-            <div>
-              <div className="text-xl font-black tracking-tighter sm:text-2xl" style={{ color: '#f1f5f9' }}>CareerMatrix</div>
-              <div className="text-[10px] font-bold uppercase tracking-[0.2em] sm:text-[11px]" style={{ color: '#818cf8' }}>Career Path Prediction</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
+      <header className="sticky top-0 z-50 backdrop-blur-2xl" style={{ background: 'rgba(10, 5, 24, 0.7)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
+          <Link to="/" className="flex items-center gap-4 transition-transform hover:scale-105">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl text-xl shadow-lg ring-2 ring-white/10"
+              style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
+            <span className="text-xl font-black tracking-tight sm:text-2xl" style={{ color: '#f1f5f9' }}>CareerMatrix</span>
+          </Link>
 
-            <Link to="/signup" className="rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 20px rgba(99,102,241,0.4)' }}>
-              Get Started Free
+          <nav className="hidden items-center gap-8 md:flex">
+            {['Features', 'How It Works'].map(label => (
+              <a key={label} href={`#${label.toLowerCase().replace(/\s/g, '-')}`}
+                className="text-sm font-semibold transition-colors hover:text-violet-300"
+                style={{ color: '#94a3b8' }}
+              >{label}</a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <Link to="/login" className="hidden text-sm font-bold transition-colors hover:text-white sm:block" style={{ color: '#94a3b8' }}>
+              Log In
+            </Link>
+            <Link to="/signup" className="rounded-full px-6 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+              style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 24px rgba(99,102,241,0.35)' }}>
+              Join Now
             </Link>
           </div>
         </div>
       </header>
 
-      {/* ── Hero ── */}
-      <section className="mx-auto w-full px-6 pt-24 pb-20 text-center">
-        <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest" style={{ borderColor: 'rgba(99,102,241,0.4)', background: 'rgba(99,102,241,0.1)', color: '#818cf8' }}>
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: '#818cf8' }} />
-            AI-Powered Career Guidance for Students
+      {/* ── Hero Section ── */}
+      <section className="relative mx-auto flex w-full max-w-7xl flex-col items-center gap-12 px-6 pt-16 pb-10 sm:px-10 lg:flex-row lg:items-center lg:gap-8 lg:pt-24 lg:pb-20">
+        {/* Left — Text */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="flex-1 space-y-8 text-left lg:max-w-[55%]"
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em]"
+            style={{ borderColor: 'rgba(139,92,246,0.4)', background: 'rgba(139,92,246,0.1)', color: '#a78bfa' }}>
+            <span className="h-2 w-2 animate-pulse rounded-full" style={{ background: '#a78bfa' }} />
+            AI-Powered Career Guidance
           </div>
 
-          <h1 className="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl" style={{ letterSpacing: '-0.03em' }}>
+          <h1 className="text-5xl font-black leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl" style={{ letterSpacing: '-0.04em' }}>
             Discover Your{' '}
-            <span style={{ background: 'linear-gradient(135deg, #818cf8, #a78bfa, #ec4899)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Ideal Career
+            <span style={{ background: 'linear-gradient(135deg, #c084fc, #818cf8, #e879f9)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              Best Career
             </span>
-            <br />with AI Precision
+            {' '}— Now Just One Click Away!
           </h1>
 
-          <p className="mx-auto max-w-xl text-lg leading-relaxed" style={{ color: '#64748b' }}>
+          <p className="max-w-lg text-lg font-medium leading-relaxed" style={{ color: '#a1a1b5' }}>
             CareerMatrix analyses your academics, skills, and interests to predict your best career paths and build a personalised roadmap — in under 3 minutes.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 pt-2">
-            <Link to="/signup" className="group inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-base font-bold text-white shadow-2xl transition-all hover:scale-105" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 40px rgba(99,102,241,0.45)' }}>
-              Start Free Assessment
-              <svg className="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          <div className="flex flex-wrap items-center gap-4 pt-2">
+            <Link to="/signup" className="group inline-flex items-center gap-3 rounded-full px-8 py-4 text-base font-bold text-white shadow-2xl transition-all hover:scale-105"
+              style={{ background: '#0f0720', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 0 30px rgba(139,92,246,0.2)' }}>
+              Start Assessment
+              <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
-            <Link to="/login" className="inline-flex items-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:bg-white/5" style={{ borderColor: 'rgba(255,255,255,0.1)', color: '#94a3b8' }}>
-              Already have an account? Sign In
+            <Link to="/login" className="text-sm font-bold transition-colors hover:text-white" style={{ color: '#94a3b8' }}>
+              Already have an account? →
             </Link>
           </div>
         </motion.div>
 
-        {/* Stats */}
+        {/* Right — Orbital Visual */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 flex flex-wrap justify-center gap-6"
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="relative hidden flex-1 items-center justify-center lg:flex"
         >
-          {stats.map((s) => (
-            <div key={s.label} className="rounded-2xl border px-8 py-4 text-center backdrop-blur-sm" style={{ borderColor: 'rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.03)' }}>
-              <div className="text-3xl font-extrabold" style={{ background: 'linear-gradient(135deg, #818cf8, #a78bfa)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{s.value}</div>
-              <div className="mt-1 text-xs font-semibold uppercase tracking-widest" style={{ color: '#64748b' }}>{s.label}</div>
-            </div>
-          ))}
+          <OrbitVisual />
         </motion.div>
       </section>
 
+      {/* ── Trust Bar ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="mx-auto w-full max-w-7xl px-6 pb-16 sm:px-10"
+      >
+        <div className="flex flex-wrap items-center justify-center gap-10 rounded-2xl border px-8 py-5 sm:justify-between"
+          style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}>
+          {trustLogos.map(t => (
+            <div key={t.name} className="flex items-center gap-2 opacity-50 transition-opacity hover:opacity-100">
+              <span className="text-lg">{t.icon}</span>
+              <span className="text-sm font-bold tracking-wide" style={{ color: '#94a3b8' }}>{t.name}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* ── Stats Band ── */}
+      <section className="mx-auto w-full max-w-7xl px-6 pb-20 sm:px-10">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {[
+            { value: '10+', label: 'Career Paths' },
+            { value: 'AI', label: 'Powered Engine' },
+            { value: '3', label: 'Assessment Tracks' },
+            { value: '100%', label: 'Personalized' },
+          ].map(s => (
+            <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              className="rounded-2xl border p-6 text-center transition-all hover:-translate-y-1"
+              style={{ borderColor: 'rgba(139,92,246,0.12)', background: 'rgba(139,92,246,0.04)' }}>
+              <div className="text-3xl font-black sm:text-4xl" style={{ background: 'linear-gradient(135deg, #c084fc, #818cf8)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{s.value}</div>
+              <div className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: '#64748b' }}>{s.label}</div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* ── Features ── */}
-      <section className="mx-auto w-full px-6 pb-24">
+      <section id="features" className="mx-auto w-full max-w-7xl px-6 pb-24 sm:px-10">
         <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-extrabold sm:text-4xl" style={{ color: '#f1f5f9' }}>Everything you need to plan your future</h2>
-            <p className="mt-3 text-base" style={{ color: '#64748b' }}>A complete platform built specifically for Indian students.</p>
+          <div className="mb-14 text-center">
+            <h2 className="text-4xl font-black tracking-tight sm:text-5xl" style={{ color: '#f1f5f9', letterSpacing: '-0.03em' }}>
+              Everything you need to{' '}
+              <span style={{ background: 'linear-gradient(135deg, #c084fc, #818cf8)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>plan your future</span>
+            </h2>
+            <p className="mt-4 text-lg font-medium" style={{ color: '#64748b' }}>A complete platform built specifically for Indian students.</p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f) => (
-              <motion.div key={f.title} variants={item} className={`group rounded-2xl border bg-gradient-to-br ${f.color} ${f.border} p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl`}>
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl text-2xl" style={{ background: 'rgba(255,255,255,0.06)' }}>{f.icon}</div>
-                <h3 className="mb-2 font-bold" style={{ color: '#f1f5f9' }}>{f.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</p>
+              <motion.div key={f.title} variants={item}
+                className="group rounded-3xl border p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                style={{ borderColor: 'rgba(139,92,246,0.1)', background: 'rgba(139,92,246,0.03)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(139,92,246,0.3)'; e.currentTarget.style.background = 'rgba(139,92,246,0.07)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(139,92,246,0.1)'; e.currentTarget.style.background = 'rgba(139,92,246,0.03)' }}
+              >
+                <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl text-2xl shadow-md ring-1 ring-white/5"
+                  style={{ background: 'rgba(139,92,246,0.15)' }}>{f.icon}</div>
+                <h3 className="mb-2 text-lg font-bold" style={{ color: '#f1f5f9' }}>{f.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: '#94a3b8' }}>{f.desc}</p>
               </motion.div>
             ))}
           </div>
         </motion.div>
       </section>
 
-      {/* ── How it works ── */}
-      <section className="mx-auto w-full px-6 pb-24">
-        <div className="rounded-3xl border p-10 sm:p-14" style={{ borderColor: 'rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.02)' }}>
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-extrabold sm:text-4xl" style={{ color: '#f1f5f9' }}>How it works</h2>
-            <p className="mt-3 text-base" style={{ color: '#64748b' }}>From sign-up to your career blueprint in 3 simple steps.</p>
+      {/* ── How it Works ── */}
+      <section id="how-it-works" className="mx-auto w-full max-w-7xl px-6 pb-24 sm:px-10">
+        <div className="overflow-hidden rounded-3xl border p-10 sm:p-16" style={{ borderColor: 'rgba(139,92,246,0.1)', background: 'linear-gradient(135deg, rgba(139,92,246,0.06), rgba(99,102,241,0.03))' }}>
+          <div className="mb-14 text-center">
+            <h2 className="text-4xl font-black tracking-tight sm:text-5xl" style={{ color: '#f1f5f9', letterSpacing: '-0.03em' }}>How it works</h2>
+            <p className="mt-4 text-lg font-medium" style={{ color: '#64748b' }}>From sign-up to your career blueprint in 3 simple steps.</p>
           </div>
-          <div className="grid gap-8 sm:grid-cols-3">
+          <div className="grid gap-10 sm:grid-cols-3">
             {steps.map((s, i) => (
-              <motion.div key={s.num} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15, duration: 0.5 }} className="text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-extrabold" style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8' }}>{s.num}</div>
-                <h3 className="mb-2 font-bold" style={{ color: '#f1f5f9' }}>{s.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{s.desc}</p>
+              <motion.div key={s.num} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15, duration: 0.5 }} className="text-center">
+                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl text-3xl font-black"
+                  style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.3), rgba(99,102,241,0.15))', border: '1px solid rgba(139,92,246,0.25)', color: '#c084fc' }}>
+                  {s.num}
+                </div>
+                <h3 className="mb-3 text-lg font-bold" style={{ color: '#f1f5f9' }}>{s.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: '#94a3b8' }}>{s.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -154,14 +300,19 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="mx-auto w-full px-6 pb-24">
-        <motion.div initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="relative overflow-hidden rounded-3xl p-12 text-center" style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15), rgba(236,72,153,0.1))', border: '1px solid rgba(99,102,241,0.25)' }}>
-          <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full blur-3xl" style={{ background: 'rgba(99,102,241,0.3)' }} />
-          <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full blur-3xl" style={{ background: 'rgba(139,92,246,0.3)' }} />
+      <section className="mx-auto w-full max-w-7xl px-6 pb-24 sm:px-10">
+        <motion.div initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+          className="relative overflow-hidden rounded-3xl p-14 text-center sm:p-20"
+          style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.2), rgba(99,102,241,0.15), rgba(236,72,153,0.08))', border: '1px solid rgba(139,92,246,0.2)' }}>
+          <div className="pointer-events-none absolute -top-20 -right-20 h-56 w-56 rounded-full blur-3xl" style={{ background: 'rgba(139,92,246,0.35)' }} />
+          <div className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full blur-3xl" style={{ background: 'rgba(99,102,241,0.3)' }} />
           <div className="relative z-10">
-            <h2 className="text-3xl font-extrabold sm:text-4xl" style={{ color: '#f1f5f9' }}>Start your career journey today</h2>
-            <p className="mx-auto mt-4 max-w-md text-base" style={{ color: '#94a3b8' }}>Free, instant access. No credit card required. Get your personalised career blueprint in minutes.</p>
-            <Link to="/signup" className="mt-8 inline-flex items-center gap-3 rounded-2xl px-10 py-4 text-base font-bold text-white shadow-2xl transition-all hover:scale-105" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 40px rgba(99,102,241,0.5)' }}>
+            <h2 className="text-4xl font-black tracking-tight sm:text-5xl" style={{ color: '#f1f5f9', letterSpacing: '-0.03em' }}>Start your career journey today</h2>
+            <p className="mx-auto mt-5 max-w-lg text-lg font-medium" style={{ color: '#a1a1b5' }}>
+              Free, instant access. No credit card required. Get your personalised career blueprint in minutes.
+            </p>
+            <Link to="/signup" className="mt-10 inline-flex items-center gap-3 rounded-full px-10 py-4 text-base font-bold text-white shadow-2xl transition-all hover:scale-105"
+              style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 40px rgba(139,92,246,0.5)' }}>
               🚀 Get Started — It's Free
             </Link>
           </div>
@@ -169,8 +320,17 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="border-t px-6 py-8 text-center text-sm" style={{ borderColor: 'rgba(255,255,255,0.06)', color: '#475569' }}>
-        © 2025 <span style={{ color: '#6366f1', fontWeight: 700 }}>CareerMatrix</span> · Built for Indian Students · AI-Powered Career Guidance
+      <footer className="border-t px-6 py-10 text-center" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-wrap items-center justify-center gap-2 text-sm" style={{ color: '#475569' }}>
+            <span>© 2025</span>
+            <span className="font-bold" style={{ color: '#8b5cf6' }}>CareerMatrix</span>
+            <span>·</span>
+            <span>Built for Indian Students</span>
+            <span>·</span>
+            <span>AI-Powered Career Guidance</span>
+          </div>
+        </div>
       </footer>
     </div>
   )
