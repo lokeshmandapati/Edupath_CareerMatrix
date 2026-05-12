@@ -90,7 +90,48 @@ export default function Dashboard() {
 
   return (
     <PageTransition>
-      <div className="mesh-gradient min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mesh-gradient relative min-h-screen px-4 py-8 sm:px-6 lg:px-8 overflow-hidden">
+
+        {/* ── Animated Background Glows ── */}
+        <div className="pointer-events-none fixed inset-0 -z-10">
+          <motion.div
+            animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full blur-[120px]"
+            style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.4), transparent 70%)' }}
+          />
+          <motion.div
+            animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            className="absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full blur-[100px]"
+            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)' }}
+          />
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+            className="absolute top-1/3 right-1/4 h-[350px] w-[350px] rounded-full blur-[80px]"
+            style={{ background: 'radial-gradient(circle, rgba(217,119,6,0.2), transparent 70%)' }}
+          />
+        </div>
+
+        {/* ── Floating Particles ── */}
+        {[
+          { top: '5%', left: '10%', size: 4, dur: 3 },
+          { top: '15%', right: '20%', size: 5, dur: 4 },
+          { bottom: '20%', left: '5%', size: 3, dur: 2.5 },
+          { top: '50%', right: '8%', size: 6, dur: 3.5 },
+          { bottom: '10%', right: '30%', size: 4, dur: 2.8 },
+          { top: '70%', left: '25%', size: 3, dur: 3.2 },
+        ].map((p, i) => (
+          <motion.div
+            key={`particle-${i}`}
+            animate={{ opacity: [0.15, 0.5, 0.15], y: [0, -8, 0] }}
+            transition={{ duration: p.dur, repeat: Infinity, delay: i * 0.5 }}
+            className="pointer-events-none absolute rounded-full"
+            style={{ ...p, width: p.size, height: p.size, background: 'rgba(139,92,246,0.6)' }}
+          />
+        ))}
+
         <div className="mx-auto w-full space-y-12 pb-10">
           {/* Header Section */}
           <header className="relative space-y-4">
