@@ -132,7 +132,7 @@ export default function LandingPage() {
 
       {/* ── Navbar ── */}
       <header className="sticky top-0 z-50 backdrop-blur-2xl" style={{ background: 'rgba(10, 5, 24, 0.7)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4 sm:px-10">
+        <div className="mx-auto flex w-full items-center justify-between px-8 py-4 sm:px-16 lg:px-24">
           <Link to="/" className="flex items-center gap-4 transition-transform hover:scale-105">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl text-xl shadow-lg ring-2 ring-white/10"
               style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>🎯</div>
@@ -161,7 +161,7 @@ export default function LandingPage() {
       </header>
 
       {/* ── Hero Section ── */}
-      <section className="relative mx-auto flex w-full max-w-7xl flex-col items-center gap-12 px-6 pt-16 pb-10 sm:px-10 lg:flex-row lg:items-center lg:gap-8 lg:pt-24 lg:pb-20">
+      <section className="relative mx-auto flex w-full flex-col items-center gap-12 px-8 pt-16 pb-10 sm:px-16 lg:flex-row lg:items-center lg:gap-8 lg:px-24 lg:pt-24 lg:pb-20">
         {/* Left — Text */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -217,7 +217,7 @@ export default function LandingPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="mx-auto w-full max-w-7xl px-6 pb-16 sm:px-10"
+        className="mx-auto w-full px-8 pb-16 sm:px-16 lg:px-24"
       >
         <div className="flex flex-wrap items-center justify-center gap-10 rounded-2xl border px-8 py-5 sm:justify-between"
           style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}>
@@ -231,7 +231,7 @@ export default function LandingPage() {
       </motion.div>
 
       {/* ── Stats Band ── */}
-      <section className="mx-auto w-full max-w-7xl px-6 pb-20 sm:px-10">
+      <section className="mx-auto w-full px-8 pb-20 sm:px-16 lg:px-24">
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
             { value: '10+', label: 'Career Paths' },
@@ -250,7 +250,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ── */}
-      <section id="features" className="mx-auto w-full max-w-7xl px-6 pb-24 sm:px-10">
+      <section id="features" className="mx-auto w-full px-8 pb-24 sm:px-16 lg:px-24">
         <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <div className="mb-14 text-center">
             <h2 className="text-4xl font-black tracking-tight sm:text-5xl" style={{ color: '#f1f5f9', letterSpacing: '-0.03em' }}>
@@ -278,7 +278,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── How it Works ── */}
-      <section id="how-it-works" className="mx-auto w-full max-w-7xl px-6 pb-24 sm:px-10">
+      <section id="how-it-works" className="mx-auto w-full px-8 pb-24 sm:px-16 lg:px-24">
         <div className="overflow-hidden rounded-3xl border p-10 sm:p-16" style={{ borderColor: 'rgba(139,92,246,0.1)', background: 'linear-gradient(135deg, rgba(139,92,246,0.06), rgba(99,102,241,0.03))' }}>
           <div className="mb-14 text-center">
             <h2 className="text-4xl font-black tracking-tight sm:text-5xl" style={{ color: '#f1f5f9', letterSpacing: '-0.03em' }}>How it works</h2>
@@ -300,7 +300,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="mx-auto w-full max-w-7xl px-6 pb-24 sm:px-10">
+      <section className="mx-auto w-full px-8 pb-24 sm:px-16 lg:px-24">
         <motion.div initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
           className="relative overflow-hidden rounded-3xl p-14 text-center sm:p-20"
           style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.2), rgba(99,102,241,0.15), rgba(236,72,153,0.08))', border: '1px solid rgba(139,92,246,0.2)' }}>
@@ -320,8 +320,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="border-t px-6 py-10 text-center" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-        <div className="mx-auto max-w-7xl">
+      <footer className="border-t px-8 py-10 text-center sm:px-16 lg:px-24" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+        <div className="mx-auto w-full">
           <div className="flex flex-wrap items-center justify-center gap-2 text-sm" style={{ color: '#475569' }}>
             <span>© 2025</span>
             <span className="font-bold" style={{ color: '#8b5cf6' }}>CareerMatrix</span>
