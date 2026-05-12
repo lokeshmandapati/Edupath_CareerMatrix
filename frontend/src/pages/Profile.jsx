@@ -52,7 +52,11 @@ export default function Profile() {
     const eng = localStorage.getItem(ENGINEERING_LAST_PREDICTION_KEY)
     const c10 = localStorage.getItem(CLASS10_LAST_PREDICTION_KEY)
     const a12 = localStorage.getItem(AFTER12_LAST_PREDICTION_KEY)
-    const roadmap = localStorage.getItem('careermatrix_roadmap_career')
+    
+    // Check for any built roadmap (Engineering or Context-based)
+    const roadmapEng = localStorage.getItem(ROADMAP_CAREER_KEY)
+    const roadmapCtx = localStorage.getItem(ROADMAP_CONTEXT_LABEL_KEY)
+    const hasAnyRoadmap = !!(roadmapEng || roadmapCtx)
 
     const processData = (raw) => {
       if (!raw) return
@@ -86,9 +90,9 @@ export default function Profile() {
     setStats({ 
       assessments: count, 
       topInterest: interest,
-      techScore: count > 0 ? (tech || 70) : 0, // Fallback to 70 if data exists but score is null
+      techScore: count > 0 ? (tech || 70) : 0, 
       creativeScore: count > 0 ? (creative || 60) : 0,
-      hasRoadmap: !!roadmap
+      hasRoadmap: hasAnyRoadmap
     })
   }, [])
 
@@ -280,14 +284,14 @@ export default function Profile() {
                     whileHover={{ scale: 1.02, translateY: -2 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => window.location.href = '/dashboard'}
-                    className={`flex flex-col items-center gap-2 rounded-2xl p-4 text-center ring-1 transition-all ${stats.assessments >= 3 ? 'bg-amber-50/50 ring-amber-500/20 shadow-soft cursor-pointer' : 'bg-surface ring-borderline opacity-40 cursor-default'}`}
+                    className={`flex flex-col items-center gap-2 rounded-2xl p-4 text-center ring-1 transition-all ${stats.assessments > 0 && stats.hasRoadmap ? 'bg-amber-50/50 ring-amber-500/20 shadow-soft cursor-pointer' : 'bg-surface ring-borderline opacity-40 cursor-default'}`}
                   >
-                    <div className={`flex h-10 w-10 items-center justify-center rounded-full ${stats.assessments >= 3 ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 text-slate-400'}`}>
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-full ${stats.assessments > 0 && stats.hasRoadmap ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 text-slate-400'}`}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <p className={`text-[10px] font-bold uppercase ${stats.assessments >= 3 ? 'text-amber-700' : 'text-accent'}`}>Goal Reached</p>
+                    <p className={`text-[10px] font-bold uppercase ${stats.assessments > 0 && stats.hasRoadmap ? 'text-amber-700' : 'text-accent'}`}>Goal Reached</p>
                   </motion.button>
                 </div>
               </Card>
