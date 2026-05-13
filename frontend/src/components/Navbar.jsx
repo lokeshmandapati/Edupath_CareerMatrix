@@ -26,9 +26,9 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl"
       style={{
-        background: 'rgba(9,9,15,0.85)',
-        borderBottom: '1px solid rgba(255,255,255,0.07)',
-        boxShadow: '0 1px 40px rgba(99,102,241,0.08), 0 1px 8px rgba(0,0,0,0.3)',
+        background: 'rgba(0,0,0,0.88)',
+        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        boxShadow: '0 1px 40px rgba(99,102,241,0.06), 0 1px 8px rgba(0,0,0,0.5)',
       }}
     >
       <div className="mx-auto flex w-full items-center justify-between px-4 py-3 sm:px-10">

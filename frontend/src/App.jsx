@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import Navbar from './components/Navbar'
@@ -33,51 +34,77 @@ function ProtectedRoute({ children }) {
   return children
 }
 
-/** Authenticated layout — deep navy animated background */
+/** Animated floating particles — memoized so they don't regenerate on every render */
+function useParticles(count = 35) {
+  return useMemo(() =>
+    Array.from({ length: count }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 3 + 1,
+      dur: Math.random() * 12 + 10,
+      delay: Math.random() * -20,
+      opacity: Math.random() * 0.35 + 0.08,
+      hue: [260, 280, 320, 220, 200][Math.floor(Math.random() * 5)],
+    })),
+  [count])
+}
+
+/** Authenticated layout — pure black animated background */
 function AppShell({ children }) {
+  const particles = useParticles(35)
+
   return (
-    <div className="relative flex min-h-screen flex-col overflow-x-hidden" style={{ background: '#0d1025' }}>
-      {/* Fixed gradient base */}
-      <div
-        className="pointer-events-none fixed inset-0 -z-10"
-        style={{
-          background: '#0d1025',
-          backgroundImage: [
-            'radial-gradient(ellipse 80% 60% at 10% -10%, rgba(99,102,241,0.12) 0%, transparent 60%)',
-            'radial-gradient(ellipse 60% 50% at 90% 110%, rgba(139,92,246,0.10) 0%, transparent 60%)',
-            'radial-gradient(ellipse 40% 40% at 50% 50%, rgba(236,72,153,0.04) 0%, transparent 70%)',
-          ].join(', '),
-        }}
-      />
-      {/* Floating animated orbs — subtle */}
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div
-          className="absolute -top-[250px] -left-[180px] h-[600px] w-[600px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)',
-            filter: 'blur(90px)',
-            animation: 'float 14s ease-in-out infinite',
-          }}
-        />
-        <div
-          className="absolute -bottom-[250px] -right-[180px] h-[550px] w-[550px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)',
-            filter: 'blur(90px)',
-            animation: 'float 18s ease-in-out infinite reverse',
-          }}
-        />
-        <div
-          className="absolute top-[35%] -right-[120px] h-[300px] w-[300px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(236,72,153,0.08) 0%, transparent 70%)',
-            filter: 'blur(70px)',
-            animation: 'float 11s ease-in-out infinite 2s',
-          }}
-        />
+    <div className="app-shell relative flex min-h-screen flex-col overflow-x-hidden" style={{ background: '#000000' }}>
+
+      {/* ── Subtle grid overlay ── */}
+      <div className="pointer-events-none fixed inset-0 z-0" style={{
+        backgroundImage: `
+          linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)
+        `,
+        backgroundSize: '60px 60px',
+      }} />
+
+      {/* ── Pulsing gradient orbs ── */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        {/* Top-left indigo orb */}
+        <div className="appshell-orb appshell-orb-1" />
+        {/* Bottom-right violet orb */}
+        <div className="appshell-orb appshell-orb-2" />
+        {/* Center-right pink orb */}
+        <div className="appshell-orb appshell-orb-3" />
+        {/* Top-right cyan accent orb */}
+        <div className="appshell-orb appshell-orb-4" />
       </div>
+
+      {/* ── Animated floating particles ── */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        {particles.map(p => (
+          <div
+            key={p.id}
+            className="appshell-particle"
+            style={{
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              opacity: p.opacity,
+              background: `hsl(${p.hue}, 80%, 65%)`,
+              animationDuration: `${p.dur}s`,
+              animationDelay: `${p.delay}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* ── Scanline sweep — subtle animated light beam ── */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="appshell-scanline" />
+      </div>
+
       <Navbar />
-      <main className="mx-auto w-full flex-1 px-4 py-8 sm:px-6 sm:py-10">{children}</main>
+      <main className="relative z-10 mx-auto w-full flex-1 px-4 py-8 sm:px-6 sm:py-10">{children}</main>
       <Footer />
     </div>
   )

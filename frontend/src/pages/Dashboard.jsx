@@ -90,27 +90,27 @@ export default function Dashboard() {
 
   return (
     <PageTransition>
-      <div className="mesh-gradient relative min-h-screen px-4 py-8 sm:px-6 lg:px-8 overflow-hidden">
+      <div className="relative min-h-screen px-4 py-8 sm:px-6 lg:px-8 overflow-hidden">
 
-        {/* ── Animated Background Glows ── */}
+        {/* ── Animated Background Glows (AppShell provides base + particles) ── */}
         <div className="pointer-events-none fixed inset-0 -z-10">
           <motion.div
-            animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }}
+            animate={{ scale: [1, 1.15, 1], opacity: [0.12, 0.22, 0.12] }}
             transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full blur-[120px]"
-            style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.4), transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.35), transparent 70%)' }}
           />
           <motion.div
-            animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
+            animate={{ scale: [1, 1.1, 1], opacity: [0.08, 0.18, 0.08] }}
             transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
             className="absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full blur-[100px]"
-            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.30), transparent 70%)' }}
           />
           <motion.div
-            animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.06, 0.12, 0.06] }}
             transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
             className="absolute top-1/3 right-1/4 h-[350px] w-[350px] rounded-full blur-[80px]"
-            style={{ background: 'radial-gradient(circle, rgba(217,119,6,0.2), transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(217,119,6,0.15), transparent 70%)' }}
           />
         </div>
 
