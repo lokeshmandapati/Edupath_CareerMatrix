@@ -35,16 +35,16 @@ function ProtectedRoute({ children }) {
 }
 
 /** Animated floating particles — memoized so they don't regenerate on every render */
-function useParticles(count = 35) {
+function useParticles(count = 40) {
   return useMemo(() =>
     Array.from({ length: count }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 3 + 1,
-      dur: Math.random() * 12 + 10,
-      delay: Math.random() * -20,
-      opacity: Math.random() * 0.35 + 0.08,
+      size: Math.random() * 4 + 2,
+      dur: Math.random() * 10 + 8,
+      delay: Math.random() * -15,
+      opacity: Math.random() * 0.5 + 0.2,
       hue: [260, 280, 320, 220, 200][Math.floor(Math.random() * 5)],
     })),
   [count])
@@ -52,7 +52,7 @@ function useParticles(count = 35) {
 
 /** Authenticated layout — pure black animated background */
 function AppShell({ children }) {
-  const particles = useParticles(35)
+  const particles = useParticles(40)
 
   return (
     <div className="app-shell relative flex min-h-screen flex-col overflow-x-hidden" style={{ background: '#000000' }}>
