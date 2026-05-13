@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import Navbar from './components/Navbar'
@@ -34,74 +33,25 @@ function ProtectedRoute({ children }) {
   return children
 }
 
-/** Animated floating particles — memoized so they don't regenerate on every render */
-function useParticles(count = 40) {
-  return useMemo(() =>
-    Array.from({ length: count }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 4 + 2,
-      dur: Math.random() * 10 + 8,
-      delay: Math.random() * -15,
-      opacity: Math.random() * 0.5 + 0.2,
-      hue: [260, 280, 320, 220, 200][Math.floor(Math.random() * 5)],
-    })),
-  [count])
-}
-
-/** Authenticated layout — pure black animated background */
+/** Authenticated layout — animated mesh gradient background */
 function AppShell({ children }) {
-  const particles = useParticles(40)
-
   return (
     <div className="app-shell relative flex min-h-screen flex-col overflow-x-hidden" style={{ background: 'rgb(var(--page))' }}>
 
-      {/* ── Subtle grid overlay ── */}
-      <div className="pointer-events-none fixed inset-0 z-0" style={{
-        backgroundImage: `
-          linear-gradient(rgba(var(--accent), 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(var(--accent), 0.03) 1px, transparent 1px)
-        `,
-        backgroundSize: '60px 60px',
-      }} />
-
-      {/* ── Pulsing gradient orbs ── */}
+      {/* ── Animated Mesh Gradient Background ── */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        {/* Top-left indigo orb */}
-        <div className="appshell-orb appshell-orb-1" />
-        {/* Bottom-right violet orb */}
-        <div className="appshell-orb appshell-orb-2" />
-        {/* Center-right pink orb */}
-        <div className="appshell-orb appshell-orb-3" />
-        {/* Top-right cyan accent orb */}
-        <div className="appshell-orb appshell-orb-4" />
+        <div className="mesh-blob mesh-blob-1" />
+        <div className="mesh-blob mesh-blob-2" />
+        <div className="mesh-blob mesh-blob-3" />
+        <div className="mesh-blob mesh-blob-4" />
+        <div className="mesh-blob mesh-blob-5" />
       </div>
 
-      {/* ── Animated floating particles ── */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        {particles.map(p => (
-          <div
-            key={p.id}
-            className="appshell-particle"
-            style={{
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              width: `${p.size}px`,
-              height: `${p.size}px`,
-              opacity: p.opacity,
-              background: `hsl(${p.hue}, 80%, 65%)`,
-              animationDuration: `${p.dur}s`,
-              animationDelay: `${p.delay}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* ── Noise texture for depth ── */}
+      <div className="mesh-noise pointer-events-none fixed inset-0 z-0" />
 
-      {/* ── Scanline sweep — subtle animated light beam ── */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="appshell-scanline" />
-      </div>
+      {/* ── Bottom aurora glow ── */}
+      <div className="mesh-aurora pointer-events-none fixed inset-x-0 bottom-0 z-0" />
 
       <Navbar />
       <main className="relative z-10 mx-auto w-full flex-1 px-4 py-8 sm:px-6 sm:py-10">{children}</main>

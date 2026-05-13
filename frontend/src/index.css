@@ -197,179 +197,93 @@ button, a {
 }
 
 /* ══════════════════════════════════════════════════════════
-   AppShell — Black Background Animated Effects
+   AppShell — Animated Mesh Gradient Background
    ══════════════════════════════════════════════════════════ */
 
-/* ── Pulsing gradient orbs — VERY visible ── */
-.appshell-orb {
+.mesh-blob {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  will-change: transform, opacity;
+  filter: blur(100px);
+  z-index: 1;
+  opacity: 0.7;
+  animation: meshFlow 20s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
-.appshell-orb-1 {
-  top: -10%;
-  left: -5%;
-  width: 700px;
-  height: 700px;
-  background: radial-gradient(circle, rgba(99,102,241,0.45) 0%, rgba(99,102,241,0.1) 50%, transparent 70%);
-  animation: orbPulse1 10s ease-in-out infinite;
+.mesh-blob-1 {
+  top: -10%; left: -10%;
+  width: 50vw; height: 50vh;
+  background: rgba(99,102,241,0.45);
+  animation-delay: 0s;
 }
 
-.appshell-orb-2 {
-  bottom: -10%;
-  right: -5%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(139,92,246,0.40) 0%, rgba(139,92,246,0.08) 50%, transparent 70%);
-  animation: orbPulse2 14s ease-in-out infinite;
+.mesh-blob-2 {
+  top: 40%; right: -20%;
+  width: 60vw; height: 60vh;
+  background: rgba(139,92,246,0.35);
+  animation-delay: -5s;
 }
 
-.appshell-orb-3 {
-  top: 35%;
-  right: -3%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(236,72,153,0.30) 0%, rgba(236,72,153,0.06) 50%, transparent 70%);
-  animation: orbPulse3 12s ease-in-out infinite;
+.mesh-blob-3 {
+  bottom: -20%; left: 20%;
+  width: 55vw; height: 55vh;
+  background: rgba(236,72,153,0.30);
+  animation-delay: -10s;
 }
 
-.appshell-orb-4 {
-  top: 5%;
-  right: 20%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(34,211,238,0.20) 0%, rgba(34,211,238,0.04) 50%, transparent 70%);
-  animation: orbPulse1 16s ease-in-out infinite 2s;
+.mesh-blob-4 {
+  top: 10%; right: 20%;
+  width: 40vw; height: 40vh;
+  background: rgba(34,211,238,0.25);
+  animation-delay: -15s;
 }
 
-@keyframes orbPulse1 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
-  33%      { transform: translate(40px, 30px) scale(1.2); opacity: 1; }
-  66%      { transform: translate(-30px, 15px) scale(0.9); opacity: 0.7; }
+.mesh-blob-5 {
+  top: 50%; left: 10%;
+  width: 45vw; height: 45vh;
+  background: rgba(99,102,241,0.30);
+  animation-delay: -7s;
 }
 
-@keyframes orbPulse2 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
-  50%      { transform: translate(-50px, -30px) scale(1.25); opacity: 1; }
+@keyframes meshFlow {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33%  { transform: translate(5vw, -5vh) scale(1.1) rotate(5deg); }
+  66%  { transform: translate(-5vw, 5vh) scale(0.9) rotate(-5deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
 }
 
-@keyframes orbPulse3 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-  40%      { transform: translate(-30px, 40px) scale(1.15); opacity: 1; }
-  80%      { transform: translate(20px, -20px) scale(0.85); opacity: 0.5; }
+/* ── Noise texture for depth ── */
+.mesh-noise {
+  z-index: 2;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* ── Floating particles — brighter with glow ── */
-.appshell-particle {
-  position: absolute;
-  border-radius: 50%;
-  animation: particleDrift linear infinite;
-  will-change: transform, opacity;
-  box-shadow: 0 0 8px 2px currentColor;
-}
-
-@keyframes particleDrift {
-  0%   { transform: translate(0, 0) scale(1); opacity: 0.3; }
-  25%  { transform: translate(20px, -35px) scale(1.5); opacity: 0.7; }
-  50%  { transform: translate(-15px, -60px) scale(0.8); opacity: 0.25; }
-  75%  { transform: translate(25px, -40px) scale(1.8); opacity: 0.6; }
-  100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-}
-
-/* ── Scanline sweep — visible horizontal light beam ── */
-.appshell-scanline {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(99,102,241,0.06) 30%,
-    rgba(139,92,246,0.12) 50%,
-    rgba(99,102,241,0.06) 70%,
-    transparent 100%
-  );
-  animation: scanlineMove 6s ease-in-out infinite;
-  will-change: top;
-}
-
-@keyframes scanlineMove {
-  0%   { top: -200px; }
-  100% { top: calc(100% + 200px); }
-}
-
-/* ── Aurora wave at bottom ── */
-.app-shell::after {
-  content: '';
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 300px;
-  background: linear-gradient(
-    0deg,
-    rgba(99,102,241,0.08) 0%,
-    rgba(139,92,246,0.05) 30%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 0;
-  animation: auroraWave 8s ease-in-out infinite;
-}
-
-@keyframes auroraWave {
-  0%, 100% { opacity: 0.5; transform: translateY(0); }
-  50%      { opacity: 1; transform: translateY(-20px); }
+/* ── Bottom aurora glow ── */
+.mesh-aurora {
+  height: 35vh;
+  z-index: 3;
+  background: linear-gradient(to top, rgba(var(--primary), 0.20) 0%, transparent 100%);
 }
 
 /* ══════════════════════════════════════════════════════════
-   Light Mode Overrides for Animated Effects
+   Light Mode Overrides for Mesh Gradient
    ══════════════════════════════════════════════════════════ */
 
-[data-theme='light'] .appshell-orb {
+[data-theme='light'] .mesh-blob {
+  opacity: 0.6;
   filter: blur(120px);
 }
 
-[data-theme='light'] .appshell-orb-1 {
-  background: radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(79,70,229,0.04) 50%, transparent 70%);
+[data-theme='light'] .mesh-blob-1 { background: rgba(79,70,229,0.25); }
+[data-theme='light'] .mesh-blob-2 { background: rgba(139,92,246,0.20); }
+[data-theme='light'] .mesh-blob-3 { background: rgba(236,72,153,0.15); }
+[data-theme='light'] .mesh-blob-4 { background: rgba(34,211,238,0.15); }
+[data-theme='light'] .mesh-blob-5 { background: rgba(79,70,229,0.20); }
+
+[data-theme='light'] .mesh-noise {
+  opacity: 0.06;
 }
 
-[data-theme='light'] .appshell-orb-2 {
-  background: radial-gradient(circle, rgba(139,92,246,0.12) 0%, rgba(139,92,246,0.03) 50%, transparent 70%);
-}
-
-[data-theme='light'] .appshell-orb-3 {
-  background: radial-gradient(circle, rgba(236,72,153,0.10) 0%, rgba(236,72,153,0.02) 50%, transparent 70%);
-}
-
-[data-theme='light'] .appshell-orb-4 {
-  background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, rgba(34,211,238,0.02) 50%, transparent 70%);
-}
-
-[data-theme='light'] .appshell-particle {
-  box-shadow: 0 0 6px 1px currentColor;
-  opacity: 0.3 !important;
-}
-
-[data-theme='light'] .appshell-scanline {
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(79,70,229,0.04) 30%,
-    rgba(139,92,246,0.07) 50%,
-    rgba(79,70,229,0.04) 70%,
-    transparent 100%
-  );
-}
-
-[data-theme='light'] .app-shell::after {
-  background: linear-gradient(
-    0deg,
-    rgba(79,70,229,0.05) 0%,
-    rgba(139,92,246,0.03) 30%,
-    transparent 100%
-  );
+[data-theme='light'] .mesh-aurora {
+  background: linear-gradient(to top, rgba(var(--primary), 0.12) 0%, transparent 100%);
 }
