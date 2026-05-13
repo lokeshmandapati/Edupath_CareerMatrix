@@ -257,7 +257,7 @@ export default function Login() {
           transition={{ delay: 1.2, duration: 0.5 }}
           className="text-sm font-semibold uppercase tracking-widest" style={{ color: '#334155' }}
         >
-          © 2025 CareerMatrix · Built for Success
+          © 2026 CareerMatrix · Built for Success
         </motion.p>
       </div>
 

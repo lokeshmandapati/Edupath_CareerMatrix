@@ -362,7 +362,7 @@ export default function LandingPage() {
       <footer className="border-t px-8 py-10 text-center sm:px-16 lg:px-24" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
         <div className="mx-auto w-full">
           <div className="flex flex-wrap items-center justify-center gap-2 text-sm" style={{ color: '#475569' }}>
-            <span>© 2025</span>
+            <span>© 2026</span>
             <span className="font-bold" style={{ color: '#8b5cf6' }}>CareerMatrix</span>
             <span>·</span>
             <span>Built for Indian Students</span>
