@@ -324,3 +324,52 @@ button, a {
   0%, 100% { opacity: 0.5; transform: translateY(0); }
   50%      { opacity: 1; transform: translateY(-20px); }
 }
+
+/* ══════════════════════════════════════════════════════════
+   Light Mode Overrides for Animated Effects
+   ══════════════════════════════════════════════════════════ */
+
+[data-theme='light'] .appshell-orb {
+  filter: blur(120px);
+}
+
+[data-theme='light'] .appshell-orb-1 {
+  background: radial-gradient(circle, rgba(79,70,229,0.15) 0%, rgba(79,70,229,0.04) 50%, transparent 70%);
+}
+
+[data-theme='light'] .appshell-orb-2 {
+  background: radial-gradient(circle, rgba(139,92,246,0.12) 0%, rgba(139,92,246,0.03) 50%, transparent 70%);
+}
+
+[data-theme='light'] .appshell-orb-3 {
+  background: radial-gradient(circle, rgba(236,72,153,0.10) 0%, rgba(236,72,153,0.02) 50%, transparent 70%);
+}
+
+[data-theme='light'] .appshell-orb-4 {
+  background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, rgba(34,211,238,0.02) 50%, transparent 70%);
+}
+
+[data-theme='light'] .appshell-particle {
+  box-shadow: 0 0 6px 1px currentColor;
+  opacity: 0.3 !important;
+}
+
+[data-theme='light'] .appshell-scanline {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(79,70,229,0.04) 30%,
+    rgba(139,92,246,0.07) 50%,
+    rgba(79,70,229,0.04) 70%,
+    transparent 100%
+  );
+}
+
+[data-theme='light'] .app-shell::after {
+  background: linear-gradient(
+    0deg,
+    rgba(79,70,229,0.05) 0%,
+    rgba(139,92,246,0.03) 30%,
+    transparent 100%
+  );
+}

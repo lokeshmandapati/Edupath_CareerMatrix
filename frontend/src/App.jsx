@@ -55,13 +55,13 @@ function AppShell({ children }) {
   const particles = useParticles(40)
 
   return (
-    <div className="app-shell relative flex min-h-screen flex-col overflow-x-hidden" style={{ background: '#000000' }}>
+    <div className="app-shell relative flex min-h-screen flex-col overflow-x-hidden" style={{ background: 'rgb(var(--page))' }}>
 
       {/* ── Subtle grid overlay ── */}
       <div className="pointer-events-none fixed inset-0 z-0" style={{
         backgroundImage: `
-          linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)
+          linear-gradient(rgba(var(--accent), 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(var(--accent), 0.03) 1px, transparent 1px)
         `,
         backgroundSize: '60px 60px',
       }} />
