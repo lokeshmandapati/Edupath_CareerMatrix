@@ -1,4 +1,4 @@
-import { useId } from 'react'
+
 import { Link } from 'react-router-dom'
 
 const SIZES = {
@@ -8,39 +8,23 @@ const SIZES = {
   xl: 'h-16 w-16',
 }
 
-/**
- * Minimal mark: upward path with start/end nodes — suggests career progression (sky palette).
- */
 export function LogoMark({ className = '', size = 'md' }) {
-  const raw = useId().replace(/:/g, '')
-  const gradId = `cm-logo-grad-${raw}`
+  // Determine text size based on container size
+  const emojiSize = 
+    size === 'sm' ? 'text-base' :
+    size === 'lg' ? 'text-2xl' :
+    size === 'xl' ? 'text-3xl' :
+    'text-xl'
 
   return (
-    <svg
-      className={`${SIZES[size] ?? SIZES.md} ${className}`}
-      viewBox="0 0 48 48"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <div
+      className={`flex items-center justify-center rounded-[28%] shadow-lg ring-2 ring-white/10 ${SIZES[size] ?? SIZES.md} ${className}`}
+      style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
       role="img"
-      aria-hidden
+      aria-label="Logo"
     >
-      <defs>
-        <linearGradient id={gradId} x1="10" y1="42" x2="42" y2="8" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#0EA5E9" />
-          <stop offset="1" stopColor="#38BDF8" />
-        </linearGradient>
-      </defs>
-      <rect width="48" height="48" rx="12" fill={`url(#${gradId})`} />
-      <path
-        d="M14 34C18 28 22 26 26 22L32 14"
-        stroke="white"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx="14" cy="34" r="3.5" fill="white" />
-      <circle cx="32" cy="14" r="3.5" fill="white" />
-    </svg>
+      <span className={emojiSize}>🎯</span>
+    </div>
   )
 }
 
