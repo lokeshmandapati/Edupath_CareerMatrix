@@ -151,7 +151,7 @@ export default function Dashboard() {
               Elevate Your <span className="bg-gradient-to-r from-primary to-violet-500 bg-clip-text text-transparent">Career Path</span>
             </h1>
             <p className="max-w-2xl text-lg font-medium text-muted sm:text-xl">
-              Join thousands of students using data-driven insights to navigate their professional journey.
+              Discover the right career path with intelligent insights tailored to your goals.
             </p>
 
             <div className="flex flex-wrap items-center gap-4 pt-4">
